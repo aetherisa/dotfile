@@ -1,13 +1,31 @@
 hostMetadata:
-{ ... }:
+{ dotlib, ... }:
 let
-    dotlib = import ../lib;
     metadata = hostMetadata // {
         "user.name" = "aetheris";
         "user.home" = "/home/aetheris";
     };
 in
 {
-    # User-level modules will be instantiated here as they are added.
-    imports = dotlib.instantiateModules metadata [ ];
+    users.users.${metadata."user.name"} = {
+        isNormalUser = true;
+        home = metadata."user.home";
+        createHome = true;
+        group = "users";
+        extraGroups = [
+            "wheel"
+            "audio"
+            "video"
+        ];
+        initialPassword = "1234";
+    };
+
+    imports = dotlib.instantiateModules metadata [
+        ../module/user/base.nix
+        ../module/user/eza.nix
+        ../module/user/fzf.nix
+        ../module/user/fish.nix
+        ../module/user/starship.nix
+        ../module/user/zoxide.nix
+    ];
 }

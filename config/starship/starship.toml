@@ -1,0 +1,49 @@
+# ==========================
+# General Configuration
+# ==========================
+add_newline = true
+format = "($git_branch )$character "
+right_format = "($custom )($nix_shell )$cmd_duration ($jobs )$directory"
+
+# ==========================
+# Module Configuration
+# ==========================
+[character]
+success_symbol = "[󰸶](bold green)"
+error_symbol = "[󰸳](bold red)"
+vimcmd_symbol = "[󰸸](bold blue)"
+vimcmd_visual_symbol = "[󰸷](bold yellow)"
+vimcmd_replace_symbol = "[󰸴](bold purple)"
+vimcmd_replace_one_symbol = "[󰸵](bold purple)"
+
+[directory]
+format = "[$path]($style)"
+style = "bold bright-black"
+truncation_length = 1
+truncation_symbol = "…/"
+
+[git_branch]
+format = "[$symbol$branch]($style)"
+
+[nix_shell]
+format = "[$symbol]($style)"
+symbol = ""
+style = "bold blue"
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+format = "[$duration]($style)"
+style = "bold bright-black"
+
+[jobs]
+format = "[$number]($style)"
+style = "bold bright-black"
+threshold = 1
+number_threshold = 1
+
+[custom.proxy]
+format = "[󰚻]($style)"
+style = "yellow"
+when = 'test -n "$http_proxy"; and test -n "$https_proxy"'
+description = "Whether proxy is enabled for current shell"

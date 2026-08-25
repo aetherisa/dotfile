@@ -42,6 +42,8 @@
             system = "x86_64-linux";
             hosts = [ "zen" ];
             pkgs = import nixpkgs { inherit system; };
+            dotlib = import ./lib;
+            base16lib = pkgs.callPackage base16.lib { };
         in
         {
             formatter.${system} = treefmt-nix.lib.mkWrapper pkgs {
@@ -59,6 +61,9 @@
                 name:
                 nixpkgs.lib.nixosSystem {
                     inherit system;
+                    specialArgs = {
+                        inherit base16lib dotlib themes;
+                    };
                     modules = [
                         disko.nixosModules.disko
                         impermanence.nixosModules.impermanence
