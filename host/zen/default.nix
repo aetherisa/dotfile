@@ -38,5 +38,6 @@ in
         ]
         ++ [
             ./hardware.nix
+            ./nvidia.nix
         ];
 }
