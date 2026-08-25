@@ -1,14 +1,22 @@
+metadata:
+assert builtins.hasAttr "host.name" metadata;
+assert builtins.hasAttr "persistence.enable" metadata;
+assert builtins.hasAttr "persistence.systemRoot" metadata;
+assert builtins.hasAttr "persistence.userRoot" metadata;
 {
     pkgs,
     lib,
-    hostmeta,
     ...
 }:
 let
-    persist = hostmeta.persistence;
+    persist = {
+        enable = metadata."persistence.enable";
+        systemRoot = metadata."persistence.systemRoot";
+        userRoot = metadata."persistence.userRoot";
+    };
 in
 {
-    networking.hostName = hostmeta.name;
+    networking.hostName = metadata."host.name";
 
     time.timeZone = "Canada/Pacific";
 
@@ -51,19 +59,23 @@ in
         };
     };
 
-    fileSystems.${persist.systemRoot}.neededForBoot = lib.mkIf persist.enable true;
-    fileSystems.${persist.userRoot}.neededForBoot = lib.mkIf persist.enable true;
+    fileSystems = lib.mkIf persist.enable {
+        ${persist.systemRoot}.neededForBoot = true;
+        ${persist.userRoot}.neededForBoot = true;
+    };
 
-    environment.persistence.${persist.systemRoot} = lib.mkIf persist.enable {
-        files = [
-            "/etc/machine-id"
-            "/etc/shadow"
-            "/var/lib/systemd/random-seed"
-        ];
+    environment.persistence = lib.mkIf persist.enable {
+        ${persist.systemRoot} = {
+            files = [
+                "/etc/machine-id"
+                "/etc/shadow"
+                "/var/lib/systemd/random-seed"
+            ];
 
-        directories = [
-            "/var/lib/nixos"
-            "/var/lib/systemd/timers"
-        ];
+            directories = [
+                "/var/lib/nixos"
+                "/var/lib/systemd/timers"
+            ];
+        };
     };
 }

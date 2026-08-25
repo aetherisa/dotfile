@@ -40,12 +40,8 @@
         }:
         let
             system = "x86_64-linux";
-            hosts = [
-                "zen"
-                "vm"
-            ];
+            hosts = [ "zen" ];
             pkgs = import nixpkgs { inherit system; };
-            dotlib = import ./lib { inherit pkgs base16 themes; };
         in
         {
             formatter.${system} = treefmt-nix.lib.mkWrapper pkgs {
@@ -61,12 +57,8 @@
 
             nixosConfigurations = nixpkgs.lib.genAttrs hosts (
                 name:
-                let
-                    hostmeta = import ./host/${name}/meta.nix { inherit dotlib; };
-                in
                 nixpkgs.lib.nixosSystem {
                     inherit system;
-                    specialArgs = { inherit hostmeta; };
                     modules = [
                         disko.nixosModules.disko
                         impermanence.nixosModules.impermanence

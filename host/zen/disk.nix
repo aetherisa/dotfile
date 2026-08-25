@@ -1,4 +1,8 @@
-{ config, hostmeta, ... }:
+metadata:
+assert builtins.hasAttr "boot.espMountPoint" metadata;
+assert builtins.hasAttr "persistence.systemRoot" metadata;
+assert builtins.hasAttr "persistence.userRoot" metadata;
+{ config, ... }:
 {
     disko.devices.disk.main = {
         type = "disk";
@@ -12,7 +16,7 @@
                     content = {
                         type = "filesystem";
                         format = "vfat";
-                        mountpoint = hostmeta.boot.espMountPoint;
+                        mountpoint = metadata."boot.espMountPoint";
                         mountOptions = [ "umask=0077" ];
                     };
                 };
@@ -31,11 +35,11 @@
                                 mountOptions = [ "compress=zstd" ];
                             };
                             "@pin" = {
-                                mountpoint = hostmeta.persistence.systemRoot;
+                                mountpoint = metadata."persistence.systemRoot";
                                 mountOptions = [ "compress=zstd" ];
                             };
                             "@upin" = {
-                                mountpoint = hostmeta.persistence.userRoot;
+                                mountpoint = metadata."persistence.userRoot";
                                 mountOptions = [ "compress=zstd" ];
                             };
                             "@nix" = {

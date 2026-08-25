@@ -1,15 +1,20 @@
+metadata:
+assert builtins.hasAttr "persistence.enable" metadata;
+assert builtins.hasAttr "persistence.systemRoot" metadata;
 {
     lib,
-    hostmeta,
     ...
 }:
 let
-    persist = hostmeta.persistence;
+    persist = {
+        enable = metadata."persistence.enable";
+        systemRoot = metadata."persistence.systemRoot";
+    };
 in
 {
     services.power-profiles-daemon.enable = true;
 
-    environment.persistence.${persist.systemRoot}.directories =
-        lib.mkIf persist.enable
-            [ "/var/lib/power-profiles-daemon" ];
+    environment.persistence = lib.mkIf persist.enable {
+        ${persist.systemRoot}.directories = [ "/var/lib/power-profiles-daemon" ];
+    };
 }

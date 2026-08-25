@@ -1,8 +1,13 @@
+hostMetadata:
 { ... }:
-{
-    users.users.aetheris = {
-        isNormalUser = true;
-        initialPassword = "1234";
-        extraGroups = [ "wheel" ];
+let
+    dotlib = import ../lib;
+    metadata = hostMetadata // {
+        "user.name" = "aetheris";
+        "user.home" = "/home/aetheris";
     };
+in
+{
+    # User-level modules will be instantiated here as they are added.
+    imports = dotlib.instantiateModules metadata [ ];
 }

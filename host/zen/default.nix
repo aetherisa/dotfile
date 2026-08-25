@@ -1,21 +1,34 @@
 { ... }:
+let
+    dotlib = import ../../lib;
+    metadata = {
+        "host.name" = "zen";
+        "boot.espMountPoint" = "/boot";
+        "persistence.enable" = true;
+        "persistence.systemRoot" = "/pin/sys";
+        "persistence.userRoot" = "/pin/user";
+    };
+in
 {
     system.stateVersion = "26.11";
 
-    imports = [
-        ../../module/sys/base.nix
-        ../../module/sys/bluez.nix
-        ../../module/sys/btrfs.nix
-        ../../module/sys/networkmanager.nix
-        ../../module/sys/pipewire.nix
-        ../../module/sys/power.nix
-        ../../module/sys/ssh.nix
-        ../../module/sys/sudo.nix
+    imports =
+        dotlib.instantiateModules metadata [
+            ../../module/sys/base.nix
+            ../../module/sys/bluez.nix
+            ../../module/sys/btrfs.nix
+            ../../module/sys/networkmanager.nix
+            ../../module/sys/pipewire.nix
+            ../../module/sys/power.nix
+            ../../module/sys/ssh.nix
+            ../../module/sys/sudo.nix
 
-        ../../user/aetheris.nix
+            ../../user/aetheris.nix
 
-        ./boot.nix
-        ./disk.nix
-        ./hardware.nix
-    ];
+            ./boot.nix
+            ./disk.nix
+        ]
+        ++ [
+            ./hardware.nix
+        ];
 }

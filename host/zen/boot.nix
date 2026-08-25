@@ -1,6 +1,7 @@
+metadata:
+assert builtins.hasAttr "boot.espMountPoint" metadata;
 {
     pkgs,
-    hostmeta,
     ...
 }:
 {
@@ -8,7 +9,7 @@
         systemd-boot.enable = false;
 
         efi = {
-            efiSysMountPoint = hostmeta.boot.espMountPoint;
+            efiSysMountPoint = metadata."boot.espMountPoint";
             canTouchEfiVariables = true;
         };
 

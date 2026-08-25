@@ -1,11 +1,16 @@
+metadata:
+assert builtins.hasAttr "persistence.enable" metadata;
+assert builtins.hasAttr "persistence.userRoot" metadata;
 {
     config,
     lib,
-    hostmeta,
     ...
 }:
 let
-    persist = hostmeta.persistence;
+    persist = {
+        enable = metadata."persistence.enable";
+        userRoot = metadata."persistence.userRoot";
+    };
     normalUsers = lib.filterAttrs (_: user: user.isNormalUser) config.users.users;
 in
 {
@@ -18,9 +23,9 @@ in
         jack.enable = true;
     };
 
-    environment.persistence.${persist.userRoot}.users = lib.mkIf persist.enable (
-        lib.mapAttrs (_: _: {
+    environment.persistence = lib.mkIf persist.enable {
+        ${persist.userRoot}.users = lib.mapAttrs (_: _: {
             directories = [ ".local/state/wireplumber" ];
-        }) normalUsers
-    );
+        }) normalUsers;
+    };
 }
