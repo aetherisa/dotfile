@@ -25,6 +25,7 @@ in
             ../../module/sys/base.nix
             ../../module/sys/bluez.nix
             ../../module/sys/btrfs.nix
+            ../../module/sys/fonts.nix
             ../../module/sys/networkmanager.nix
             ../../module/sys/power.nix
             ../../module/sys/sudo.nix
