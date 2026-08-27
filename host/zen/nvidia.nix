@@ -35,4 +35,14 @@
             };
         };
     };
+
+	services.udev.extraRules = ''
+		KERNEL=="card*", KERNELS=="0000:01:00.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/nvidia-dgpu"
+		KERNEL=="card*", KERNELS=="0000:06:00.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/amd-igpu"
+		'';
+
+	environment.sessionVariables = {
+		AQ_DRM_DEVICES = "/dev/dri/nvidia-dgpu:/dev/dri/amd-igpu";
+		AQ_FORCE_LINEAR_BLIT = "0";
+	};
 }
