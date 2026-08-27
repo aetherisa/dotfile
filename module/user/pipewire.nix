@@ -1,17 +1,17 @@
 metadata:
+assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
 {
-    config,
     lib,
     ...
 }:
 let
+    userName = metadata."user.name";
     persist = {
         enable = metadata."persistence.enable";
         userRoot = metadata."persistence.userRoot";
     };
-    normalUsers = lib.filterAttrs (_: user: user.isNormalUser) config.users.users;
 in
 {
     security.rtkit.enable = true;
@@ -24,8 +24,8 @@ in
     };
 
     environment.persistence = lib.mkIf persist.enable {
-        ${persist.userRoot}.users = lib.mapAttrs (_: _: {
-            directories = [ ".local/state/wireplumber" ];
-        }) normalUsers;
+        ${persist.userRoot}.users.${userName}.directories = [
+            ".local/state/wireplumber"
+        ];
     };
 }

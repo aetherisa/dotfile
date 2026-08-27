@@ -26,6 +26,8 @@ in
         ../module/user/fzf.nix
         ../module/user/fish.nix
         ../module/user/hyprland.nix
+        ../module/user/pipewire.nix
+        ../module/user/ssh.nix
         ../module/user/starship.nix
         ../module/user/zen-browser.nix
         ../module/user/zoxide.nix
