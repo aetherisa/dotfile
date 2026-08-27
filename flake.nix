@@ -44,6 +44,7 @@
             pkgs = import nixpkgs { inherit system; };
             dotlib = import ./lib;
             base16lib = pkgs.callPackage base16.lib { };
+            localpkgs = import ./package { inherit pkgs; };
         in
         {
             formatter.${system} = treefmt-nix.lib.mkWrapper pkgs {
@@ -62,7 +63,12 @@
                 nixpkgs.lib.nixosSystem {
                     inherit system;
                     specialArgs = {
-                        inherit base16lib dotlib themes;
+                        inherit
+                            base16lib
+                            dotlib
+                            localpkgs
+                            themes
+                            ;
                     };
                     modules = [
                         disko.nixosModules.disko

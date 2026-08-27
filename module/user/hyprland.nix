@@ -2,6 +2,7 @@ metadata:
 assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 {
+    localpkgs,
     pkgs,
     ...
 }:
@@ -9,7 +10,6 @@ let
     userName = metadata."user.name";
     userHome = metadata."user.home";
     config = ../../config/hypr;
-    localpkgs = import ../../package { inherit pkgs; };
 in
 {
     programs.hyprland = {

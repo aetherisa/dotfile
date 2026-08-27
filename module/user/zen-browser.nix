@@ -4,12 +4,11 @@ assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
 {
     lib,
-    pkgs,
+    localpkgs,
     ...
 }:
 let
     userName = metadata."user.name";
-    localpkgs = import ../../package { inherit pkgs; };
     persist = {
         enable = metadata."persistence.enable";
         userRoot = metadata."persistence.userRoot";
