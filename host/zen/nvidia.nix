@@ -32,6 +32,7 @@
             offload = {
                 enable = true;
                 enableOffloadCmd = true;
+                offloadCmdMainProgram = "prime-run";
             };
         };
     };

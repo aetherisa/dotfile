@@ -30,6 +30,7 @@ in
         ../module/user/pipewire.nix
         ../module/user/ssh.nix
         ../module/user/starship.nix
+        ../module/user/xdg.nix
         ../module/user/zen-browser.nix
         ../module/user/zoxide.nix
     ];
