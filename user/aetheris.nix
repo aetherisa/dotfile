@@ -25,7 +25,9 @@ in
         ../module/user/eza.nix
         ../module/user/fzf.nix
         ../module/user/fish.nix
+        ../module/user/hyprland.nix
         ../module/user/starship.nix
+        ../module/user/zen-browser.nix
         ../module/user/zoxide.nix
     ];
 }
