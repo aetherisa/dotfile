@@ -25,6 +25,7 @@ in
         ../module/user/eza.nix
         ../module/user/fzf.nix
         ../module/user/fish.nix
+        ../module/user/ghostty.nix
         ../module/user/hyprland.nix
         ../module/user/pipewire.nix
         ../module/user/ssh.nix
