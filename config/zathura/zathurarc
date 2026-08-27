@@ -1,0 +1,11 @@
+# Font
+set font "CaskaydiaCove Nerd Font normal 12"
+
+# Two pages per row
+set pages-per-row 2
+
+# Q to quit is annoying
+unmap q
+
+# Disable selection to copy
+set selection-clipboard false
