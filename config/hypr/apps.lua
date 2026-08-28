@@ -3,7 +3,7 @@
 ------------------------
 return {
 	terminal = {
-		command = "prime-run ghostty",
+		command = "ghostty",
 		class = "com.mitchellh.ghostty",
 	},
 

@@ -71,7 +71,7 @@ local gui_opt = {
 }
 
 local gui_g = {
-	neovide_padding_top = 40,
+	neovide_padding_top = 20,
 	neovide_padding_bottom = 10,
 	neovide_padding_left = 20,
 	neovide_padding_right = 20,

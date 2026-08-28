@@ -8,8 +8,8 @@ window-padding-x = 20
 window-padding-y = 20,10
 
 # shaders
-custom-shader = "shaders/glow-rgbsplit-twitchy-edit.glsl"
-custom-shader = "shaders/in-game-crt-cursor.glsl"
+# custom-shader = "shaders/glow-rgbsplit-twitchy-edit.glsl"
+# custom-shader = "shaders/in-game-crt-cursor.glsl"
 
 # miscellaneous
 # quit without confirm
