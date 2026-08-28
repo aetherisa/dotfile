@@ -28,6 +28,7 @@ in
         ../module/user/ghostty.nix
         ../module/user/git.nix
         ../module/user/hyprland.nix
+        ../module/user/neovim.nix
         ../module/user/pipewire.nix
         ../module/user/ssh.nix
         ../module/user/starship.nix
