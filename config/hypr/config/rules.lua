@@ -6,6 +6,15 @@ local apps = require("apps")
 ----------------------
 -- Window rules
 
+-- swallowed editor windows should only fade, without sliding or zooming
+hl.window_rule({
+	name = "fade-editor",
+	match = {
+		class = apps.editor.class,
+	},
+	animation = "popin 100%",
+})
+
 ----------------------
 -- Workspace rules
 

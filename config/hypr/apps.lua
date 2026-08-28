@@ -10,5 +10,10 @@ return {
 	browser = {
 		command = "zen-browser",
 		class = "zen",
-	}
+	},
+
+	editor = {
+		command = "neovide",
+		class = "neovide",
+	},
 }
