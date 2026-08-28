@@ -83,25 +83,23 @@
 
             apps.${system} =
                 let
-                    normalUsers = lib.mapAttrs (
-                        _: host:
-                        builtins.attrNames (
-                            lib.filterAttrs (_: user: user.isNormalUser) host.config.users.users
-                        )
-                    ) nixosConfigurations;
+                    installData = lib.mapAttrs (_: host: {
+                        disks = builtins.attrNames host.config.disko.devices.disk;
+                    }) nixosConfigurations;
 
-                    hostUsersFile = pkgs.writeText "host-users.json" (builtins.toJSON normalUsers);
+                    installDataFile = pkgs.writeText "install-data.json" (
+                        builtins.toJSON installData
+                    );
 
                     installOS = pkgs.writeShellApplication {
                         name = "install";
 
                         runtimeInputs = [
                             disko.packages.${system}.disko
-                            pkgs.coreutils
                             pkgs.fish
                             pkgs.jq
                             pkgs.gum
-                            pkgs.nixos-install-tools
+                            pkgs.sudo
                             pkgs.util-linux
                         ];
 
@@ -109,7 +107,7 @@
                             exec ${pkgs.fish}/bin/fish \
                                 ${./script/install.fish} \
                                 --flake ${self} \
-                                --host-users ${hostUsersFile} \
+                                --install-data ${installDataFile} \
                                 "$@"
                         '';
                     };
