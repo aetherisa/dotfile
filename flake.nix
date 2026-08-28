@@ -42,21 +42,10 @@
             system = "x86_64-linux";
             hosts = [ "zen" ];
             pkgs = import nixpkgs { inherit system; };
+            lib = nixpkgs.lib;
             dotlib = import ./lib;
             base16lib = pkgs.callPackage base16.lib { };
             localpkgs = import ./package { inherit pkgs; };
-        in
-        {
-            formatter.${system} = treefmt-nix.lib.mkWrapper pkgs {
-                projectRootFile = "flake.nix";
-                programs.nixfmt.enable = true;
-                settings.formatter.nixfmt.options = [
-                    "--indent"
-                    "4"
-                    "--width"
-                    "80"
-                ];
-            };
 
             nixosConfigurations = nixpkgs.lib.genAttrs hosts (
                 name:
@@ -77,5 +66,59 @@
                     ];
                 }
             );
+        in
+        {
+            inherit nixosConfigurations;
+
+            formatter.${system} = treefmt-nix.lib.mkWrapper pkgs {
+                projectRootFile = "flake.nix";
+                programs.nixfmt.enable = true;
+                settings.formatter.nixfmt.options = [
+                    "--indent"
+                    "4"
+                    "--width"
+                    "80"
+                ];
+            };
+
+            apps.${system} =
+                let
+                    normalUsers = lib.mapAttrs (
+                        _: host:
+                        builtins.attrNames (
+                            lib.filterAttrs (_: user: user.isNormalUser) host.config.users.users
+                        )
+                    ) nixosConfigurations;
+
+                    hostUsersFile = pkgs.writeText "host-users.json" (builtins.toJSON normalUsers);
+
+                    installOS = pkgs.writeShellApplication {
+                        name = "install";
+
+                        runtimeInputs = [
+                            disko.packages.${system}.disko
+                            pkgs.coreutils
+                            pkgs.fish
+                            pkgs.jq
+                            pkgs.gum
+                            pkgs.nixos-install-tools
+                            pkgs.util-linux
+                        ];
+
+                        text = ''
+                            exec ${pkgs.fish}/bin/fish \
+                                ${./script/install.fish} \
+                                --flake ${self} \
+                                --host-users ${hostUsersFile} \
+                                "$@"
+                        '';
+                    };
+                in
+                {
+                    install = {
+                        type = "app";
+                        program = lib.getExe installOS;
+                    };
+                };
         };
 }
