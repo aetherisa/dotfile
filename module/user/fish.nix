@@ -3,6 +3,12 @@ assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
+assert builtins.hasAttr "user.modules.fish" metadata;
+assert builtins.hasAttr "user.modules.eza" metadata;
+assert builtins.hasAttr "user.modules.fzf" metadata;
+assert builtins.hasAttr "user.modules.neovim" metadata;
+assert builtins.hasAttr "user.modules.starship" metadata;
+assert builtins.hasAttr "user.modules.zoxide" metadata;
 {
     lib,
     pkgs,
@@ -23,13 +29,8 @@ in
     users.users.${userName} = {
         shell = pkgs.fish;
         packages = with pkgs; [
-            eza
             fish
-            fzf
             less
-            neovim
-            starship
-            zoxide
         ];
     };
 

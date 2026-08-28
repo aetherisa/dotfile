@@ -1,6 +1,7 @@
 metadata:
 assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
+assert builtins.hasAttr "user.modules.base" metadata;
 { ... }:
 let
     userName = metadata."user.name";

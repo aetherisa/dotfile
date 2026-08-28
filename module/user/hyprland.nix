@@ -1,8 +1,11 @@
 metadata:
 assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
+assert builtins.hasAttr "user.modules.hyprland" metadata;
+assert builtins.hasAttr "user.modules.ghostty" metadata;
+assert builtins.hasAttr "user.modules.pipewire" metadata;
+assert builtins.hasAttr "user.modules.zen-browser" metadata;
 {
-    localpkgs,
     pkgs,
     ...
 }:
@@ -23,9 +26,6 @@ in
 
     users.users.${userName}.packages = [
         pkgs.brightnessctl
-        pkgs.ghostty
-        pkgs.wireplumber
-        localpkgs.zen-browser
     ];
 
     systemd.tmpfiles.rules = [

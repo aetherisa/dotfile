@@ -4,6 +4,7 @@ assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "theme.colors" metadata;
 assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
+assert builtins.hasAttr "user.modules.neovim" metadata;
 {
     lib,
     localpkgs,
@@ -55,7 +56,9 @@ let
 
     neovimPackage = pkgs.neovim.override {
         configure = {
-            customRC = "";
+            customLuaRC = ''
+                dofile(vim.fn.stdpath("config") .. "/init.lua")
+            '';
             packages.dotfile.start = with pkgs.vimPlugins; [
                 alpha-nvim
                 blink-cmp

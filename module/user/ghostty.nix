@@ -2,6 +2,7 @@ metadata:
 assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "theme.colors" metadata;
+assert builtins.hasAttr "user.modules.ghostty" metadata;
 {
     pkgs,
     ...

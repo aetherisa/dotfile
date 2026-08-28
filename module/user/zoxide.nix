@@ -3,6 +3,7 @@ assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
+assert builtins.hasAttr "user.modules.zoxide" metadata;
 {
     lib,
     pkgs,
