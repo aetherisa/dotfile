@@ -18,6 +18,24 @@ let
         userRoot = metadata."persistence.userRoot";
     };
     originalConfig = builtins.readFile ../../config/zathura/zathurarc;
+    reloadTheme = pkgs.writeShellScript "reload-zathura-theme" ''
+        ${pkgs.systemd}/bin/busctl \
+            --user \
+            --no-legend \
+            --no-pager \
+            list | while read -r service _; do
+                case "$service" in
+                    org.pwmt.zathura.PID-*)
+                        ${pkgs.systemd}/bin/busctl \
+                            --user \
+                            call "$service" \
+                            /org/pwmt/zathura \
+                            org.pwmt.zathura \
+                            SourceConfig || true
+                        ;;
+                esac
+            done
+    '';
     finalConfig = pkgs.writeText "zathurarc" ''
         ${originalConfig}
 
@@ -70,6 +88,16 @@ in
         "d ${userHome}/.config/zathura 0755 ${userName} users -"
         "L+ ${userHome}/.config/zathura/zathurarc - - - - ${finalConfig}"
     ];
+
+    systemd.user.services."theme-reload-zathura-${userName}" = {
+        description = "Reload Zathura after a theme change";
+        wantedBy = [ "theme-reload.target" ];
+        unitConfig.ConditionUser = userName;
+        serviceConfig = {
+            Type = "oneshot";
+            ExecStart = reloadTheme;
+        };
+    };
 
     environment.persistence = lib.mkIf persist.enable {
         ${persist.userRoot}.users.${userName}.directories = [

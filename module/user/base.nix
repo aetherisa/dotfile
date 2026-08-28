@@ -7,6 +7,11 @@ let
     userHome = metadata."user.home";
 in
 {
+    systemd.user.targets.theme-reload = {
+        description = "Reload applications after a theme change";
+        unitConfig.StopWhenUnneeded = true;
+    };
+
     systemd.tmpfiles.rules = [
         "d ${userHome}/.config 0755 ${userName} users -"
     ];
