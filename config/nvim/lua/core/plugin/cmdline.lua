@@ -4,6 +4,7 @@
 return function()
 	require("vim._core.ui2").enable({})
 	require("tiny-cmdline").setup({
+		border = vim.opt.winborder:get(),
 		position = {
 			x = "50%",
 			y = "20%",

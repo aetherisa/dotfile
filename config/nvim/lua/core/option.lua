@@ -46,7 +46,7 @@ local tui = {
 	pumheight = 20,
 	pumblend = 20,
 	winblend = 20,
-	winborder = "bold",
+	winborder = "┏,━,┓,┃,┛,━,┗,┃",
 
 	-- interface
 	mousemodel = "extend",
