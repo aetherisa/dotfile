@@ -1,0 +1,38 @@
+# Base16 {{scheme-name}}
+# Author: {{scheme-author}}
+
+set default-bg                  ""
+set default-fg                  "#{{base05-hex}}"
+
+set statusbar-bg                "#{{base00-hex}}"
+set statusbar-fg                "#{{base05-hex}}"
+
+set inputbar-bg                 "#{{base00-hex}}"
+set inputbar-fg                 "#{{base05-hex}}"
+
+set notification-bg             "#{{base00-hex}}"
+set notification-fg             "#{{base05-hex}}"
+
+set notification-error-bg       "#{{base00-hex}}"
+set notification-error-fg       "#{{base08-hex}}"
+
+set notification-warning-bg     "#{{base00-hex}}"
+set notification-warning-fg     "#{{base09-hex}}"
+
+set completion-bg               "#{{base00-hex}}"
+set completion-fg               "#{{base05-hex}}"
+
+set completion-highlight-bg     "#{{base0B-hex}}"
+set completion-highlight-fg     "#{{base00-hex}}"
+
+set completion-group-bg			"#{{base01-hex}}"
+set completion-group-fg			"#{{base05-hex}}"
+
+set index-bg					"#{{base00-hex}}"
+set index-fg					"#{{base05-hex}}"
+
+set index-active-bg				"#{{base0B-hex}}"
+set index-active-fg				"#{{base00-hex}}"
+
+set recolor-lightcolor          "#{{base00-hex}}"
+set recolor-darkcolor           "#{{base05-hex}}"

@@ -17,7 +17,6 @@ let
         enable = metadata."persistence.enable";
         userRoot = metadata."persistence.userRoot";
     };
-    originalConfig = builtins.readFile ../../config/zathura/zathurarc;
     reloadTheme = pkgs.writeShellScript "reload-zathura-theme" ''
         ${pkgs.systemd}/bin/busctl \
             --user \
@@ -36,48 +35,13 @@ let
                 esac
             done
     '';
-    finalConfig = pkgs.writeText "zathurarc" ''
-        ${originalConfig}
-
-        # Base16 ${colors."scheme-name"}
-        # Author: ${colors."scheme-author"}
-
-        set default-bg                  ""
-        set default-fg                  "#${colors.base05}"
-
-        set statusbar-bg                "#${colors.base00}"
-        set statusbar-fg                "#${colors.base05}"
-
-        set inputbar-bg                 "#${colors.base00}"
-        set inputbar-fg                 "#${colors.base05}"
-
-        set notification-bg             "#${colors.base00}"
-        set notification-fg             "#${colors.base05}"
-
-        set notification-error-bg       "#${colors.base00}"
-        set notification-error-fg       "#${colors.base08}"
-
-        set notification-warning-bg     "#${colors.base00}"
-        set notification-warning-fg     "#${colors.base09}"
-
-        set completion-bg               "#${colors.base00}"
-        set completion-fg               "#${colors.base05}"
-
-        set completion-highlight-bg     "#${colors.base0B}"
-        set completion-highlight-fg     "#${colors.base00}"
-
-        set completion-group-bg         "#${colors.base01}"
-        set completion-group-fg         "#${colors.base05}"
-
-        set index-bg                    "#${colors.base00}"
-        set index-fg                    "#${colors.base05}"
-
-        set index-active-bg             "#${colors.base0B}"
-        set index-active-fg             "#${colors.base00}"
-
-        set recolor-lightcolor          "#${colors.base00}"
-        set recolor-darkcolor           "#${colors.base05}"
-    '';
+    theme = colors {
+        template = ../../template/zathura.template;
+    };
+    finalConfig = pkgs.concatText "zathurarc" [
+        ../../config/zathura/zathurarc
+        theme
+    ];
 in
 {
     users.users.${userName}.packages = [
