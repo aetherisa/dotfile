@@ -6,5 +6,5 @@
 * [x] Metadata-driven module generator framework
 * [x] Native application configration and deployed declaratively
 * [x] Ephemeral root with declarative persistence
-* [ ] Global colorscheme control
+* [x] Global colorscheme control
 * [ ] One command to install everything
