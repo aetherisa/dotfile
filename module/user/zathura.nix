@@ -36,7 +36,7 @@ let
             done
     '';
     theme = colors {
-        template = ../../template/zathura.template;
+        template = ../../template/zathura.mustache;
     };
     finalConfig = pkgs.concatText "zathurarc" [
         ../../config/zathura/zathurarc

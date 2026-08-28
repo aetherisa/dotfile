@@ -20,7 +20,7 @@ let
     };
 
     finalConfig = colors {
-        template = ../../template/neovim.template;
+        template = ../../template/neovim.mustache;
         extension = ".lua";
     };
 

@@ -20,7 +20,7 @@ let
             2>/dev/null || true
     '';
     theme = colors {
-        template = ../../template/ghostty.template;
+        template = ../../template/ghostty.mustache;
     };
     finalConfig = pkgs.concatText "ghostty-config" [
         ../../config/ghostty/config.ghostty

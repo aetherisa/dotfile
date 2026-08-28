@@ -11,7 +11,7 @@ let
     userHome = metadata."user.home";
     colors = metadata."theme.colors";
     theme = colors {
-        template = ../../template/fzf.template;
+        template = ../../template/fzf.mustache;
     };
     finalConfig = pkgs.concatText "fzf-options" [
         ../../config/fzf/options
