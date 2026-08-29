@@ -39,7 +39,6 @@ end
 # CLIs
 # ===============================
 # Fzf
-set -gx FZF_DEFAULT_OPTS_FILE "$XDG_CONFIG_HOME/fzf/options"
 if status is-interactive
 	fzf --fish | source
 end

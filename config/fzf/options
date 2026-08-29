@@ -1,3 +1,4 @@
---height=40%
---layout=reverse
---style=minimal
+set -gx FZF_DEFAULT_OPTS \
+	"--height=40%" \
+	"--layout=reverse" \
+	"--style=minimal"
