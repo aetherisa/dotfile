@@ -6,6 +6,7 @@ let
         "eza"
         "fzf"
         "fish"
+		"gum"
         "ghostty"
         "git"
         "hyprland"
