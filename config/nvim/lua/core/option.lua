@@ -52,6 +52,7 @@ local tui = {
 	mousemodel = "extend",
 	cmdheight = 0,
 	laststatus = 3,
+	messagesopt = "history:500,progress:,wait:0",
 
 	-- status column
 	signcolumn = "yes",
