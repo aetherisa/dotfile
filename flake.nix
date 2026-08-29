@@ -91,6 +91,10 @@
                         builtins.toJSON installData
                     );
 
+                    rebuildDataFile = pkgs.writeText "rebuild-data.json" (
+                        builtins.toJSON (builtins.attrNames nixosConfigurations)
+                    );
+
                     installOS = pkgs.writeShellApplication {
                         name = "install";
 
@@ -110,12 +114,37 @@
                                 "$@"
                         '';
                     };
+
+					rebuildOS = pkgs.writeShellApplication {
+						name = "rebuild";
+
+						runtimeInputs = [
+							pkgs.fish
+							pkgs.jq
+							pkgs.gum
+							pkgs.nixos-rebuild
+							pkgs.systemd
+						];
+
+						text = ''
+							exec ${pkgs.fish}/bin/fish \
+								${./script/rebuild.fish} \
+								--flake ${self} \
+								--rebuild-data ${rebuildDataFile} \
+								"$@"
+						'';
+					};
                 in
                 {
                     install = {
                         type = "app";
                         program = lib.getExe installOS;
                     };
+
+					rebuild = {
+						type = "app";
+						program = lib.getExe rebuildOS;
+					};
                 };
         };
 }

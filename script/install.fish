@@ -6,7 +6,7 @@ function fail
 end
 
 function info
-    gum style --foreground 6 --bold "========> $argv"
+    gum style --foreground 6 --bold "=======> $argv"
 end
 
 set -lx GUM_CHOOSE_HEADER_FOREGROUND 15
