@@ -7,4 +7,5 @@
 * [x] Native application configration and deployed declaratively
 * [x] Ephemeral root with declarative persistence
 * [x] Global colorscheme control
-* [ ] One command to install everything
+* [x] One command to install everything (except setting password)
+* [x] One command to rebuild, switch and reload
