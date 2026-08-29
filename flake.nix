@@ -99,7 +99,6 @@
                             pkgs.fish
                             pkgs.jq
                             pkgs.gum
-                            pkgs.sudo
                             pkgs.util-linux
                         ];
 
