@@ -1,7 +1,5 @@
 {
-    base16lib,
     dotlib,
-    themes,
     ...
 }:
 let
@@ -11,11 +9,6 @@ let
         "persistence.enable" = true;
         "persistence.systemRoot" = "/pin/sys";
         "persistence.userRoot" = "/pin/user";
-    }
-    // dotlib.mkThemeMetadata {
-        inherit base16lib themes;
-        name = "everforest-dark-hard";
-        mode = "dark";
     };
 in
 {
