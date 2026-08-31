@@ -23,8 +23,6 @@ in
     i18n.defaultLocale = "en_US.UTF-8";
     console.keyMap = "us";
 
-    services.dbus.implementation = "dbus";
-
     environment.systemPackages = with pkgs; [
         neovim
         git
