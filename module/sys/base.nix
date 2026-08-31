@@ -66,14 +66,24 @@ in
         ${persist.systemRoot} = {
             files = [
                 "/etc/machine-id"
-                "/etc/shadow"
                 "/var/lib/systemd/random-seed"
             ];
 
             directories = [
                 "/var/lib/nixos"
+                "/var/lib/userborn"
                 "/var/lib/systemd/timers"
             ];
         };
+    };
+
+    users.mutableUsers = true;
+
+    services.userborn = {
+        enable = true;
+        passwordFilesLocation = 
+            if persist.enable
+            then "${persist.systemRoot}"
+            else "/etc";
     };
 }
