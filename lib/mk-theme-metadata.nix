@@ -8,7 +8,10 @@ let
     schemeFile = "${themes}/base16/${name}.yaml";
 in
 assert builtins.pathExists schemeFile;
-assert builtins.elem mode [ "dark" "light" ];
+assert builtins.elem mode [
+    "dark"
+    "light"
+];
 {
     "theme.name" = name;
     "theme.mode" = mode;

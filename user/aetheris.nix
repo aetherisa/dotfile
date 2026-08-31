@@ -1,12 +1,13 @@
 hostMetadata:
 assert builtins.hasAttr "persistence.enable" hostMetadata;
 assert builtins.hasAttr "persistence.userRoot" hostMetadata;
-{ 
-    dotlib, 
-    lib, 
+{
+    dotlib,
+    lib,
     base16lib,
     themes,
-    ... }:
+    ...
+}:
 let
     modules = [
         "base"
@@ -41,7 +42,8 @@ let
             inherit base16lib themes;
             name = "everforest-dark-hard";
             mode = "dark";
-        } // dotlib.mkModuleMetadata modules;
+        }
+        // dotlib.mkModuleMetadata modules;
 in
 {
     users.users.${metadata."user.name"} = {
