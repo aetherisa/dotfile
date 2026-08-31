@@ -3,7 +3,6 @@ assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "theme.colors" metadata;
 assert builtins.hasAttr "user.modules.fzf" metadata;
-assert builtins.hasAttr "user.modules.fish" metadata;
 {
     pkgs,
     ...
@@ -15,7 +14,7 @@ let
     theme = colors {
         template = ../../template/fzf.mustache;
     };
-    finalConfig = pkgs.concatText "fzf.fish" [
+    finalConfig = pkgs.concatText "20-fzf.conf" [
         ../../config/fzf/options
         theme
     ];
@@ -26,7 +25,6 @@ in
     ];
 
     systemd.tmpfiles.rules = [
-        "d ${userHome}/.config/fish/conf.d 0755 ${userName} users -"
-        "L+ ${userHome}/.config/fish/conf.d/fzf.fish - - - - ${finalConfig}"
+        "L+ ${userHome}/.config/environment.d/20-fzf.conf - - - - ${finalConfig}"
     ];
 }

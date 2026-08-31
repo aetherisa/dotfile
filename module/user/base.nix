@@ -21,6 +21,7 @@ in
 
     systemd.tmpfiles.rules = [
         "d ${userHome}/.config 0755 ${userName} users -"
+        "d ${userHome}/.config/environment.d 0755 ${userName} users -"
     ];
 
     environment.persistence = lib.mkIf persist.enable {

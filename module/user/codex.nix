@@ -16,15 +16,18 @@ let
         enable = metadata."persistence.enable";
         userRoot = metadata."persistence.userRoot";
     };
+    environmentConfig = pkgs.writeText "20-codex.conf" ''
+        CODEX_HOME=$XDG_STATE_HOME/codex
+    '';
 in
 {
     users.users.${userName}.packages = [
         pkgs.codex
     ];
 
-    environment.sessionVariables = {
-        CODEX_HOME = "${userHome}/.local/state/codex";
-    };
+    systemd.tmpfiles.rules = [
+        "L+ ${userHome}/.config/environment.d/20-codex.conf - - - - ${environmentConfig}"
+    ];
 
     environment.persistence = lib.mkIf persist.enable {
         ${persist.userRoot}.users.${userName}.directories = [

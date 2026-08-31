@@ -3,7 +3,6 @@ assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "theme.colors" metadata;
 assert builtins.hasAttr "user.modules.gum" metadata;
-assert builtins.hasAttr "user.modules.fish" metadata;
 {
     pkgs,
     ...
@@ -22,7 +21,6 @@ in
     ];
 
     systemd.tmpfiles.rules = [
-        "d ${userHome}/.config/fish/conf.d 0755 ${userName} users -"
-        "L+ ${userHome}/.config/fish/conf.d/gum.fish - - - - ${finalConfig}"
+        "L+ ${userHome}/.config/environment.d/20-gum.conf - - - - ${finalConfig}"
     ];
 }
