@@ -81,9 +81,7 @@ in
 
     services.userborn = {
         enable = true;
-        passwordFilesLocation = 
-            if persist.enable
-            then "${persist.systemRoot}"
-            else "/etc";
+        passwordFilesLocation =
+            if persist.enable then "${persist.systemRoot}/etc" else "/etc";
     };
 }

@@ -127,12 +127,12 @@
                         ];
 
                         text = ''
-                            							exec ${pkgs.fish}/bin/fish \
-                            								${./script/rebuild.fish} \
-                            								--flake ${self} \
-                            								--rebuild-data ${rebuildDataFile} \
-                            								"$@"
-                            						'';
+                            exec ${pkgs.fish}/bin/fish \
+                                ${./script/rebuild.fish} \
+                                --flake ${self} \
+                                --rebuild-data ${rebuildDataFile} \
+                                "$@"
+                        '';
                     };
                 in
                 {
