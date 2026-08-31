@@ -18,6 +18,7 @@ assert builtins.hasAttr "boot.espMountPoint" metadata;
             efiSupport = true;
             device = "nodev";
             useOSProber = true;
+            splashImage = null;
 
             font = "${pkgs.nerd-fonts.terminess-ttf}/share/fonts/truetype/NerdFonts/Terminess/TerminessNerdFontMono-Bold.ttf";
             fontSize = 36;
