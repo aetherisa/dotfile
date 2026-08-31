@@ -1,5 +1,7 @@
 hostMetadata:
-{ dotlib, ... }:
+assert builtins.hasAttr "persistence.enable" hostMetadata;
+assert builtins.hasAttr "persistence.userRoot" hostMetadata;
+{ dotlib, lib, ... }:
 let
     modules = [
         "base"
@@ -44,6 +46,12 @@ in
             "video"
         ];
         initialPassword = "1234";
+    };
+
+    environment.persistence = lib.mkIf metadata."persistence.enable" {
+        ${metadata."persistence.userRoot"}.users.${metadata."user.name"}.directories = [
+            "dotfile"
+        ];
     };
 
     imports = dotlib.instantiateModules metadata (
