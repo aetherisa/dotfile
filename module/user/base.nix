@@ -4,7 +4,7 @@ assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "user.modules.base" metadata;
 assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
-{ ... }:
+{ lib, ... }:
 let
     userName = metadata."user.name";
     userHome = metadata."user.home";

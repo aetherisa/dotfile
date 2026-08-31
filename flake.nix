@@ -115,25 +115,25 @@
                         '';
                     };
 
-					rebuildOS = pkgs.writeShellApplication {
-						name = "rebuild";
+                    rebuildOS = pkgs.writeShellApplication {
+                        name = "rebuild";
 
-						runtimeInputs = [
-							pkgs.fish
-							pkgs.jq
-							pkgs.gum
-							pkgs.nixos-rebuild
-							pkgs.systemd
-						];
+                        runtimeInputs = [
+                            pkgs.fish
+                            pkgs.jq
+                            pkgs.gum
+                            pkgs.nixos-rebuild
+                            pkgs.systemd
+                        ];
 
-						text = ''
-							exec ${pkgs.fish}/bin/fish \
-								${./script/rebuild.fish} \
-								--flake ${self} \
-								--rebuild-data ${rebuildDataFile} \
-								"$@"
-						'';
-					};
+                        text = ''
+                            							exec ${pkgs.fish}/bin/fish \
+                            								${./script/rebuild.fish} \
+                            								--flake ${self} \
+                            								--rebuild-data ${rebuildDataFile} \
+                            								"$@"
+                            						'';
+                    };
                 in
                 {
                     install = {
@@ -141,10 +141,10 @@
                         program = lib.getExe installOS;
                     };
 
-					rebuild = {
-						type = "app";
-						program = lib.getExe rebuildOS;
-					};
+                    rebuild = {
+                        type = "app";
+                        program = lib.getExe rebuildOS;
+                    };
                 };
         };
 }
