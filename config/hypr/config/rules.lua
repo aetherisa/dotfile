@@ -15,6 +15,21 @@ hl.window_rule({
 	animation = "popin 100%",
 })
 
+-- GTK portal file choosers can negotiate a monitor-height transient window
+-- under fractional scaling. Give them a predictable dialog-sized geometry.
+hl.window_rule({
+	name = "gtk-file-chooser",
+	match = {
+		class = "xdg-desktop-portal-gtk",
+	},
+	float = true,
+	size = {
+		"monitor_w*0.7",
+		"monitor_h*0.75",
+	},
+	center = true,
+})
+
 ----------------------
 -- Workspace rules
 
