@@ -60,10 +60,13 @@ in
         initialPassword = "1234";
     };
 
-    systemd.services."getty@tty1".serviceConfig.ExecStart = [
-        ""
-        "@${lib.getExe' pkgs.util-linux "agetty"} agetty --autologin ${metadata."user.name"} --noclear %I $TERM"
-    ];
+    systemd.services."getty@tty1" = {
+        overrideStrategy = "asDropin";
+        serviceConfig.ExecStart = [
+            ""
+            "@${lib.getExe' pkgs.util-linux "agetty"} agetty --autologin ${metadata."user.name"} --noclear %I $TERM"
+        ];
+    };
 
     environment.persistence = lib.mkIf metadata."persistence.enable" {
         ${metadata."persistence.userRoot"}.users.${metadata."user.name"}.directories = [

@@ -25,6 +25,7 @@ let
 in
 {
     programs.fish.enable = true;
+    programs.fish.useBabelfish = true;
 
     users.users.${userName} = {
         shell = pkgs.fish;
