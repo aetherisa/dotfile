@@ -40,6 +40,7 @@ hl.config({
 
 		blur = {
 			enabled = true,
+            popups = true,
 		},
 
 		shadow = {
