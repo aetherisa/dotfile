@@ -10,6 +10,7 @@ let
         "gum"
         "ghostty"
         "git"
+        "gtk"
         "hyprland"
         "neovim"
         "pipewire"

@@ -15,6 +15,7 @@ let
     // dotlib.mkThemeMetadata {
         inherit base16lib themes;
         name = "everforest-dark-hard";
+        mode = "dark";
     };
 in
 {
