@@ -20,6 +20,8 @@ in
 appimageTools.wrapType2 {
     inherit pname version src;
 
+    extraPkgs = pkgs: [ pkgs.ffmpeg ];
+
     extraInstallCommands = ''
         ln -s $out/bin/zen-browser $out/bin/zen
 
