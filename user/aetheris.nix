@@ -4,6 +4,7 @@ let
     modules = [
         "base"
         "codex"
+        "cursor"
         "eza"
         "fzf"
         "fish"
@@ -26,6 +27,8 @@ let
         // {
             "user.name" = "aetheris";
             "user.home" = "/home/aetheris";
+            "cursor.name" = "Bibata-Modern-Ice";
+            "cursor.size" = 24;
         }
         // dotlib.mkModuleMetadata modules;
 in

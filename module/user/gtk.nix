@@ -3,7 +3,10 @@ assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "theme.colors" metadata;
 assert builtins.hasAttr "theme.mode" metadata;
+assert builtins.hasAttr "cursor.name" metadata;
+assert builtins.hasAttr "cursor.size" metadata;
 assert builtins.hasAttr "user.modules.base" metadata;
+assert builtins.hasAttr "user.modules.cursor" metadata;
 assert builtins.hasAttr "user.modules.gtk" metadata;
 { pkgs, ... }:
 let
@@ -11,14 +14,20 @@ let
     userHome = metadata."user.home";
     colors = metadata."theme.colors";
     mode = metadata."theme.mode";
+    cursorName = metadata."cursor.name";
+    cursorSize = metadata."cursor.size";
     preferDark = if mode == "dark" then "true" else "false";
     gtk3Settings = pkgs.writeText "gtk3-settings.ini" ''
         [Settings]
         gtk-application-prefer-dark-theme=${preferDark}
+        gtk-cursor-theme-name=${cursorName}
+        gtk-cursor-theme-size=${toString cursorSize}
     '';
     gtk4Settings = pkgs.writeText "gtk4-settings.ini" ''
         [Settings]
         gtk-application-prefer-dark-theme=${preferDark}
+        gtk-cursor-theme-name=${cursorName}
+        gtk-cursor-theme-size=${toString cursorSize}
     '';
     gtk3Theme = colors {
         template = ../../template/gtk3.mustache;
