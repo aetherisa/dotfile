@@ -43,7 +43,7 @@
         		'';
 
     environment.sessionVariables = {
-        AQ_DRM_DEVICES = "/dev/dri/nvidia-dgpu:/dev/dri/amd-igpu";
+        AQ_DRM_DEVICES = "/dev/dri/amd-igpu:/dev/dri/nvidia-dgpu";
         AQ_FORCE_LINEAR_BLIT = "0";
     };
 }
