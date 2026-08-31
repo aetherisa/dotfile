@@ -3,6 +3,7 @@ hostMetadata:
 let
     modules = [
         "base"
+        "codex"
         "eza"
         "fzf"
         "fish"
