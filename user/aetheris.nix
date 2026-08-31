@@ -6,6 +6,7 @@ assert builtins.hasAttr "persistence.userRoot" hostMetadata;
     lib,
     base16lib,
     themes,
+    pkgs,
     ...
 }:
 let
@@ -58,6 +59,11 @@ in
         ];
         initialPassword = "1234";
     };
+
+    systemd.services."getty@tty1".serviceConfig.ExecStart = [
+        ""
+        "@${lib.getExe' pkgs.util-linux "agetty"} agetty --autologin ${metadata."user.name"} --noclear %I $TERM"
+    ];
 
     environment.persistence = lib.mkIf metadata."persistence.enable" {
         ${metadata."persistence.userRoot"}.users.${metadata."user.name"}.directories = [
