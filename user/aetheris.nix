@@ -29,6 +29,7 @@ let
         "zathura"
         "zen-browser"
         "zoxide"
+        "quickshell"
     ];
     themes = [
         {
