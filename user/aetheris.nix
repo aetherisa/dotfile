@@ -30,6 +30,14 @@ let
         "zen-browser"
         "zoxide"
     ];
+    themes = [
+        { name = "everforest-dark-medium"; mode = "dark"; }
+        { name = "everforest-light-medium"; mode = "light"; }
+        { name = "nord"; mode = "dark"; }
+        { name = "gruvbox-material-dark-medium"; mode = "dark"; }
+        { name = "catppuccin-mocha"; mode = "dark"; }
+        { name = "tokyo-night-storm"; mode = "dark"; }
+    ];
     metadata =
         hostMetadata
         // {
@@ -41,32 +49,7 @@ let
         // dotlib.mkThemeMetadata {
             inherit userHome;
             default = "everforest-dark-medium";
-            list = [
-                {
-                    name = "everforest-dark-medium";
-                    mode = "dark";
-                }
-                {
-                    name = "everforest-light-medium";
-                    mode = "light";
-                }
-                {
-                    name = "nord";
-                    mode = "dark";
-                }
-                {
-                    name = "gruvbox-material-dark-medium";
-                    mode = "dark";
-                }
-                {
-                    name = "catppuccin-mocha";
-                    mode = "dark";
-                }
-                {
-                    name = "tokyo-night-storm";
-                    mode = "dark";
-                }
-            ];
+            list = themes;
         }
         // dotlib.mkModuleMetadata modules;
 in
