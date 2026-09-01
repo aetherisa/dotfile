@@ -4,8 +4,6 @@ assert builtins.hasAttr "persistence.userRoot" hostMetadata;
 {
     dotlib,
     lib,
-    base16lib,
-    themes,
     pkgs,
     ...
 }:
@@ -41,7 +39,7 @@ let
             "cursor.size" = 24;
         }
         // dotlib.mkThemeMetadata {
-            inherit base16lib themes userHome;
+            inherit userHome;
             default = "everforest-dark-medium";
             list = [
                 {

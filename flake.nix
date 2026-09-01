@@ -43,8 +43,8 @@
             hosts = [ "zen" ];
             pkgs = import nixpkgs { inherit system; };
             lib = nixpkgs.lib;
-            dotlib = import ./lib;
             base16lib = pkgs.callPackage base16.lib { };
+            dotlib = import ./lib { inherit base16lib themes; };
             localpkgs = import ./package { inherit pkgs; };
 
             nixosConfigurations = nixpkgs.lib.genAttrs hosts (
@@ -53,10 +53,8 @@
                     inherit system;
                     specialArgs = {
                         inherit
-                            base16lib
                             dotlib
                             localpkgs
-                            themes
                             ;
                     };
                     modules = [
