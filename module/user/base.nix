@@ -7,7 +7,10 @@ assert builtins.hasAttr "theme.default" metadata;
 assert builtins.hasAttr "theme.list" metadata;
 assert builtins.hasAttr "theme.root" metadata;
 assert builtins.hasAttr "user.modules.base" metadata;
-{ lib, ... }:
+{
+    lib,
+    ...
+}:
 let
     userName = metadata."user.name";
     userHome = metadata."user.home";
