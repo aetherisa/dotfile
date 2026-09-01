@@ -15,6 +15,12 @@ let
     themeRelative = lib.removePrefix "${userHome}/" themeRoot;
 in
 {
+    environment.etc."dotfile/theme/${userName}.json".text = builtins.toJSON {
+        default = metadata."theme.default";
+        root = themeRoot;
+        themes = map (theme: theme.name) metadata."theme.list";
+    };
+
     systemd.user.targets.theme-reload = {
         description = "Reload applications after a theme change";
         unitConfig.StopWhenUnneeded = true;
@@ -31,7 +37,7 @@ in
         theme: "d ${themeRoot}/${theme.name} 0755 ${userName} users -"
     ) metadata."theme.list"
     ++ [
-        "L ${themeRoot}/active - - - - ${metadata."theme.default"}"
+        "L+ ${themeRoot}/active - - - - ${metadata."theme.default"}"
     ];
 
     environment.persistence = lib.mkIf metadata."persistence.enable" {

@@ -131,6 +131,25 @@
                                 ${./script/rebuild.fish} \
                                 --flake ${self} \
                                 --rebuild-data ${rebuildDataFile} \
+                            "$@"
+                        '';
+                    };
+
+                    themeOS = pkgs.writeShellApplication {
+                        name = "theme";
+
+                        runtimeInputs = [
+                            pkgs.coreutils
+                            pkgs.fish
+                            pkgs.jq
+                            pkgs.gum
+                            pkgs.systemd
+                        ];
+
+                        text = ''
+                            exec ${pkgs.fish}/bin/fish \
+                                ${./script/theme.fish} \
+                                --theme-data "/etc/dotfile/theme/$USER.json" \
                                 "$@"
                         '';
                     };
@@ -144,6 +163,11 @@
                     rebuild = {
                         type = "app";
                         program = lib.getExe rebuildOS;
+                    };
+
+                    theme = {
+                        type = "app";
+                        program = lib.getExe themeOS;
                     };
                 };
         };
