@@ -57,15 +57,11 @@ let
                     mode = "dark";
                 }
                 {
-                    name = "gruvbox-dark-medium";
+                    name = "gruvbox-material-dark-medium";
                     mode = "dark";
                 }
                 {
                     name = "catppuccin-mocha";
-                    mode = "dark";
-                }
-                {
-                    name = "dracula";
                     mode = "dark";
                 }
                 {

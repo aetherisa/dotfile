@@ -15,12 +15,7 @@ let
     themeRoot = metadata."theme.root";
     shaders = ../../config/ghostty/shaders;
     reloadTheme = pkgs.writeShellScript "reload-ghostty-theme" ''
-        ${pkgs.systemd}/bin/systemctl \
-            --user \
-            reload app-com.mitchellh.ghostty.service \
-            2>/dev/null || \
-            ${pkgs.procps}/bin/pkill -USR2 -x ghostty \
-            2>/dev/null || true
+        ${pkgs.procps}/bin/pkill -USR2 ghostty || true
     '';
     themeRules = dotlib.mkThemeFiles {
         inherit themeRoot;
