@@ -66,7 +66,7 @@ let
         }
         // dotlib.mkThemeMetadata {
             inherit userHome;
-            default = "everforest-dark-medium";
+            default = "everforest-light-medium";
             list = themes;
         }
         // dotlib.mkModuleMetadata modules;
