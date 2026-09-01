@@ -6,6 +6,7 @@ assert builtins.hasAttr "persistence.userRoot" metadata;
 {
     pkgs,
     lib,
+    self,
     ...
 }:
 let
@@ -22,6 +23,8 @@ in
 
     i18n.defaultLocale = "en_US.UTF-8";
     console.keyMap = "us";
+
+    nix.registry.dot.flake = self;
 
     environment.systemPackages = with pkgs; [
         neovim

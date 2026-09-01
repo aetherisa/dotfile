@@ -53,6 +53,7 @@
                     inherit system;
                     specialArgs = {
                         inherit
+                            self
                             dotlib
                             localpkgs
                             ;
