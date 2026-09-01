@@ -10,6 +10,7 @@ assert builtins.hasAttr "persistence.userRoot" hostMetadata;
     ...
 }:
 let
+    userHome = "/home/aetheris";
     modules = [
         "base"
         "codex"
@@ -35,14 +36,19 @@ let
         hostMetadata
         // {
             "user.name" = "aetheris";
-            "user.home" = "/home/aetheris";
+            "user.home" = userHome;
             "cursor.name" = "Bibata-Modern-Ice";
             "cursor.size" = 24;
         }
         // dotlib.mkThemeMetadata {
-            inherit base16lib themes;
-            name = "everforest-dark-hard";
-            mode = "dark";
+            inherit base16lib themes userHome;
+            default = "everforest-dark-hard";
+            list = [
+                {
+                    name = "everforest-dark-hard";
+                    mode = "dark";
+                }
+            ];
         }
         // dotlib.mkModuleMetadata modules;
 in

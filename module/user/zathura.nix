@@ -1,11 +1,13 @@
 metadata:
 assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
-assert builtins.hasAttr "theme.colors" metadata;
+assert builtins.hasAttr "theme.list" metadata;
+assert builtins.hasAttr "theme.root" metadata;
 assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
 assert builtins.hasAttr "user.modules.zathura" metadata;
 {
+    dotlib,
     lib,
     pkgs,
     ...
@@ -13,7 +15,7 @@ assert builtins.hasAttr "user.modules.zathura" metadata;
 let
     userName = metadata."user.name";
     userHome = metadata."user.home";
-    colors = metadata."theme.colors";
+    themeRoot = metadata."theme.root";
     persist = {
         enable = metadata."persistence.enable";
         userRoot = metadata."persistence.userRoot";
@@ -36,12 +38,18 @@ let
                 esac
             done
     '';
-    theme = colors {
+    themeRules = dotlib.mkThemeFiles {
+        inherit themeRoot;
+        themes = metadata."theme.list";
         template = ../../template/zathura.mustache;
+        fileName = "zathura";
     };
+    themeConfig = pkgs.writeText "zathura-theme-config" ''
+        include ${themeRoot}/active/zathura
+    '';
     finalConfig = pkgs.concatText "zathurarc" [
         ../../config/zathura/zathurarc
-        theme
+        themeConfig
     ];
 in
 {
@@ -49,7 +57,7 @@ in
         pkgs.zathura
     ];
 
-    systemd.tmpfiles.rules = [
+    systemd.tmpfiles.rules = themeRules ++ [
         "d ${userHome}/.config/zathura 0755 ${userName} users -"
         "L+ ${userHome}/.config/zathura/zathurarc - - - - ${finalConfig}"
     ];

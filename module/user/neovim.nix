@@ -1,11 +1,13 @@
 metadata:
 assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
-assert builtins.hasAttr "theme.colors" metadata;
+assert builtins.hasAttr "theme.list" metadata;
+assert builtins.hasAttr "theme.root" metadata;
 assert builtins.hasAttr "persistence.enable" metadata;
 assert builtins.hasAttr "persistence.userRoot" metadata;
 assert builtins.hasAttr "user.modules.neovim" metadata;
 {
+    dotlib,
     lib,
     localpkgs,
     pkgs,
@@ -14,15 +16,17 @@ assert builtins.hasAttr "user.modules.neovim" metadata;
 let
     userName = metadata."user.name";
     userHome = metadata."user.home";
-    colors = metadata."theme.colors";
+    themeRoot = metadata."theme.root";
     persist = {
         enable = metadata."persistence.enable";
         userRoot = metadata."persistence.userRoot";
     };
 
-    finalConfig = colors {
+    themeRules = dotlib.mkThemeFiles {
+        inherit themeRoot;
+        themes = metadata."theme.list";
         template = ../../template/neovim.mustache;
-        extension = ".lua";
+        fileName = "neovim";
     };
 
     treesitter = pkgs.vimPlugins.nvim-treesitter.withPlugins (
@@ -95,7 +99,7 @@ in
         rust-analyzer
     ];
 
-    systemd.tmpfiles.rules = [
+    systemd.tmpfiles.rules = themeRules ++ [
         "d ${userHome}/.config/nvim 0755 ${userName} users -"
         "d ${userHome}/.config/nvim/lua 0755 ${userName} users -"
         "d ${userHome}/.config/nvim/lua/core 0755 ${userName} users -"
@@ -110,7 +114,7 @@ in
         "L+ ${userHome}/.config/nvim/lua/core/native/lsp.lua - - - - ${../../config/nvim/lua/core/native/lsp.lua}"
         "L+ ${userHome}/.config/nvim/lua/core/native/signal.lua - - - - ${../../config/nvim/lua/core/native/signal.lua}"
         "L+ ${userHome}/.config/nvim/lua/core/native/statusline.lua - - - - ${../../config/nvim/lua/core/native/statusline.lua}"
-        "L+ ${userHome}/.config/nvim/lua/core/native/theme.lua - - - - ${finalConfig}"
+        "L+ ${userHome}/.config/nvim/lua/core/native/theme.lua - - - - ${themeRoot}/active/neovim"
         "L+ ${userHome}/.config/nvim/lua/core/native/treesitter.lua - - - - ${../../config/nvim/lua/core/native/treesitter.lua}"
     ];
 

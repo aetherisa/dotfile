@@ -1,18 +1,23 @@
 metadata:
 assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
-assert builtins.hasAttr "theme.colors" metadata;
+assert builtins.hasAttr "theme.list" metadata;
+assert builtins.hasAttr "theme.root" metadata;
 assert builtins.hasAttr "user.modules.gum" metadata;
 {
+    dotlib,
     pkgs,
     ...
 }:
 let
     userName = metadata."user.name";
     userHome = metadata."user.home";
-    colors = metadata."theme.colors";
-    finalConfig = colors {
+    themeRoot = metadata."theme.root";
+    themeRules = dotlib.mkThemeFiles {
+        inherit themeRoot;
+        themes = metadata."theme.list";
         template = ../../template/gum.mustache;
+        fileName = "gum";
     };
 in
 {
@@ -20,7 +25,7 @@ in
         pkgs.gum
     ];
 
-    systemd.tmpfiles.rules = [
-        "L+ ${userHome}/.config/environment.d/20-gum.conf - - - - ${finalConfig}"
+    systemd.tmpfiles.rules = themeRules ++ [
+        "L+ ${userHome}/.config/environment.d/20-gum.conf - - - - ${themeRoot}/active/gum"
     ];
 }
