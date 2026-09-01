@@ -42,10 +42,34 @@ let
         }
         // dotlib.mkThemeMetadata {
             inherit base16lib themes userHome;
-            default = "everforest-dark-hard";
+            default = "everforest-dark-medium";
             list = [
                 {
-                    name = "everforest-dark-hard";
+                    name = "everforest-dark-medium";
+                    mode = "dark";
+                }
+                {
+                    name = "everforest-light-medium";
+                    mode = "light";
+                }
+                {
+                    name = "nord";
+                    mode = "dark";
+                }
+                {
+                    name = "gruvbox-dark-medium";
+                    mode = "dark";
+                }
+                {
+                    name = "catppuccin-mocha";
+                    mode = "dark";
+                }
+                {
+                    name = "dracula";
+                    mode = "dark";
+                }
+                {
+                    name = "tokyo-night-storm";
                     mode = "dark";
                 }
             ];
