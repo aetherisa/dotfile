@@ -76,6 +76,14 @@ Singleton {
         }
     }
 
+    IpcHandler {
+        target: "theme"
+
+        function reload(): void {
+            themeFile.reload()
+        }
+    }
+
     Process {
         id: lutBuilder
 
