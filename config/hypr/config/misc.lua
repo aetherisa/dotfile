@@ -10,7 +10,7 @@ hl.config({
 		background_color = "#FFFFFF",
 
 		-- reason why hyprland better than niri
-		enable_swallow = true,
+		enable_swallow = false,
 		swallow_regex = apps.terminal.class,
     },
 })
