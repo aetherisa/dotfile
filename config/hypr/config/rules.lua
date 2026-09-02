@@ -45,12 +45,7 @@ hl.workspace_rule({
 	},
 })
 
--- launch initial terminal on workspace 1 & special
-hl.workspace_rule({
-	workspace = "1",
-	on_created_empty = apps.terminal.command
-})
-
+-- launch initial terminal on special workspace
 hl.workspace_rule({
 	workspace = "special:magic",
 	on_created_empty = apps.terminal.command
