@@ -45,6 +45,22 @@ in
         "L+ ${userHome}/.config/quickshell/theme.json - - - - ${themeRoot}/active/quickshell"
     ];
 
+    systemd.user.services.quickshell = {
+        description = "Quickshell desktop shell";
+        wantedBy = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        unitConfig.ConditionUser = userName;
+        path = [
+            pkgs.imagemagick
+            pkgs.lutgen
+        ];
+        serviceConfig = {
+            ExecStart = lib.getExe quickshell;
+            Restart = "on-failure";
+        };
+    };
+
     systemd.user.services."theme-reload-quickshell-${userName}" = {
         description = "Reload Quickshell after a theme change";
         wantedBy = [ "theme-reload.target" ];
