@@ -1,3 +1,4 @@
+{ pkgs }:
 {
     themeRoot,
     themes,
@@ -13,7 +14,17 @@ let
                 "is-dark" = theme.mode == "dark";
                 "is-light" = theme.mode == "light";
             };
-            rendered = colors { inherit template; };
+            data = pkgs.writeText "${theme.name}-${fileName}-theme-data.json" (
+                builtins.toJSON colors
+            );
+            rendered =
+                pkgs.runCommand "${theme.name}-${fileName}"
+                    {
+                        nativeBuildInputs = [ pkgs.mustache-go ];
+                    }
+                    ''
+                        mustache ${data} ${template} > "$out"
+                    '';
         in
         assert builtins.elem theme.mode [
             "dark"

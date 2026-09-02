@@ -1,6 +1,7 @@
 {
-    base16lib,
-    themes,
+    lib,
+    themeDir,
+    yamlParser,
 }:
 {
     userHome,
@@ -8,7 +9,7 @@
     list,
 }:
 let
-    names = map (theme: theme.name) list;
+    names = list;
     uniqueNames = builtins.attrNames (
         builtins.listToAttrs (
             map (name: {
@@ -18,25 +19,71 @@ let
         )
     );
 
-    validTheme =
-        theme:
-        builtins.elem theme.mode [
+    colorNames = [
+        "base00"
+        "base01"
+        "base02"
+        "base03"
+        "base04"
+        "base05"
+        "base06"
+        "base07"
+        "base08"
+        "base09"
+        "base0A"
+        "base0B"
+        "base0C"
+        "base0D"
+        "base0E"
+        "base0F"
+    ];
+
+    loadTheme =
+        name:
+        let
+            path = themeDir + "/${name}.yaml";
+            raw = yamlParser (builtins.readFile path);
+            normalizeColor = color: lib.toLower (lib.removePrefix "#" color);
+            validColor =
+                color:
+                builtins.isString color
+                && builtins.match "[0-9a-fA-F]{6}" (normalizeColor color) != null;
+            validPalette =
+                raw ? palette
+                && builtins.all (
+                    colorName:
+                    builtins.hasAttr colorName raw.palette && validColor raw.palette.${colorName}
+                ) colorNames;
+            colors =
+                builtins.listToAttrs (
+                    map (colorName: {
+                        name = "${colorName}-hex";
+                        value = normalizeColor raw.palette.${colorName};
+                    }) colorNames
+                )
+                // {
+                    "scheme-name" = raw.name;
+                    "scheme-author" = raw.author or "unknown";
+                    "scheme-slug" = raw.slug or name;
+                };
+        in
+        assert builtins.pathExists path;
+        assert builtins.isString (raw.name or null);
+        assert (raw.slug or name) == name;
+        assert builtins.elem (raw.mode or null) [
             "dark"
             "light"
-        ]
-        && builtins.pathExists "${themes}/base16/${theme.name}.yaml";
+        ];
+        assert validPalette;
+        {
+            inherit colors name;
+            mode = raw.mode;
+        };
 in
 assert builtins.elem default names;
 assert builtins.length names == builtins.length uniqueNames;
-assert builtins.all validTheme list;
 {
     "theme.default" = default;
     "theme.root" = "${userHome}/.local/state/theme";
-    "theme.list" = map (
-        theme:
-        theme
-        // {
-            colors = base16lib.mkSchemeAttrs "${themes}/base16/${theme.name}.yaml";
-        }
-    ) list;
+    "theme.list" = map loadTheme list;
 }

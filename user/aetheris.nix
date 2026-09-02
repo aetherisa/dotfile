@@ -32,30 +32,12 @@ let
         "quickshell"
     ];
     themes = [
-        {
-            name = "everforest-dark-medium";
-            mode = "dark";
-        }
-        {
-            name = "everforest-light-medium";
-            mode = "light";
-        }
-        {
-            name = "nord";
-            mode = "dark";
-        }
-        {
-            name = "gruvbox-material-dark-medium";
-            mode = "dark";
-        }
-        {
-            name = "catppuccin-mocha";
-            mode = "dark";
-        }
-        {
-            name = "tokyo-night-storm";
-            mode = "dark";
-        }
+        "everforest-dark-medium"
+        "everforest-light-medium"
+        "nord"
+        "gruvbox-material-dark-medium"
+        "catppuccin-mocha"
+        "tokyo-night-storm"
     ];
     metadata =
         hostMetadata

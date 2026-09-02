@@ -11,10 +11,9 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        # theme parser and Base16 scheme collection
-        base16.url = "github:SenchoPens/base16.nix";
-        themes = {
-            url = "github:tinted-theming/schemes";
+        # YAML parser for the local theme collection
+        fromYaml = {
+            url = "github:SenchoPens/fromYaml";
             flake = false;
         };
 
@@ -33,8 +32,7 @@
             self,
             nixpkgs,
             treefmt-nix,
-            base16,
-            themes,
+            fromYaml,
             impermanence,
             disko,
         }:
@@ -43,8 +41,11 @@
             hosts = [ "zen" ];
             pkgs = import nixpkgs { inherit system; };
             lib = nixpkgs.lib;
-            base16lib = pkgs.callPackage base16.lib { };
-            dotlib = import ./lib { inherit base16lib themes; };
+            yamlParser = import "${fromYaml}/fromYaml.nix" { inherit lib; };
+            dotlib = import ./lib {
+                inherit lib pkgs yamlParser;
+                themeDir = ./theme;
+            };
             localpkgs = import ./package { inherit pkgs; };
 
             nixosConfigurations = nixpkgs.lib.genAttrs hosts (
