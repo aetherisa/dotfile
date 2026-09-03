@@ -5,6 +5,7 @@ assert builtins.hasAttr "user.modules.hyprland" metadata;
 assert builtins.hasAttr "user.modules.ghostty" metadata;
 assert builtins.hasAttr "user.modules.pipewire" metadata;
 assert builtins.hasAttr "user.modules.zen-browser" metadata;
+assert builtins.hasAttr "user.modules.quickshell" metadata;
 {
     lib,
     pkgs,
