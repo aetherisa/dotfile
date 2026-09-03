@@ -10,6 +10,9 @@ local mod = "SUPER"
 -- MOD + Return -> launch terminal
 hl.bind(mod .. "+ Return", hl.dsp.exec_cmd(apps.terminal.command))
 
+-- Mod + S -> screen pick
+hl.bind(mod .. "+ S", hl.dsp.exec_cmd("qs ipc call picker open"))
+
 ----------------------
 -- Workspace
 
