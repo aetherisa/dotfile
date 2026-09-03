@@ -53,7 +53,7 @@ Scope {
             bottom: true
         }
 
-        visible: true
+        visible: false
         WlrLayershell.keyboardFocus:
             visible
             ? WlrKeyboardFocus.Exclusive

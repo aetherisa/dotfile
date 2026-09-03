@@ -20,8 +20,8 @@ return {
     shell = {
         command = {
             screenpick = {
-                start = "qs ipc call picker start"
-                stop = "qs ipc call picker stop"
+                start = "qs ipc call picker start",
+                stop = "qs ipc call picker stop",
             }
         }
     }
