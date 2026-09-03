@@ -59,7 +59,7 @@ Scope {
             ? WlrKeyboardFocus.Exclusive
             : WlrKeyboardFocus.None
         color: "transparent"
-        exclusiveZone: 0
+        exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "screen-picker"
 
@@ -183,7 +183,7 @@ Scope {
         visible: takeRecording.running
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
         color: "transparent"
-        exclusiveZone: 0
+        exclusionMode: ExclusionMode.Ignore
         mask: Region {}
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "screen-picker"
