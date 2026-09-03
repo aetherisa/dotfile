@@ -270,7 +270,8 @@ Scope {
     Process {
         id: copyRecording
         command: [
-            "sh", "-c", "wl-copy --type video/webm < \"$1\"",
+            "sh", "-c",
+            "printf 'file://%s\\r\\n' \"$1\" | wl-copy --type text/uri-list",
             "screen-picker-copy", root.path
         ]
     }
@@ -298,7 +299,7 @@ Scope {
         function stop(): void {
             if (takeRecording.running)
                 takeRecording.signal(2)
-            pick.visible = false
+            picker.visible = false
         }
     }
 }
