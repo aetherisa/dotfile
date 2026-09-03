@@ -53,6 +53,7 @@ in
         partOf = [ "graphical-session.target" ];
         after = [ "graphical-session.target" ];
         unitConfig.ConditionUser = userName;
+        restartTriggers = [ config ];
         path = [
             pkgs.grim
             pkgs.imagemagick
