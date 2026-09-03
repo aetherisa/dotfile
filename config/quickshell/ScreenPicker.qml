@@ -298,6 +298,7 @@ Scope {
         function stop(): void {
             if (takeRecording.running)
                 takeRecording.signal(2)
+            pick.visible = false
         }
     }
 }

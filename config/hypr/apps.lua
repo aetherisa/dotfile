@@ -16,4 +16,13 @@ return {
 		command = "neovide",
 		class = "neovide",
 	},
+
+    shell = {
+        command = {
+            screenpick = {
+                start = "qs ipc call picker start"
+                stop = "qs ipc call picker stop"
+            }
+        }
+    }
 }
