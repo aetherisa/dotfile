@@ -30,6 +30,15 @@ hl.window_rule({
 	center = true,
 })
 
+-- fullscreen browser
+hl.window_rule({
+    name = "maximized-browser",
+    match = {
+        class = apps.browser.class,
+    },
+    fullscreen = true,
+})
+
 ----------------------
 -- Workspace rules
 
