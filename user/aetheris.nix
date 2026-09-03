@@ -32,6 +32,7 @@ let
         "quickshell"
     ];
     themes = [
+        "everforest"
         "everforest-dark-medium"
         "everforest-light-medium"
         "nord"
@@ -49,7 +50,7 @@ let
         }
         // dotlib.mkThemeMetadata {
             inherit userHome;
-            default = "everforest-light-medium";
+            default = "everforest";
             list = themes;
         }
         // dotlib.mkModuleMetadata modules;
