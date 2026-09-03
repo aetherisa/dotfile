@@ -39,6 +39,10 @@ Singleton {
             ? ""
             : "file://" + Quickshell.cachePath("theme-lut-" + _lutSlot + ".png")
 
+    function withAlpha(color, alpha): string {
+        return color.slice(0, 1) + alpha + color.slice(1)
+    }
+
     FileView {
         id: themeFile
 

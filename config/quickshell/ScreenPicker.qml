@@ -12,47 +12,34 @@ Scope {
     property real startY: 0
     property real currentX: 0
     property real currentY: 0
-    property string captureGeometry: ""
-    property string capturePath: ""
-    property bool recordSelection: false
-    property bool copyRecording: false
+    property string geometry: ""
+    property string path: ""
+    property bool shouldRecord: false
+    property bool shouldCopyToClipboard: false
 
-    function resetSelection(): void {
+    function reset(): void {
         root.startX = 0
         root.startY = 0
         root.currentX = 0
         root.currentY = 0
-        root.captureGeometry = ""
-        root.capturePath = ""
-        root.recordSelection = false
+        root.geometry = ""
+        root.path = ""
+        root.shouldRecord = false
+        root.shouldCopyToClipboard = false
     }
 
-    function capture(copyToClipboard): void {
-        picker.visible = false
-
-        if (root.recordSelection) {
-            root.capturePath = Quickshell.cachePath(
-                "recording-" +
-                Qt.formatDateTime(new Date(), "yyyy-MM-dd_HH-mm-ss-zzz") +
-                ".webm"
-            )
-            root.copyRecording = copyToClipboard
-            recordDelay.restart()
-        } else if (copyToClipboard) {
-            clipboardDelay.restart()
-        } else {
-            root.capturePath = Quickshell.cachePath(
-                "screenshot-" +
-                Qt.formatDateTime(new Date(), "yyyy-MM-dd_HH-mm-ss-zzz") +
-                ".png"
-            )
-            captureDelay.restart()
-        }
+    function newScreenshotPath(): string {
+        return Quickshell.cachePath(
+            "screenshot-" +
+            Qt.formatDateTime(new Date(), "yyyy-MM-dd_HH-mm-ss-zzz") +
+            ".png")
     }
 
-    function stopRecording(): void {
-        if (screenRecorder.running)
-            screenRecorder.signal(2)
+    function newRecordingPath(): string {
+        return Quickshell.cachePath(
+            "recording-" +
+            Qt.formatDateTime(new Date(), "yyyy-MM-dd_HH-mm-ss-zzz") +
+            ".webm")
     }
 
     PanelWindow {
@@ -66,7 +53,7 @@ Scope {
             bottom: true
         }
 
-        visible: false
+        visible: true
         WlrLayershell.keyboardFocus:
             visible
             ? WlrKeyboardFocus.Exclusive
@@ -123,7 +110,7 @@ Scope {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
 
             onPressed: mouse => {
-                root.recordSelection = mouse.button === Qt.RightButton
+                root.shouldRecord = mouse.button === Qt.RightButton
                 root.startX = mouse.x
                 root.startY = mouse.y
                 root.currentX = mouse.x
@@ -131,7 +118,7 @@ Scope {
             }
 
             onReleased: {
-                root.captureGeometry =
+                root.geometry =
                     `${Math.round(root.screen.x + selection.x)},` +
                     `${Math.round(root.screen.y + selection.y)} ` +
                     `${Math.round(selection.width)}x${Math.round(selection.height)}`
@@ -154,131 +141,163 @@ Scope {
         Shortcut {
             sequence: "Return"
             enabled: selection.width >= 10 && selection.height >= 5
-            onActivated: root.capture(false)
+            onActivated: {
+                picker.visible = false
+                root.shouldCopyToClipboard = false
+                if (!root.shouldRecord) {
+                    root.path = root.newScreenshotPath()
+                    screenshotDelay.restart()
+                } else {
+                    root.path = root.newRecordingPath()
+                    recordingDelay.restart()
+                }
+            }
         }
 
         Shortcut {
             sequence: "Ctrl+C"
             enabled: selection.width >= 10 && selection.height >= 5
-            onActivated: root.capture(true)
+            onActivated: {
+                picker.visible = false
+                root.shouldCopyToClipboard = true
+                if (!root.shouldRecord) {
+                    root.path = root.newScreenshotPath()
+                    screenshotDelay.restart()
+                } else {
+                    root.path = root.newRecordingPath()
+                    recordingDelay.restart()
+                }
+            }
         }
     }
 
     PanelWindow {
-        id: recordingIndicator
-
         screen: root.screen
         anchors {
+            left: true
             right: true
             top: true
+            bottom: true
         }
-        implicitWidth: 32
-        implicitHeight: 32
-        visible: screenRecorder.running
+
+        visible: takeRecording.running
+        WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
         color: "transparent"
         exclusiveZone: 0
+        mask: Region {}
         WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.namespace: "screen-picker-recording"
+        WlrLayershell.namespace: "screen-picker"
 
         Rectangle {
-            anchors.centerIn: parent
-            width: 12
-            height: 12
-            radius: width / 2
-            color: Theme.base08
-            opacity: 0.75
+            x: 0
+            y: 0
+            width: parent.width
+            height: selection.y
+            color: Theme.withAlpha(Theme.base0B, "66")
         }
 
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.stopRecording()
+        Rectangle {
+            x: 0
+            y: selection.y + selection.height
+            width: parent.width
+            height: parent.height - y
+            color: Theme.withAlpha(Theme.base0B, "66")
+        }
+
+        Rectangle {
+            x: 0
+            y: selection.y
+            width: selection.x
+            height: selection.height
+            color: Theme.withAlpha(Theme.base0B, "66")
+        }
+
+        Rectangle {
+            x: selection.x + selection.width
+            y: selection.y
+            width: parent.width - x
+            height: selection.height
+            color: Theme.withAlpha(Theme.base0B, "66")
         }
     }
 
     Timer {
-        id: captureDelay
+        id: screenshotDelay
         interval: 50
         repeat: false
-        onTriggered: screenshot.running = true
+        onTriggered: takeScreenshot.running = true
     }
 
     Process {
-        id: screenshot
-        command: ["grim", "-g", root.captureGeometry, root.capturePath]
-    }
-
-    Timer {
-        id: clipboardDelay
-        interval: 50
-        repeat: false
-        onTriggered: clipboardScreenshot.running = true
+        id: takeScreenshot
+        command: ["grim", "-g", root.geometry, root.path]
+        onExited: (exitCode, exitStatus) => {
+            if (exitCode === 0 && root.shouldCopyToClipboard) 
+                copyScreenshot.running = true
+        }
     }
 
     Process {
-        id: clipboardScreenshot
+        id: copyScreenshot
         command: [
-            "sh",
-            "-c",
-            "grim -g \"$1\" - | wl-copy --type image/png",
-            "screen-picker-copy",
-            root.captureGeometry
+            "sh", "-c", "wl-copy --type image/png < \"$1\"", 
+            "screen-picker-copy", root.path
         ]
     }
 
     Timer {
-        id: recordDelay
+        id: recordingDelay
         interval: 50
         repeat: false
-        onTriggered: screenRecorder.running = true
+        onTriggered: takeRecording.running = true
     }
 
     Process {
-        id: screenRecorder
+        id: takeRecording
         command: [
             "wf-recorder",
-            "-g", root.captureGeometry,
+            "-g", root.geometry,
             "-c", "libvpx-vp9",
             "-m", "webm",
-            "-f", root.capturePath
+            "-f", root.path
         ]
-
         onExited: (exitCode, exitStatus) => {
-            if (exitCode === 0 && root.copyRecording)
-                clipboardRecording.running = true
-            else if (exitCode !== 0)
-                console.error("wf-recorder failed:", exitCode)
-
-            root.copyRecording = false
+            if (exitCode === 0 && root.shouldCopyToClipboard)
+                copyRecording.running = true
         }
     }
 
     Process {
-        id: clipboardRecording
+        id: copyRecording
         command: [
-            "sh",
-            "-c",
-            "wl-copy --type video/webm < \"$1\"",
-            "screen-picker-copy",
-            root.capturePath
+            "sh", "-c", "wl-copy --type video/webm < \"$1\"",
+            "screen-picker-copy", root.path
         ]
     }
 
     IpcHandler {
         target: "picker"
 
-        function open(): void {
-            if (screenRecorder.running) {
-                root.stopRecording()
+        function start(): void {
+            if (
+                takeRecording.running
+                || takeScreenshot.running
+                || copyRecording.running
+                || copyScreenshot.running
+                || screenshotDelay.running
+                || recordingDelay.running
+                || picker.visible
+            ) {
                 return
             }
 
-            root.resetSelection()
+            root.reset()
             picker.visible = true
         }
 
         function stop(): void {
-            root.stopRecording()
+            if (takeRecording.running)
+                takeRecording.signal(2)
         }
     }
 }
