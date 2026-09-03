@@ -38,6 +38,8 @@ in
 
     systemd.tmpfiles.rules = themeRules ++ [
         "d ${userHome}/.config/quickshell 0755 ${userName} users -"
+        "L+ ${userHome}/.config/quickshell/Background.qml - - - - ${config}/Background.qml"
+        "L+ ${userHome}/.config/quickshell/ScreenPicker.qml - - - - ${config}/ScreenPicker.qml"
         "L+ ${userHome}/.config/quickshell/shell.qml - - - - ${config}/shell.qml"
         "L+ ${userHome}/.config/quickshell/Theme.qml - - - - ${config}/Theme.qml"
         "L+ ${userHome}/.config/quickshell/Wallpaper.qml - - - - ${config}/Wallpaper.qml"
@@ -52,8 +54,10 @@ in
         after = [ "graphical-session.target" ];
         unitConfig.ConditionUser = userName;
         path = [
+            pkgs.grim
             pkgs.imagemagick
             pkgs.lutgen
+            pkgs.wl-clipboard
         ];
         serviceConfig = {
             ExecStart = lib.getExe quickshell;

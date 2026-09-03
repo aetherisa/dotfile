@@ -4,16 +4,21 @@ import Quickshell
 ShellRoot {
     id: root
 
+    Wallpaper {
+        screen: Quickshell.screens[0]
+    }
+
+    ScreenPicker {
+        screen: Quickshell.screens[0]
+    }
+
     Variants {
-        model: Quickshell.screens
+        model: [...Quickshell.screens].slice(1)
 
-        Scope {
-            id: shell
-
+        Background {
             required property ShellScreen modelData
-            readonly property ShellScreen mointor: modelData
 
-            Wallpaper {}
+            screen: modelData
         }
     }
 }
