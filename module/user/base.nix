@@ -18,6 +18,11 @@ let
     themeRelative = lib.removePrefix "${userHome}/" themeRoot;
 in
 {
+    nix.registry.dot.to = {
+        type = "path";
+        path = "${userHome}/dotfile";
+    };
+
     environment.etc."dotfile/theme/${userName}.json".text = builtins.toJSON {
         default = metadata."theme.default";
         root = themeRoot;
