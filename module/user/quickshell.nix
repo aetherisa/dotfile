@@ -55,6 +55,7 @@ in
         unitConfig.ConditionUser = userName;
         restartTriggers = [ config ];
         path = [
+            pkgs.bash
             pkgs.grim
             pkgs.imagemagick
             pkgs.lutgen

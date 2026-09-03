@@ -164,11 +164,9 @@ PanelWindow {
         id: clipboardScreenshot
 
         command: [
-            "/bin/sh",
+            "sh",
             "-c",
-            "grim -g \"$1\" - | wl-copy --type image/png",
-            "screen-picker",
-            root.captureGeometry
+            "grim -g '" + root.captureGeometry + "' - | wl-copy --type image/png",
         ]
     }
 
