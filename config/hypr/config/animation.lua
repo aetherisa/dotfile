@@ -36,7 +36,7 @@ hl.animation({
 	enabled = true,
 	speed = 2.0,
 	bezier = "linear",
-	style = "slidefade"
+	style = "fade"
 })
 
 hl.animation({
