@@ -18,11 +18,6 @@ return function()
 			inlay_hints = true,
 			format_on_save = false,
 		},
-
-		qmlls = {
-			inlay_hints = false,
-			format_on_save = true,
-		},
 	}
 
 	-- activate the server definitions supplied by nvim-lspconfig

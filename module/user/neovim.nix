@@ -47,7 +47,6 @@ let
             markdown
             markdown_inline
             nix
-            qmljs
             query
             rust
             toml
@@ -92,7 +91,6 @@ in
 {
     users.users.${userName}.packages = with pkgs; [
         clang-tools
-        kdePackages.qtdeclarative
         neovide
         neovimPackage
         ripgrep
