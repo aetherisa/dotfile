@@ -60,6 +60,7 @@ in
             pkgs.imagemagick
             pkgs.lutgen
             pkgs.wl-clipboard
+            pkgs.wf-recorder
         ];
         serviceConfig = {
             ExecStart = lib.getExe quickshell;
