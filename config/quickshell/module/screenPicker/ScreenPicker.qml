@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
+import "../../global"
 
 Scope {
     id: root
@@ -16,6 +17,16 @@ Scope {
     property string path: ""
     property bool shouldRecord: false
     property bool shouldCopyToClipboard: false
+
+    readonly property color selectionColor: Theme.withAlpha(
+        Theme[root.shouldRecord
+            ? Config.screenPicker.recording
+            : Config.screenPicker.screenshot],
+        Config.screenPicker.alpha)
+
+    readonly property color recordingActiveColor: Theme.withAlpha(
+        Theme[Config.screenPicker.recordingActive],
+        Config.screenPicker.alpha)
 
     function reset(): void {
         root.startX = 0
@@ -68,7 +79,7 @@ Scope {
             y: 0
             width: parent.width
             height: selection.y
-            color: "#66000000"
+            color: root.selectionColor
         }
 
         Rectangle {
@@ -76,7 +87,7 @@ Scope {
             y: selection.y + selection.height
             width: parent.width
             height: parent.height - y
-            color: "#66000000"
+            color: root.selectionColor
         }
 
         Rectangle {
@@ -84,7 +95,7 @@ Scope {
             y: selection.y
             width: selection.x
             height: selection.height
-            color: "#66000000"
+            color: root.selectionColor
         }
 
         Rectangle {
@@ -92,7 +103,7 @@ Scope {
             y: selection.y
             width: parent.width - x
             height: selection.height
-            color: "#66000000"
+            color: root.selectionColor
         }
 
         Rectangle {
@@ -135,14 +146,14 @@ Scope {
 
         Shortcut {
             sequence: "Escape"
-            onActivated: picker.visible = false
+            onActivated: IpcManager.dismissPicker()
         }
 
         Shortcut {
             sequence: "Return"
             enabled: selection.width >= 10 && selection.height >= 5
             onActivated: {
-                picker.visible = false
+                IpcManager.dismissPicker()
                 root.shouldCopyToClipboard = false
                 if (!root.shouldRecord) {
                     root.path = root.newScreenshotPath()
@@ -158,7 +169,7 @@ Scope {
             sequence: "Ctrl+C"
             enabled: selection.width >= 10 && selection.height >= 5
             onActivated: {
-                picker.visible = false
+                IpcManager.dismissPicker()
                 root.shouldCopyToClipboard = true
                 if (!root.shouldRecord) {
                     root.path = root.newScreenshotPath()
@@ -193,7 +204,7 @@ Scope {
             y: 0
             width: parent.width
             height: selection.y
-            color: Theme.withAlpha(Theme.base0B, "66")
+            color: root.recordingActiveColor
         }
 
         Rectangle {
@@ -201,7 +212,7 @@ Scope {
             y: selection.y + selection.height
             width: parent.width
             height: parent.height - y
-            color: Theme.withAlpha(Theme.base0B, "66")
+            color: root.recordingActiveColor
         }
 
         Rectangle {
@@ -209,7 +220,7 @@ Scope {
             y: selection.y
             width: selection.x
             height: selection.height
-            color: Theme.withAlpha(Theme.base0B, "66")
+            color: root.recordingActiveColor
         }
 
         Rectangle {
@@ -217,7 +228,7 @@ Scope {
             y: selection.y
             width: parent.width - x
             height: selection.height
-            color: Theme.withAlpha(Theme.base0B, "66")
+            color: root.recordingActiveColor
         }
     }
 
@@ -276,10 +287,10 @@ Scope {
         ]
     }
 
-    IpcHandler {
-        target: "picker"
+    Connections {
+        target: IpcManager
 
-        function start(): void {
+        function onPickerStartRequested(): void {
             if (
                 takeRecording.running
                 || takeScreenshot.running
@@ -296,9 +307,13 @@ Scope {
             picker.visible = true
         }
 
-        function stop(): void {
+        function onPickerStopRequested(): void {
             if (takeRecording.running)
                 takeRecording.signal(2)
+            picker.visible = false
+        }
+
+        function onPickerDismissRequested(): void {
             picker.visible = false
         }
     }

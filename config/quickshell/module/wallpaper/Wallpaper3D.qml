@@ -4,6 +4,7 @@ import QtQuick3D.AssetUtils
 import QtQuick3D.Helpers
 import Quickshell
 import Quickshell.Wayland
+import "../../global"
 
 PanelWindow {
     anchors {
@@ -13,7 +14,7 @@ PanelWindow {
         bottom: true
     }
 
-    color: Theme.base00
+    color: Theme[Config.wallpaper.background]
     WlrLayershell.layer: WlrLayer.Bottom
     exclusionMode: ExclusionMode.Ignore
 
@@ -24,7 +25,7 @@ PanelWindow {
 
         environment: ExtendedSceneEnvironment {
             backgroundMode: SceneEnvironment.Color
-            clearColor: Theme.base01
+            clearColor: Theme[Config.wallpaper.background]
 
             lutEnabled: true
             lutSize: 16
@@ -73,7 +74,7 @@ PanelWindow {
 
         RuntimeLoader {
             id: nixosIcon
-            source: Qt.resolvedUrl("assets/nixos_3d_icon.glb")
+            source: Qt.resolvedUrl("../../assets/nixos_3d_icon.glb")
         }
 
         Model {
@@ -82,7 +83,7 @@ PanelWindow {
             position: Qt.vector3d(0, 0, -50)
             scale: Qt.vector3d(10, 10, 10)
             materials: PrincipledMaterial {
-                baseColor: Theme.base00
+                baseColor: Theme[Config.wallpaper.background]
                 roughness: 1.0
             }
         }

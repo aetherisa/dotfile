@@ -1,21 +1,19 @@
 import QtQuick
 import Quickshell
+import "global"
+import "screen"
 
 ShellRoot {
-    id: root
+    Component.onCompleted: IpcManager.initialize()
 
-    Wallpaper {
-        screen: Quickshell.screens[0]
-    }
-
-    ScreenPicker {
-        screen: Quickshell.screens[0]
+    PrimaryScreen {
+        screen: Config.primaryScreen
     }
 
     Variants {
-        model: [...Quickshell.screens].slice(1)
+        model: Config.secondaryScreens
 
-        Background {
+        SecondaryScreen {
             required property ShellScreen modelData
 
             screen: modelData

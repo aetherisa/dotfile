@@ -38,11 +38,11 @@ in
 
     systemd.tmpfiles.rules = themeRules ++ [
         "d ${userHome}/.config/quickshell 0755 ${userName} users -"
-        "L+ ${userHome}/.config/quickshell/Background.qml - - - - ${config}/Background.qml"
-        "L+ ${userHome}/.config/quickshell/ScreenPicker.qml - - - - ${config}/ScreenPicker.qml"
         "L+ ${userHome}/.config/quickshell/shell.qml - - - - ${config}/shell.qml"
-        "L+ ${userHome}/.config/quickshell/Theme.qml - - - - ${config}/Theme.qml"
-        "L+ ${userHome}/.config/quickshell/Wallpaper.qml - - - - ${config}/Wallpaper.qml"
+        "L+ ${userHome}/.config/quickshell/config.json - - - - ${config}/config.json"
+        "L+ ${userHome}/.config/quickshell/global - - - - ${config}/global"
+        "L+ ${userHome}/.config/quickshell/module - - - - ${config}/module"
+        "L+ ${userHome}/.config/quickshell/screen - - - - ${config}/screen"
         "L+ ${userHome}/.config/quickshell/assets - - - - ${config}/assets"
         "L+ ${userHome}/.config/quickshell/theme.json - - - - ${themeRoot}/active/quickshell"
     ];

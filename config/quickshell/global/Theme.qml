@@ -46,7 +46,7 @@ Singleton {
     FileView {
         id: themeFile
 
-        path: Qt.resolvedUrl("theme.json")
+        path: Qt.resolvedUrl("../theme.json")
         watchChanges: true
 
         onFileChanged: reload()
@@ -80,10 +80,10 @@ Singleton {
         }
     }
 
-    IpcHandler {
-        target: "theme"
+    Connections {
+        target: IpcManager
 
-        function reload(): void {
+        function onThemeReloadRequested(): void {
             themeFile.reload()
         }
     }
@@ -96,7 +96,7 @@ Singleton {
             "apply",
             "-P",
             "-o", root._rawLutPath,
-            Qt.resolvedUrl("assets/identity.png").toString().replace("file://", ""),
+            Qt.resolvedUrl("../assets/identity.png").toString().replace("file://", ""),
             "--",
             root.base00,
             root.base01,

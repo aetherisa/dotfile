@@ -1,0 +1,12 @@
+{
+    "primaryScreen": "auto",
+    "screenPicker": {
+        "screenshot": "base0B",
+        "recording": "base08",
+        "recordingActive": "base00",
+        "alpha": "66"
+    },
+    "wallpaper": {
+        "background": "base00"
+    }
+}
