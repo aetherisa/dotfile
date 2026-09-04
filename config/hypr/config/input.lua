@@ -12,6 +12,7 @@ hl.config({
 		-- detach mouse focus from keyboard
 		-- click window to switch keyboard focus
 		follow_mouse = 2,
+        special_fallthrough = true,
 
         touchpad = {
 			-- scroll up -> scroll down
