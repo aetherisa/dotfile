@@ -20,6 +20,9 @@ let
         XDG_VIDEOS_DIR="$HOME/"
         XDG_PROJECTS_DIR="$HOME/"
     '';
+    userDirsControl = pkgs.writeText "user-dirs.conf" ''
+        enabled=False
+    '';
     environmentConfig = pkgs.writeText "10-xdg.conf" ''
         XDG_CONFIG_HOME=${userHome}/.config
         XDG_DATA_HOME=${userHome}/.local/share
@@ -33,6 +36,9 @@ in
     ];
 
     systemd.tmpfiles.rules = [
+        "d ${userHome}/downloads 0755 ${userName} users -"
+        "d ${userHome}/pictures 0755 ${userName} users -"
+        "L+ ${userHome}/.config/user-dirs.conf - - - - ${userDirsControl}"
         "L+ ${userHome}/.config/user-dirs.dirs - - - - ${userDirsConfig}"
         "L+ ${userHome}/.config/environment.d/10-xdg.conf - - - - ${environmentConfig}"
     ];
