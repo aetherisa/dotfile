@@ -12,6 +12,10 @@ ShellRoot {
         screen: Quickshell.screens[0]
     }
 
+    StatusBar {
+        screen: Quickshell.screens[0]
+    }
+
     Variants {
         model: [...Quickshell.screens].slice(1)
 
