@@ -11,6 +11,7 @@ Scope {
 
     readonly property int width: 48
     readonly property int radius: 10
+    readonly property int padding: 8
 
     PanelWindow {
         screen: root.screen
@@ -92,14 +93,19 @@ Scope {
         ColumnLayout {
             id: components
 
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
+            x: root.padding
+            y: root.padding
+            width: root.width - root.padding * 2
+            height: overlay.height - root.padding * 2
+            spacing: 0
+
+            Workspace {
+                Layout.fillWidth: true
             }
 
-            width: root.width
-            spacing: 0
+            Item {
+                Layout.fillHeight: true
+            }
         }
     }
 }

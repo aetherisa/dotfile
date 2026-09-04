@@ -41,6 +41,7 @@ in
         "L+ ${userHome}/.config/quickshell/Background.qml - - - - ${config}/Background.qml"
         "L+ ${userHome}/.config/quickshell/ScreenPicker.qml - - - - ${config}/ScreenPicker.qml"
         "L+ ${userHome}/.config/quickshell/StatusBar.qml - - - - ${config}/StatusBar.qml"
+        "L+ ${userHome}/.config/quickshell/Workspace.qml - - - - ${config}/Workspace.qml"
         "L+ ${userHome}/.config/quickshell/shell.qml - - - - ${config}/shell.qml"
         "L+ ${userHome}/.config/quickshell/Theme.qml - - - - ${config}/Theme.qml"
         "L+ ${userHome}/.config/quickshell/Wallpaper.qml - - - - ${config}/Wallpaper.qml"
