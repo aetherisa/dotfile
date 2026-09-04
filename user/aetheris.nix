@@ -21,6 +21,7 @@ let
         "git"
         "gtk"
         "hyprland"
+        "mpv"
         "neovim"
         "pipewire"
         "ssh"
