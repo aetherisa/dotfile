@@ -8,6 +8,7 @@ Singleton {
     id: root
 
     readonly property alias screenPicker: adapter.screenPicker
+    readonly property alias statusbar: adapter.statusbar
     readonly property alias wallpaper: adapter.wallpaper
 
     readonly property ShellScreen primaryScreen: {
@@ -56,6 +57,14 @@ Singleton {
                 property string recording: "base08"
                 property string recordingActive: "base00"
                 property string alpha: "66"
+            }
+            property JsonObject statusbar: JsonObject {
+                property int width: 10
+                property string color: "base00"
+                property JsonObject border: JsonObject {
+                    property int width: 3
+                    property string color: "base02"
+                }
             }
             property JsonObject wallpaper: JsonObject {
                 property string background: "base00"

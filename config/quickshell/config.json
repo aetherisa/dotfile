@@ -6,6 +6,14 @@
         "recordingActive": "base00",
         "alpha": "66"
     },
+    "statusbar": {
+        "width": 10,
+        "color": "base00",
+        "border": {
+            "width": 3,
+            "color": "base02"
+        }
+    },
     "wallpaper": {
         "background": "base00"
     }
