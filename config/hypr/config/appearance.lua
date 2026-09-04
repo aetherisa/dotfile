@@ -1,10 +1,18 @@
 ------------------------
 -- hyprland appearance
 ------------------------
+local theme = require("theme")
+
 hl.config({
 	general = {
 		-- no border
-		border_size = 0,
+		border_size = 3,
+        col = {
+            active_border = theme.base02,
+            inactive_border = theme.base02,
+            nogroup_border = theme.base02,
+            nogroup_border_active = theme.base02,
+        },
 
 		-- same gaps between window and mointor edge
 		gaps_in = 5,
@@ -31,7 +39,7 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 10,
+		rounding = 0,
 
 		-- helps concentration
 		active_opacity = 0.9,
@@ -44,9 +52,9 @@ hl.config({
 		},
 
 		shadow = {
-			enabled = true,
-            color = "0xff1a1a1a",
-            range = 5,
+			enabled = false,
+            -- color = "0xff1a1a1a",
+            -- range = 5,
 		},
 	},
 
