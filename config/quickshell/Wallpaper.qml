@@ -14,8 +14,8 @@ PanelWindow {
     }
 
     color: Theme.base00
-    exclusiveZone: 0
     WlrLayershell.layer: WlrLayer.Bottom
+    exclusionMode: ExclusionMode.Ignore
 
     View3D {
         id: root
@@ -54,6 +54,20 @@ PanelWindow {
 
                 fieldOfView: 45
                 z: 20
+            }
+
+            Behavior on pitch {
+                NumberAnimation {
+                    duration: 400
+                    easing.type: Easing.OutCubic
+                }
+            }
+
+            Behavior on yaw {
+                NumberAnimation {
+                    duration: 400
+                    easing.type: Easing.OutCubic
+                }
             }
         }
 
