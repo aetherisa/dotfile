@@ -20,6 +20,12 @@ PanelWindow {
 
     View3D {
         id: root
+
+        readonly property bool interactive:
+            pointer.containsMouse
+            && Workspace.focusedIsEmpty
+            && !Workspace.specialVisible
+
         anchors.fill: parent
         camera: camera
 
@@ -45,8 +51,10 @@ PanelWindow {
         Node {
             id: cameraRig
 
-            property real pitch: -pointer.normalizedY * 3
-            property real yaw: pointer.normalizedX * 4
+            property real pitch:
+                root.interactive ? -pointer.normalizedY * 3 : 0
+            property real yaw:
+                root.interactive ? pointer.normalizedX * 4 : 0
 
             eulerRotation: Qt.vector3d(pitch, yaw, 0)
 
