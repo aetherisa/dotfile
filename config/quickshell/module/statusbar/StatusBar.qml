@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import "../../global"
@@ -22,9 +23,14 @@ Scope {
 
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
-        mask: Region {}
         WlrLayershell.layer: WlrLayer.Top
-        WlrLayershell.namespace: "qs-trivial-statusbar"
+        WlrLayershell.namespace: "qs-statusbar"
+        mask: Region {
+            x: components.x
+            y: components.y
+            width: components.width
+            height: components.height
+        }
 
         Shape {
             anchors.fill: parent
@@ -66,16 +72,52 @@ Scope {
                 }
                 PathLine {
                     x: frame.width - Config.statusbar.padding
-                    y: frame.height - Config.statusbar.padding
+                    y: frame.height
+                        - Config.statusbar.padding * 2
+                        - Config.statusbar.height
                 }
                 PathLine {
                     x: Config.statusbar.padding
-                    y: frame.height - Config.statusbar.padding
+                    y: frame.height
+                        - Config.statusbar.padding * 2
+                        - Config.statusbar.height
                 }
                 PathLine {
                     x: Config.statusbar.padding
                     y: Config.statusbar.padding
                 }
+            }
+        }
+
+        RowLayout {
+            id: components
+
+            x: Config.statusbar.padding
+            y: frame.height
+                - Config.statusbar.padding
+                - Config.statusbar.height
+            width: frame.width - Config.statusbar.padding * 2
+            height: Config.statusbar.height
+            spacing: Config.statusbar.padding
+
+            ComponentNetwork {
+                Layout.fillHeight: true
+            }
+
+            ComponentBacklight {
+                Layout.fillHeight: true
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            ComponentTime {
+                Layout.fillHeight: true
+            }
+
+            ComponentDate {
+                Layout.fillHeight: true
             }
         }
     }
@@ -103,7 +145,9 @@ Scope {
             bottom: true
         }
 
-        implicitHeight: Config.statusbar.padding
+        implicitHeight:
+            Config.statusbar.padding * 2
+            + Config.statusbar.height
         color: "transparent"
         exclusiveZone: implicitHeight
         mask: Region {}

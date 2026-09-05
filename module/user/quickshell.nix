@@ -3,8 +3,11 @@ assert builtins.hasAttr "user.name" metadata;
 assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "theme.list" metadata;
 assert builtins.hasAttr "theme.root" metadata;
+assert builtins.hasAttr "brightness.device" metadata;
+assert builtins.hasAttr "user.modules.brightnessctl" metadata;
 assert builtins.hasAttr "user.modules.quickshell" metadata;
 {
+    config,
     dotlib,
     lib,
     pkgs,
@@ -14,7 +17,7 @@ let
     userName = metadata."user.name";
     userHome = metadata."user.home";
     themeRoot = metadata."theme.root";
-    config = ../../config/quickshell;
+    quickshellConfig = ../../config/quickshell;
 
     quickshell = pkgs.quickshell.overrideAttrs (old: {
         buildInputs = (old.buildInputs or [ ]) ++ [
@@ -38,12 +41,12 @@ in
 
     systemd.tmpfiles.rules = themeRules ++ [
         "d ${userHome}/.config/quickshell 0755 ${userName} users -"
-        "L+ ${userHome}/.config/quickshell/shell.qml - - - - ${config}/shell.qml"
-        "L+ ${userHome}/.config/quickshell/config.json - - - - ${config}/config.json"
-        "L+ ${userHome}/.config/quickshell/global - - - - ${config}/global"
-        "L+ ${userHome}/.config/quickshell/module - - - - ${config}/module"
-        "L+ ${userHome}/.config/quickshell/screen - - - - ${config}/screen"
-        "L+ ${userHome}/.config/quickshell/assets - - - - ${config}/assets"
+        "L+ ${userHome}/.config/quickshell/shell.qml - - - - ${quickshellConfig}/shell.qml"
+        "L+ ${userHome}/.config/quickshell/config.json - - - - ${quickshellConfig}/config.json"
+        "L+ ${userHome}/.config/quickshell/global - - - - ${quickshellConfig}/global"
+        "L+ ${userHome}/.config/quickshell/module - - - - ${quickshellConfig}/module"
+        "L+ ${userHome}/.config/quickshell/screen - - - - ${quickshellConfig}/screen"
+        "L+ ${userHome}/.config/quickshell/assets - - - - ${quickshellConfig}/assets"
         "L+ ${userHome}/.config/quickshell/theme.json - - - - ${themeRoot}/active/quickshell"
     ];
 
@@ -53,8 +56,8 @@ in
         partOf = [ "graphical-session.target" ];
         after = [ "graphical-session.target" ];
         unitConfig.ConditionUser = userName;
-        restartTriggers = [ config ];
-        path = [
+        restartTriggers = [ quickshellConfig ];
+        path = config.users.users.${userName}.packages ++ [
             pkgs.bash
             pkgs.grim
             pkgs.imagemagick

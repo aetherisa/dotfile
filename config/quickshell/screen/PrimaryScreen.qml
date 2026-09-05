@@ -16,7 +16,7 @@ Scope {
         screen: root.screen
     }
 
-    StatusBarTrivial {
+    StatusBar {
         screen: root.screen
     }
 }

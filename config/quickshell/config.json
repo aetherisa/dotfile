@@ -7,8 +7,13 @@
         "alpha": "66"
     },
     "statusbar": {
-        "width": 10,
+        "height": 20,
+        "padding": 10,
         "color": "base00",
+        "component": {
+            "tagColor": "base08",
+            "contentColor": "base02"
+        },
         "border": {
             "width": 3,
             "color": "base02"

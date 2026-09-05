@@ -59,8 +59,13 @@ Singleton {
                 property string alpha: "66"
             }
             property JsonObject statusbar: JsonObject {
-                property int width: 10
+                property int height: 20
+                property int padding: 10
                 property string color: "base00"
+                property JsonObject component: JsonObject {
+                    property string tagColor: "base08"
+                    property string contentColor: "base02"
+                }
                 property JsonObject border: JsonObject {
                     property int width: 3
                     property string color: "base02"
