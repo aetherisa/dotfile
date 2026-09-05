@@ -6,6 +6,7 @@ let
     metadata = {
         "host.name" = "zen";
         "boot.espMountPoint" = "/boot";
+        "brightness.device" = "amdgpu_bl2";
         "persistence.enable" = true;
         "persistence.systemRoot" = "/pin/sys";
         "persistence.userRoot" = "/pin/user";

@@ -4,6 +4,7 @@ assert builtins.hasAttr "user.home" metadata;
 assert builtins.hasAttr "theme.list" metadata;
 assert builtins.hasAttr "theme.root" metadata;
 assert builtins.hasAttr "user.modules.hyprland" metadata;
+assert builtins.hasAttr "user.modules.brightnessctl" metadata;
 assert builtins.hasAttr "user.modules.ghostty" metadata;
 assert builtins.hasAttr "user.modules.pipewire" metadata;
 assert builtins.hasAttr "user.modules.zen-browser" metadata;
@@ -36,10 +37,6 @@ in
 
     xdg.portal.extraPortals = [
         pkgs.xdg-desktop-portal-gtk
-    ];
-
-    users.users.${userName}.packages = [
-        pkgs.brightnessctl
     ];
 
     systemd.tmpfiles.rules = themeRules ++ [
