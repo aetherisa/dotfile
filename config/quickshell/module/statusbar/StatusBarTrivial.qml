@@ -35,13 +35,25 @@ Scope {
                 strokeWidth: Config.statusbar.border.width
                 fillRule: ShapePath.OddEvenFill
 
-                startX: 0
-                startY: 0
+                startX: -Config.statusbar.border.width
+                startY: -Config.statusbar.border.width
 
-                PathLine { x: frame.width; y: 0 }
-                PathLine { x: frame.width; y: frame.height }
-                PathLine { x: 0; y: frame.height }
-                PathLine { x: 0; y: 0 }
+                PathLine {
+                    x: frame.width + Config.statusbar.border.width
+                    y: -Config.statusbar.border.width
+                }
+                PathLine {
+                    x: frame.width + Config.statusbar.border.width
+                    y: frame.height + Config.statusbar.border.width
+                }
+                PathLine {
+                    x: -Config.statusbar.border.width
+                    y: frame.height + Config.statusbar.border.width
+                }
+                PathLine {
+                    x: -Config.statusbar.border.width
+                    y: -Config.statusbar.border.width
+                }
 
                 PathMove {
                     x: Config.statusbar.width
