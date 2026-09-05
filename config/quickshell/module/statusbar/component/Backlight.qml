@@ -1,10 +1,8 @@
 import QtQuick
-import "../../global"
+import qs.global
 
 Row {
     id: root
-
-    property date currentDate: new Date()
 
     height: Config.statusbar.height
     spacing: 0
@@ -18,7 +16,7 @@ Row {
             id: tagText
 
             anchors.centerIn: parent
-            text: "DAT"
+            text: "LGT"
             color: Theme.base00
             font.family: "monospace"
             font.bold: true
@@ -35,18 +33,11 @@ Row {
             id: contentText
 
             anchors.centerIn: parent
-            text: Qt.formatDateTime(root.currentDate, "MM-dd")
+            text: Backlight.available ? Backlight.percentage + "%" : "--"
             color: Theme.base05
-            font.bold: true
             font.family: "monospace"
+            font.bold: true
             font.pixelSize: 12
         }
-    }
-
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: root.currentDate = new Date()
     }
 }

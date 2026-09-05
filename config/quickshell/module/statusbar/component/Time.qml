@@ -1,5 +1,5 @@
 import QtQuick
-import "../../global"
+import qs.global
 
 Row {
     id: root

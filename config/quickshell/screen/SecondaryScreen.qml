@@ -1,7 +1,7 @@
 import Quickshell
-import "../module/screenPicker"
-import "../module/wallpaper"
-import "../module/statusbar"
+import qs.module.screenPicker
+import qs.module.wallpaper
+import qs.module.statusbar
 
 Scope {
     id: root

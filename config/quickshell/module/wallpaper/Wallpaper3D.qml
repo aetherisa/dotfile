@@ -4,7 +4,7 @@ import QtQuick3D.AssetUtils
 import QtQuick3D.Helpers
 import Quickshell
 import Quickshell.Wayland
-import "../../global"
+import qs.global
 
 PanelWindow {
     anchors {

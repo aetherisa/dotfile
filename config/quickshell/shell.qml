@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
-import "global"
-import "screen"
+import qs.global
+import qs.screen
 
 ShellRoot {
     Component.onCompleted: IpcManager.initialize()

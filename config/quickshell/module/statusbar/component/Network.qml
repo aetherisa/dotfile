@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Networking
-import "../../global"
+import qs.global
 
 Row {
     id: root

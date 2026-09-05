@@ -3,7 +3,8 @@ import QtQuick.Shapes
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
-import "../../global"
+import qs.global
+import qs.module.statusbar.component as Component
 
 Scope {
     id: root
@@ -100,11 +101,11 @@ Scope {
             height: Config.statusbar.height
             spacing: Config.statusbar.padding
 
-            ComponentNetwork {
+            Component.Network {
                 Layout.fillHeight: true
             }
 
-            ComponentBacklight {
+            Component.Backlight {
                 Layout.fillHeight: true
             }
 
@@ -112,11 +113,11 @@ Scope {
                 Layout.fillWidth: true
             }
 
-            ComponentTime {
+            Component.Time {
                 Layout.fillHeight: true
             }
 
-            ComponentDate {
+            Component.Day {
                 Layout.fillHeight: true
             }
         }

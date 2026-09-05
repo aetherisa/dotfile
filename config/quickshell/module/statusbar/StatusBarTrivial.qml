@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
-import "../../global"
+import qs.global
 
 Scope {
     id: root
