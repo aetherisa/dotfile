@@ -7,7 +7,7 @@ Item {
 
     readonly property date currentTime: systemClock.date
 
-    implicitHeight: Config.statusbar.popup.unit * 61 / 8
+    implicitHeight: Config.unit * 61 / 8
     implicitWidth: implicitHeight
 
     SystemClock {
@@ -17,18 +17,18 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Theme.base01
+        color: Theme[Config.colors.surface]
     }
 
     Rectangle {
         id: face
 
         anchors.fill: parent
-        anchors.margins: Config.statusbar.padding
+        anchors.margins: Config.padding
         radius: width / 2
-        color: Theme.base01
-        border.width: Config.statusbar.border.width
-        border.color: Theme[Config.statusbar.border.color]
+        color: Theme[Config.colors.surface]
+        border.width: Config.borderWidth
+        border.color: Theme[Config.colors.border]
 
         Repeater {
             model: 60
@@ -43,12 +43,12 @@ Item {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                         top: parent.top
-                        topMargin: Config.statusbar.padding
+                        topMargin: Config.padding
                     }
                     width: index % 5 === 0 ? 2 : 1
                     height: index % 5 === 0 ? 8 : 4
                     radius: width / 2
-                    color: index % 5 === 0 ? Theme.base05 : Theme.base03
+                    color: index % 5 === 0 ? Theme[Config.colors.foreground] : Theme[Config.colors.muted]
                 }
             }
         }
@@ -57,7 +57,7 @@ Item {
             width: 4
             height: face.height * 0.23
             radius: width / 2
-            color: Theme.base05
+            color: Theme[Config.colors.foreground]
             x: (face.width - width) / 2
             y: face.height / 2 - height
             transformOrigin: Item.Bottom
@@ -69,7 +69,7 @@ Item {
             width: 3
             height: face.height * 0.34
             radius: width / 2
-            color: Theme.base05
+            color: Theme[Config.colors.foreground]
             x: (face.width - width) / 2
             y: face.height / 2 - height
             transformOrigin: Item.Bottom
@@ -80,7 +80,7 @@ Item {
         Rectangle {
             width: 1
             height: face.height * 0.39
-            color: Theme[Config.statusbar.popup.color]
+            color: Theme[Config.colors.accent]
             x: (face.width - width) / 2
             y: face.height / 2 - height
             transformOrigin: Item.Bottom
@@ -92,7 +92,7 @@ Item {
             width: 8
             height: 8
             radius: 4
-            color: Theme[Config.statusbar.popup.color]
+            color: Theme[Config.colors.accent]
         }
     }
 }

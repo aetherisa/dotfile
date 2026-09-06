@@ -25,7 +25,7 @@ Item {
             implicitWidth: tagText.implicitWidth + 12
             height: root.height
             color: Global.Theme[
-                Global.Config.statusbar.component.tagColor
+                Global.Config.colors.danger
             ]
 
             Text {
@@ -33,10 +33,10 @@ Item {
 
                 anchors.centerIn: parent
                 text: "BAT"
-                color: Global.Theme.base00
+                color: Global.Theme[Global.Config.colors.background]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
         }
 
@@ -44,7 +44,7 @@ Item {
             implicitWidth: contentText.implicitWidth + 12
             height: root.height
             color: Global.Theme[
-                Global.Config.statusbar.component.contentColor
+                Global.Config.colors.surfaceAlt
             ]
 
             Text {
@@ -52,10 +52,10 @@ Item {
 
                 anchors.centerIn: parent
                 text: root.content
-                color: Global.Theme.base05
+                color: Global.Theme[Global.Config.colors.foreground]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
         }
     }

@@ -10,12 +10,12 @@ Scope {
 
     required property ShellScreen screen
 
-    readonly property int unit: Config.statusbar.popup.unit
-    readonly property int padding: Config.statusbar.padding
+    readonly property int unit: Config.unit
+    readonly property int padding: Config.padding
     readonly property int rowHeight: root.unit
-    readonly property int maximumVisibleRows: 5
-    readonly property real frameTop: Config.statusbar.padding
-    readonly property real launcherWidth: root.unit * 16
+    readonly property int maximumVisibleRows: Config.launcher.maximumRows
+    readonly property real frameTop: Config.padding
+    readonly property real launcherWidth: root.unit * Config.launcher.width
     readonly property real collapsedHeight: root.rowHeight + root.padding * 2
     readonly property var applications: {
         const query = searchInput.text.trim().toLowerCase()
@@ -216,17 +216,17 @@ Scope {
             anchors.fill: parent
 
             ShapePath {
-                fillColor: Theme[Config.statusbar.color]
+                fillColor: Theme[Config.colors.background]
                 strokeWidth: -1
 
                 startX: launcherShape.popupLeft
                 startY: launcherShape.popupTop
-                    - Config.statusbar.border.width / 2
+                    - Config.borderWidth / 2
 
                 PathLine {
                     x: launcherShape.popupRight
                     y: launcherShape.popupTop
-                        - Config.statusbar.border.width / 2
+                        - Config.borderWidth / 2
                 }
                 PathLine {
                     x: launcherShape.popupRight
@@ -239,14 +239,14 @@ Scope {
                 PathLine {
                     x: launcherShape.popupLeft
                     y: launcherShape.popupTop
-                        - Config.statusbar.border.width / 2
+                        - Config.borderWidth / 2
                 }
             }
 
             ShapePath {
                 fillColor: "transparent"
-                strokeColor: Theme[Config.statusbar.border.color]
-                strokeWidth: Config.statusbar.border.width
+                strokeColor: Theme[Config.colors.border]
+                strokeWidth: Config.borderWidth
                 capStyle: ShapePath.FlatCap
 
                 startX: launcherShape.popupLeft
@@ -287,7 +287,7 @@ Scope {
                 y: root.padding
                 width: parent.width - root.padding * 2
                 height: root.rowHeight
-                color: Theme.base01
+                color: Theme[Config.colors.surface]
 
                 Item {
                     id: inputArea
@@ -302,10 +302,10 @@ Scope {
                         }
                         visible: searchInput.text.length === 0
                         text: "Search applications"
-                        color: Theme.base03
+                        color: Theme[Config.colors.muted]
                         font.family: "monospace"
                         font.bold: true
-                        font.pixelSize: Config.statusbar.fontSize
+                        font.pixelSize: Config.fontSize
                     }
 
                     TextInput {
@@ -317,12 +317,12 @@ Scope {
                             rightMargin: root.padding
                         }
                         verticalAlignment: TextInput.AlignVCenter
-                        color: Theme.base05
-                        selectionColor: Theme[Config.statusbar.popup.color]
-                        selectedTextColor: Theme.base00
+                        color: Theme[Config.colors.foreground]
+                        selectionColor: Theme[Config.colors.accent]
+                        selectedTextColor: Theme[Config.colors.background]
                         font.family: "monospace"
                         font.bold: true
-                        font.pixelSize: Config.statusbar.fontSize
+                        font.pixelSize: Config.fontSize
                         clip: true
 
                         onTextChanged: {
@@ -395,7 +395,7 @@ Scope {
                                 margins: root.padding / 4
                             }
                             color: applicationEntry.index === root.selectedIndex
-                                ? Theme[Config.statusbar.popup.color]
+                                ? Theme[Config.colors.accent]
                                 : "transparent"
 
                             Text {
@@ -408,11 +408,11 @@ Scope {
                                 text: applicationEntry.modelData.name
                                 elide: Text.ElideRight
                                 color: applicationEntry.index === root.selectedIndex
-                                    ? Theme.base00
-                                    : Theme.base05
+                                    ? Theme[Config.colors.background]
+                                    : Theme[Config.colors.foreground]
                                 font.family: "monospace"
                                 font.bold: true
-                                font.pixelSize: Config.statusbar.fontSize
+                                font.pixelSize: Config.fontSize
                             }
                         }
 

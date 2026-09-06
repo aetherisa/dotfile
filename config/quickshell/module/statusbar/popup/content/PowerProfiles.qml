@@ -4,24 +4,24 @@ import qs.global as Global
 Item {
     id: root
 
-    readonly property int unit: Global.Config.statusbar.popup.unit
+    readonly property int unit: Global.Config.unit
     readonly property int buttonWidth: unit * 2
     readonly property int profileCount: Global.Battery.profiles.length
 
     implicitWidth: buttonWidth * profileCount
-        + Global.Config.statusbar.padding * Math.max(0, profileCount - 1)
+        + Global.Config.padding * Math.max(0, profileCount - 1)
     implicitHeight: unit
 
     Rectangle {
         anchors.fill: parent
-        color: Global.Theme.base01
+        color: Global.Theme[Global.Config.colors.surface]
     }
 
     Row {
         id: profileRow
 
         height: parent.height
-        spacing: Global.Config.statusbar.padding
+        spacing: Global.Config.padding
 
         Repeater {
             model: Global.Battery.profiles
@@ -36,10 +36,10 @@ Item {
                 width: root.buttonWidth
                 height: profileRow.height
                 color: active
-                    ? Global.Theme.base05
+                    ? Global.Theme[Global.Config.colors.foreground]
                     : profileMouse.containsMouse
                         ? Global.Theme.base06
-                        : Global.Theme.base02
+                        : Global.Theme[Global.Config.colors.surfaceAlt]
 
                 Behavior on color {
                     ColorAnimation { duration: 120 }
@@ -52,11 +52,11 @@ Item {
                     text: Global.Battery.profileTag(profileButton.modelData)
                     color: profileButton.active
                         || profileMouse.containsMouse
-                        ? Global.Theme.base00
-                        : Global.Theme.base05
+                        ? Global.Theme[Global.Config.colors.background]
+                        : Global.Theme[Global.Config.colors.foreground]
                     font.family: "monospace"
                     font.bold: true
-                    font.pixelSize: Global.Config.statusbar.fontSize
+                    font.pixelSize: Global.Config.fontSize
                 }
 
                 MouseArea {

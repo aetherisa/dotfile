@@ -10,24 +10,24 @@ Row {
     Rectangle {
         implicitWidth: tagText.implicitWidth + 12
         height: root.height
-        color: Global.Theme[Global.Config.statusbar.component.tagColor]
+        color: Global.Theme[Global.Config.colors.danger]
 
         Text {
             id: tagText
 
             anchors.centerIn: parent
             text: "MEM"
-            color: Global.Theme.base00
+            color: Global.Theme[Global.Config.colors.background]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
     }
 
     Rectangle {
         implicitWidth: contentText.implicitWidth + 12
         height: root.height
-        color: Global.Theme[Global.Config.statusbar.component.contentColor]
+        color: Global.Theme[Global.Config.colors.surfaceAlt]
 
         Text {
             id: contentText
@@ -36,10 +36,10 @@ Row {
             text: Global.SystemStats.memoryPercentage < 0
                 ? "--"
                 : Global.SystemStats.memoryPercentage + "%"
-            color: Global.Theme.base05
+            color: Global.Theme[Global.Config.colors.foreground]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
     }
 }

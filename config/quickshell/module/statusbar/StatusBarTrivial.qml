@@ -30,51 +30,51 @@ Scope {
             anchors.fill: parent
 
             ShapePath {
-                fillColor: Theme[Config.statusbar.color]
-                strokeColor: Theme[Config.statusbar.border.color]
-                strokeWidth: Config.statusbar.border.width
+                fillColor: Theme[Config.colors.background]
+                strokeColor: Theme[Config.colors.border]
+                strokeWidth: Config.borderWidth
                 fillRule: ShapePath.OddEvenFill
 
-                startX: -Config.statusbar.border.width
-                startY: -Config.statusbar.border.width
+                startX: -Config.borderWidth
+                startY: -Config.borderWidth
 
                 PathLine {
-                    x: frame.width + Config.statusbar.border.width
-                    y: -Config.statusbar.border.width
+                    x: frame.width + Config.borderWidth
+                    y: -Config.borderWidth
                 }
                 PathLine {
-                    x: frame.width + Config.statusbar.border.width
-                    y: frame.height + Config.statusbar.border.width
+                    x: frame.width + Config.borderWidth
+                    y: frame.height + Config.borderWidth
                 }
                 PathLine {
-                    x: -Config.statusbar.border.width
-                    y: frame.height + Config.statusbar.border.width
+                    x: -Config.borderWidth
+                    y: frame.height + Config.borderWidth
                 }
                 PathLine {
-                    x: -Config.statusbar.border.width
-                    y: -Config.statusbar.border.width
+                    x: -Config.borderWidth
+                    y: -Config.borderWidth
                 }
 
                 PathMove {
-                    x: Config.statusbar.padding
-                    y: Config.statusbar.padding
+                    x: Config.padding
+                    y: Config.padding
                 }
 
                 PathLine {
-                    x: frame.width - Config.statusbar.padding
-                    y: Config.statusbar.padding
+                    x: frame.width - Config.padding
+                    y: Config.padding
                 }
                 PathLine {
-                    x: frame.width - Config.statusbar.padding
-                    y: frame.height - Config.statusbar.padding
+                    x: frame.width - Config.padding
+                    y: frame.height - Config.padding
                 }
                 PathLine {
-                    x: Config.statusbar.padding
-                    y: frame.height - Config.statusbar.padding
+                    x: Config.padding
+                    y: frame.height - Config.padding
                 }
                 PathLine {
-                    x: Config.statusbar.padding
-                    y: Config.statusbar.padding
+                    x: Config.padding
+                    y: Config.padding
                 }
             }
         }
@@ -88,7 +88,7 @@ Scope {
             top: true
         }
 
-        implicitHeight: Config.statusbar.padding
+        implicitHeight: Config.padding
         color: "transparent"
         exclusiveZone: implicitHeight
         mask: Region {}
@@ -103,7 +103,7 @@ Scope {
             bottom: true
         }
 
-        implicitHeight: Config.statusbar.padding
+        implicitHeight: Config.padding
         color: "transparent"
         exclusiveZone: implicitHeight
         mask: Region {}
@@ -118,7 +118,7 @@ Scope {
             bottom: true
         }
 
-        implicitWidth: Config.statusbar.padding
+        implicitWidth: Config.padding
         color: "transparent"
         exclusiveZone: implicitWidth
         mask: Region {}
@@ -133,7 +133,7 @@ Scope {
             bottom: true
         }
 
-        implicitWidth: Config.statusbar.padding
+        implicitWidth: Config.padding
         color: "transparent"
         exclusiveZone: implicitWidth
         mask: Region {}

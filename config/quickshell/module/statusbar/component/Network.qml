@@ -39,34 +39,34 @@ Item {
         Rectangle {
             implicitWidth: tagText.implicitWidth + 12
             height: root.height
-            color: Global.Theme[Global.Config.statusbar.component.tagColor]
+            color: Global.Theme[Global.Config.colors.danger]
 
             Text {
                 id: tagText
 
                 anchors.centerIn: parent
                 text: root.tag
-                color: Global.Theme.base00
+                color: Global.Theme[Global.Config.colors.background]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
         }
 
         Rectangle {
             implicitWidth: contentText.implicitWidth + 12
             height: root.height
-            color: Global.Theme[Global.Config.statusbar.component.contentColor]
+            color: Global.Theme[Global.Config.colors.surfaceAlt]
 
             Text {
                 id: contentText
 
                 anchors.centerIn: parent
                 text: root.content
-                color: Global.Theme.base05
+                color: Global.Theme[Global.Config.colors.foreground]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
         }
     }

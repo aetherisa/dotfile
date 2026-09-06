@@ -22,34 +22,34 @@ Item {
         Rectangle {
             implicitWidth: tagText.implicitWidth + 12
             height: root.height
-            color: Theme[Config.statusbar.component.tagColor]
+            color: Theme[Config.colors.danger]
 
             Text {
                 id: tagText
 
                 anchors.centerIn: parent
                 text: "TIM"
-                color: Theme.base00
+                color: Theme[Config.colors.background]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Config.statusbar.fontSize
+                font.pixelSize: Config.fontSize
             }
         }
 
         Rectangle {
             implicitWidth: contentText.implicitWidth + 12
             height: root.height
-            color: Theme[Config.statusbar.component.contentColor]
+            color: Theme[Config.colors.surfaceAlt]
 
             Text {
                 id: contentText
 
                 anchors.centerIn: parent
                 text: Qt.formatDateTime(root.currentTime, "HH:mm")
-                color: Theme.base05
+                color: Theme[Config.colors.foreground]
                 font.bold: true
                 font.family: "monospace"
-                font.pixelSize: Config.statusbar.fontSize
+                font.pixelSize: Config.fontSize
             }
         }
     }

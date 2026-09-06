@@ -5,7 +5,7 @@ import qs.global
 Item {
     id: root
 
-    readonly property int unit: Config.statusbar.popup.unit
+    readonly property int unit: Config.unit
     readonly property int rowHeight: unit
 
     implicitWidth: unit * 10
@@ -13,7 +13,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Theme.base01
+        color: Theme[Config.colors.surface]
     }
 
     ScriptModel {
@@ -27,10 +27,10 @@ Item {
         anchors.centerIn: parent
         visible: Audio.streams.length === 0
         text: "No playback streams"
-        color: Theme.base03
+        color: Theme[Config.colors.muted]
         font.family: "monospace"
         font.bold: true
-        font.pixelSize: Config.statusbar.fontSize
+        font.pixelSize: Config.fontSize
     }
 
     Column {
@@ -55,16 +55,16 @@ Item {
 
                     anchors {
                         left: parent.left
-                        leftMargin: Config.statusbar.padding
+                        leftMargin: Config.padding
                         verticalCenter: parent.verticalCenter
                     }
                     width: root.unit * 3
                     text: Audio.streamName(streamRow.modelData)
                     elide: Text.ElideRight
-                    color: Theme.base05
+                    color: Theme[Config.colors.foreground]
                     font.family: "monospace"
                     font.bold: true
-                    font.pixelSize: Config.statusbar.fontSize
+                    font.pixelSize: Config.fontSize
                 }
 
                 Item {
@@ -73,15 +73,15 @@ Item {
                     anchors {
                         left: streamLabel.right
                         right: volumeText.left
-                        leftMargin: Config.statusbar.padding
-                        rightMargin: Config.statusbar.padding
+                        leftMargin: Config.padding
+                        rightMargin: Config.padding
                         verticalCenter: parent.verticalCenter
                     }
                     height: Config.statusbar.height / 2
 
                     Rectangle {
                         anchors.fill: parent
-                        color: Theme.base02
+                        color: Theme[Config.colors.surfaceAlt]
                     }
 
                     Rectangle {
@@ -91,8 +91,8 @@ Item {
                         )
                         height: parent.height
                         color: streamRow.audio.muted
-                            ? Theme.base03
-                            : Theme[Config.statusbar.popup.color]
+                            ? Theme[Config.colors.muted]
+                            : Theme[Config.colors.accent]
                     }
 
                     MouseArea {
@@ -124,7 +124,7 @@ Item {
 
                     anchors {
                         right: parent.right
-                        rightMargin: Config.statusbar.padding
+                        rightMargin: Config.padding
                         verticalCenter: parent.verticalCenter
                     }
                     width: root.unit * 1.5
@@ -132,10 +132,10 @@ Item {
                     text: streamRow.audio.muted
                         ? "--"
                         : Math.round(streamRow.audio.volume * 100) + "%"
-                    color: Theme.base05
+                    color: Theme[Config.colors.foreground]
                     font.family: "monospace"
                     font.bold: true
-                    font.pixelSize: Config.statusbar.fontSize
+                    font.pixelSize: Config.fontSize
                 }
             }
         }

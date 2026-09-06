@@ -9,8 +9,8 @@ Scope {
 
     required property ShellScreen screen
 
-    readonly property int padding: Global.Config.statusbar.padding
-    readonly property int unit: Global.Config.statusbar.popup.unit
+    readonly property int padding: Global.Config.padding
+    readonly property int unit: Global.Config.unit
     readonly property int entryHeight: unit
     readonly property int queueWidth: unit * 10
     property bool opened: false
@@ -33,9 +33,9 @@ Scope {
 
     function urgencyColor(urgency): color {
         if (urgency === NotificationUrgency.Critical)
-            return Global.Theme.base08
+            return Global.Theme[Global.Config.colors.danger]
         if (urgency === NotificationUrgency.Low)
-            return Global.Theme.base0B
+            return Global.Theme[Global.Config.colors.accent]
         return Global.Theme.base0A
     }
 
@@ -78,7 +78,7 @@ Scope {
 
                 GradientStop {
                     position: 1
-                    color: Global.Theme.withAlpha(Global.Theme.base00, "e6")
+                    color: Global.Theme.withAlpha(Global.Theme[Global.Config.colors.background], "e6")
                 }
             }
         }
@@ -196,10 +196,10 @@ Scope {
 
                             anchors.centerIn: parent
                             text: root.urgencyTag(slot.modelData.urgency)
-                            color: Global.Theme.base00
+                            color: Global.Theme[Global.Config.colors.background]
                             font.family: "monospace"
                             font.bold: true
-                            font.pixelSize: Global.Config.statusbar.fontSize
+                            font.pixelSize: Global.Config.fontSize
                         }
                     }
 
@@ -207,7 +207,7 @@ Scope {
                         width: summary.width - tagText.implicitWidth - 12
                         height: parent.height
                         color: Global.Theme[
-                            Global.Config.statusbar.component.contentColor
+                            Global.Config.colors.surfaceAlt
                         ]
 
                         Text {
@@ -221,10 +221,10 @@ Scope {
                                 || slot.modelData.appName
                                 || "Notification"
                             elide: Text.ElideRight
-                            color: Global.Theme.base05
+                            color: Global.Theme[Global.Config.colors.foreground]
                             font.family: "monospace"
                             font.bold: true
-                            font.pixelSize: Global.Config.statusbar.fontSize
+                            font.pixelSize: Global.Config.fontSize
                         }
                     }
                 }
@@ -243,7 +243,7 @@ Scope {
                     implicitHeight: contentHeight + root.padding * 2
                     height: slot.expanded ? implicitHeight : 0
                     color: Global.Theme[
-                        Global.Config.statusbar.component.contentColor
+                        Global.Config.colors.surfaceAlt
                     ]
                     opacity: slot.expanded ? 1 : 0
                     enabled: slot.expanded
@@ -275,10 +275,10 @@ Scope {
                             || "Notification"
                         textFormat: Text.PlainText
                         wrapMode: Text.Wrap
-                        color: Global.Theme.base05
+                        color: Global.Theme[Global.Config.colors.foreground]
                         font.family: "monospace"
                         font.bold: true
-                        font.pixelSize: Global.Config.statusbar.fontSize
+                        font.pixelSize: Global.Config.fontSize
                     }
 
                     Item {
@@ -318,7 +318,7 @@ Scope {
                                     height: parent.height
                                     color: actionMouse.containsMouse
                                         ? Global.Theme.base06
-                                        : Global.Theme.base05
+                                        : Global.Theme[Global.Config.colors.foreground]
 
                                     Text {
                                         id: actionText
@@ -326,11 +326,11 @@ Scope {
                                         anchors.centerIn: parent
                                         text: root.actionLabel(
                                             actionButton.modelData)
-                                        color: Global.Theme.base00
+                                        color: Global.Theme[Global.Config.colors.background]
                                         font.family: "monospace"
                                         font.bold: true
                                         font.pixelSize:
-                                            Global.Config.statusbar.fontSize
+                                            Global.Config.fontSize
                                     }
 
                                     MouseArea {
@@ -358,7 +358,7 @@ Scope {
                                     - submitButton.width
                                     - parent.spacing
                                 height: parent.height
-                                color: Global.Theme.base00
+                                color: Global.Theme[Global.Config.colors.background]
 
                                 TextInput {
                                     id: replyInput
@@ -370,13 +370,13 @@ Scope {
                                     }
                                     verticalAlignment: TextInput.AlignVCenter
                                     clip: true
-                                    color: Global.Theme.base05
+                                    color: Global.Theme[Global.Config.colors.foreground]
                                     selectionColor: Global.Theme.base0D
-                                    selectedTextColor: Global.Theme.base00
+                                    selectedTextColor: Global.Theme[Global.Config.colors.background]
                                     font.family: "monospace"
                                     font.bold: true
                                     font.pixelSize:
-                                        Global.Config.statusbar.fontSize
+                                        Global.Config.fontSize
 
                                     Text {
                                         anchors.fill: parent
@@ -385,7 +385,7 @@ Scope {
                                             && !replyInput.activeFocus
                                         text: slot.modelData.inlineReplyPlaceholder
                                             || "Reply..."
-                                        color: Global.Theme.base03
+                                        color: Global.Theme[Global.Config.colors.muted]
                                         font: replyInput.font
                                     }
 
@@ -401,7 +401,7 @@ Scope {
                                 height: parent.height
                                 color: submitMouse.containsMouse
                                     ? Global.Theme.base06
-                                    : Global.Theme.base05
+                                    : Global.Theme[Global.Config.colors.foreground]
 
                                 function submit(): void {
                                     if (replyInput.text.length === 0)
@@ -416,11 +416,11 @@ Scope {
                                 Text {
                                     anchors.centerIn: parent
                                     text: "SUB"
-                                    color: Global.Theme.base00
+                                    color: Global.Theme[Global.Config.colors.background]
                                     font.family: "monospace"
                                     font.bold: true
                                     font.pixelSize:
-                                        Global.Config.statusbar.fontSize
+                                        Global.Config.fontSize
                                 }
 
                                 MouseArea {

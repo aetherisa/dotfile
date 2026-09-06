@@ -5,7 +5,7 @@ import qs.global as Global
 Item {
     id: root
 
-    readonly property int unit: Global.Config.statusbar.popup.unit
+    readonly property int unit: Global.Config.unit
     readonly property var player: Global.Media.activePlayer
     readonly property bool showPlayerSelector: Global.Media.players.length >= 2
 
@@ -14,7 +14,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Global.Theme.base01
+        color: Global.Theme[Global.Config.colors.surface]
     }
 
     ListView {
@@ -45,10 +45,10 @@ Item {
             width: Math.max(root.unit * 2, playerName.implicitWidth + 24)
             height: playerList.height
             color: selected
-                ? Global.Theme.base05
+                ? Global.Theme[Global.Config.colors.foreground]
                 : playerMouse.containsMouse
                     ? Global.Theme.base06
-                    : Global.Theme.base02
+                    : Global.Theme[Global.Config.colors.surfaceAlt]
 
             Behavior on color {
                 ColorAnimation { duration: 120 }
@@ -60,11 +60,11 @@ Item {
                 anchors.centerIn: parent
                 text: playerButton.modelData.identity || "Player"
                 color: playerButton.selected || playerMouse.containsMouse
-                    ? Global.Theme.base00
-                    : Global.Theme.base05
+                    ? Global.Theme[Global.Config.colors.background]
+                    : Global.Theme[Global.Config.colors.foreground]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
 
             MouseArea {
@@ -95,17 +95,17 @@ Item {
                 left: parent.left
                 right: parent.right
                 top: parent.top
-                leftMargin: Global.Config.statusbar.padding
-                rightMargin: Global.Config.statusbar.padding
+                leftMargin: Global.Config.padding
+                rightMargin: Global.Config.padding
             }
             height: root.unit * 0.75
             verticalAlignment: Text.AlignBottom
             text: root.player?.trackTitle || "Nothing playing"
             elide: Text.ElideRight
-            color: Global.Theme.base05
+            color: Global.Theme[Global.Config.colors.foreground]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
 
         Text {
@@ -113,17 +113,17 @@ Item {
                 left: parent.left
                 right: parent.right
                 top: titleText.bottom
-                leftMargin: Global.Config.statusbar.padding
-                rightMargin: Global.Config.statusbar.padding
+                leftMargin: Global.Config.padding
+                rightMargin: Global.Config.padding
             }
             height: root.unit * 0.75
             verticalAlignment: Text.AlignTop
             text: root.player?.trackArtist || root.player?.identity || "--"
             elide: Text.ElideRight
-            color: Global.Theme.base03
+            color: Global.Theme[Global.Config.colors.muted]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
     }
 
@@ -142,17 +142,17 @@ Item {
 
             anchors {
                 left: parent.left
-                leftMargin: Global.Config.statusbar.padding
+                leftMargin: Global.Config.padding
                 verticalCenter: parent.verticalCenter
             }
             width: root.unit * 1.5
             text: Global.Media.available
                 ? Global.Media.formatTime(Global.Media.position)
                 : "--"
-            color: Global.Theme.base05
+            color: Global.Theme[Global.Config.colors.foreground]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
 
         Item {
@@ -161,15 +161,15 @@ Item {
             anchors {
                 left: elapsedText.right
                 right: durationText.left
-                leftMargin: Global.Config.statusbar.padding
-                rightMargin: Global.Config.statusbar.padding
+                leftMargin: Global.Config.padding
+                rightMargin: Global.Config.padding
                 verticalCenter: parent.verticalCenter
             }
             height: Global.Config.statusbar.height / 2
 
             Rectangle {
                 anchors.fill: parent
-                color: Global.Theme.base02
+                color: Global.Theme[Global.Config.colors.surfaceAlt]
             }
 
             Rectangle {
@@ -178,7 +178,7 @@ Item {
                         Global.Media.position / Global.Media.length))
                     : 0)
                 height: parent.height
-                color: Global.Theme[Global.Config.statusbar.popup.color]
+                color: Global.Theme[Global.Config.colors.accent]
             }
 
             MouseArea {
@@ -203,7 +203,7 @@ Item {
 
             anchors {
                 right: parent.right
-                rightMargin: Global.Config.statusbar.padding
+                rightMargin: Global.Config.padding
                 verticalCenter: parent.verticalCenter
             }
             width: root.unit * 1.5
@@ -211,10 +211,10 @@ Item {
             text: Global.Media.length > 0
                 ? Global.Media.formatTime(Global.Media.length)
                 : "--"
-            color: Global.Theme.base05
+            color: Global.Theme[Global.Config.colors.foreground]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
     }
 
@@ -226,7 +226,7 @@ Item {
             bottom: parent.bottom
         }
         height: root.unit * 1.5
-        spacing: Global.Config.statusbar.padding
+        spacing: Global.Config.padding
 
         Repeater {
             model: ["PRE", Global.Media.playing ? "PAU" : "PLY", "NXT"]
@@ -247,7 +247,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 color: controlMouse.containsMouse && enabledAction
                     ? Global.Theme.base06
-                    : Global.Theme.base05
+                    : Global.Theme[Global.Config.colors.foreground]
                 opacity: enabledAction ? 1 : 0.45
 
                 Behavior on color {
@@ -257,10 +257,10 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     text: controlButton.modelData
-                    color: Global.Theme.base00
+                    color: Global.Theme[Global.Config.colors.background]
                     font.family: "monospace"
                     font.bold: true
-                    font.pixelSize: Global.Config.statusbar.fontSize
+                    font.pixelSize: Global.Config.fontSize
                 }
 
                 MouseArea {

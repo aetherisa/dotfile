@@ -6,7 +6,7 @@ import qs.global as Global
 Item {
     id: root
 
-    readonly property int unit: Global.Config.statusbar.popup.unit
+    readonly property int unit: Global.Config.unit
     property bool wifiSelected: true
     property var expandedNetwork: null
 
@@ -15,7 +15,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Global.Theme.base01
+        color: Global.Theme[Global.Config.colors.surface]
     }
 
     Row {
@@ -32,8 +32,8 @@ Item {
             width: root.wifiSelected ? root.unit * 2.5 : root.unit * 1.5
             height: parent.height
             color: root.wifiSelected
-                ? Global.Theme.base05
-                : Global.Theme.base02
+                ? Global.Theme[Global.Config.colors.foreground]
+                : Global.Theme[Global.Config.colors.surfaceAlt]
 
             Behavior on width {
                 NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
@@ -42,10 +42,10 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: "WIFI"
-                color: root.wifiSelected ? Global.Theme.base00 : Global.Theme.base05
+                color: root.wifiSelected ? Global.Theme[Global.Config.colors.background] : Global.Theme[Global.Config.colors.foreground]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
 
             MouseArea {
@@ -59,8 +59,8 @@ Item {
             width: root.wifiSelected ? root.unit * 1.5 : root.unit * 2.5
             height: parent.height
             color: root.wifiSelected
-                ? Global.Theme.base02
-                : Global.Theme.base05
+                ? Global.Theme[Global.Config.colors.surfaceAlt]
+                : Global.Theme[Global.Config.colors.foreground]
 
             Behavior on width {
                 NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
@@ -69,10 +69,10 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: "BLUE"
-                color: root.wifiSelected ? Global.Theme.base05 : Global.Theme.base00
+                color: root.wifiSelected ? Global.Theme[Global.Config.colors.foreground] : Global.Theme[Global.Config.colors.background]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
 
             MouseArea {
@@ -110,9 +110,9 @@ Item {
                     height: powerControl.height
                     color: selected
                         ? modelData
-                            ? Global.Theme.base0B
-                            : Global.Theme.base08
-                        : Global.Theme.base02
+                            ? Global.Theme[Global.Config.colors.accent]
+                            : Global.Theme[Global.Config.colors.danger]
+                        : Global.Theme[Global.Config.colors.surfaceAlt]
 
                     Behavior on width {
                         NumberAnimation {
@@ -125,11 +125,11 @@ Item {
                         anchors.centerIn: parent
                         text: parent.modelData ? "ON" : "OFF"
                         color: parent.selected
-                            ? Global.Theme.base00
-                            : Global.Theme.base05
+                            ? Global.Theme[Global.Config.colors.background]
+                            : Global.Theme[Global.Config.colors.foreground]
                         font.family: "monospace"
                         font.bold: true
-                        font.pixelSize: Global.Config.statusbar.fontSize
+                        font.pixelSize: Global.Config.fontSize
                     }
 
                     MouseArea {
@@ -167,10 +167,10 @@ Item {
             text: Global.Network.bluetoothEnabled
                 ? "No Bluetooth devices found"
                 : "Bluetooth is off"
-            color: Global.Theme.base03
+            color: Global.Theme[Global.Config.colors.muted]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
 
         Text {
@@ -178,10 +178,10 @@ Item {
             visible: root.wifiSelected && (!Global.Network.wifiEnabled
                 || Global.Network.wifiNetworks.length === 0)
             text: Global.Network.wifiEnabled ? "No networks found" : "Wi-Fi is off"
-            color: Global.Theme.base03
+            color: Global.Theme[Global.Config.colors.muted]
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: Global.Config.statusbar.fontSize
+            font.pixelSize: Global.Config.fontSize
         }
 
         ListView {
@@ -215,7 +215,7 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     color: networkMouse.containsMouse
-                        ? Global.Theme.base02
+                        ? Global.Theme[Global.Config.colors.surfaceAlt]
                         : "transparent"
                 }
 
@@ -224,31 +224,31 @@ Item {
 
                     anchors {
                         left: parent.left
-                        leftMargin: Global.Config.statusbar.padding
+                        leftMargin: Global.Config.padding
                         verticalCenter: actionRow.verticalCenter
                     }
                     width: root.unit * 4
                     text: networkRow.modelData.name || "Hidden network"
                     elide: Text.ElideRight
                     color: networkRow.modelData.connected
-                        ? Global.Theme[Global.Config.statusbar.popup.color]
-                        : Global.Theme.base05
+                        ? Global.Theme[Global.Config.colors.accent]
+                        : Global.Theme[Global.Config.colors.foreground]
                     font.family: "monospace"
                     font.bold: true
-                    font.pixelSize: Global.Config.statusbar.fontSize
+                    font.pixelSize: Global.Config.fontSize
                 }
 
                 Text {
                     anchors {
                         right: actionRow.left
-                        rightMargin: Global.Config.statusbar.padding
+                        rightMargin: Global.Config.padding
                         verticalCenter: actionRow.verticalCenter
                     }
                     text: Math.round(networkRow.modelData.signalStrength * 100) + "%"
                     color: Global.Theme.base04
                     font.family: "monospace"
                     font.bold: true
-                    font.pixelSize: Global.Config.statusbar.fontSize
+                    font.pixelSize: Global.Config.fontSize
                 }
 
                 Row {
@@ -256,7 +256,7 @@ Item {
 
                     anchors {
                         right: parent.right
-                        rightMargin: Global.Config.statusbar.padding
+                        rightMargin: Global.Config.padding
                         top: parent.top
                     }
                     height: root.unit
@@ -279,7 +279,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             color: actionMouse.containsMouse
                                 ? Global.Theme.base06
-                                : Global.Theme.base05
+                                : Global.Theme[Global.Config.colors.foreground]
 
                             Behavior on color {
                                 ColorAnimation { duration: 120 }
@@ -288,10 +288,10 @@ Item {
                             Text {
                                 anchors.centerIn: parent
                                 text: parent.modelData
-                                color: Global.Theme.base00
+                                color: Global.Theme[Global.Config.colors.background]
                                 font.family: "monospace"
                                 font.bold: true
-                                font.pixelSize: Global.Config.statusbar.fontSize
+                                font.pixelSize: Global.Config.fontSize
                             }
 
                             MouseArea {
@@ -346,7 +346,7 @@ Item {
                     visible: networkRow.expanded || height > 0
                     opacity: networkRow.expanded ? 1 : 0
                     clip: true
-                    color: Global.Theme.base00
+                    color: Global.Theme[Global.Config.colors.background]
 
                     Behavior on height {
                         NumberAnimation {
@@ -365,28 +365,28 @@ Item {
                         anchors {
                             left: parent.left
                             right: submitButton.left
-                            leftMargin: Global.Config.statusbar.padding
-                            rightMargin: Global.Config.statusbar.padding
+                            leftMargin: Global.Config.padding
+                            rightMargin: Global.Config.padding
                             verticalCenter: parent.verticalCenter
                         }
                         visible: networkRow.supported
                         focus: visible && networkRow.expanded
                         echoMode: TextInput.Password
                         passwordCharacter: "•"
-                        color: Global.Theme.base05
+                        color: Global.Theme[Global.Config.colors.foreground]
                         selectionColor:
-                            Global.Theme[Global.Config.statusbar.popup.color]
-                        selectedTextColor: Global.Theme.base00
+                            Global.Theme[Global.Config.colors.accent]
+                        selectedTextColor: Global.Theme[Global.Config.colors.background]
                         font.family: "monospace"
                         font.bold: true
-                        font.pixelSize: Global.Config.statusbar.fontSize
+                        font.pixelSize: Global.Config.fontSize
                         Keys.onReturnPressed: submitButton.submit()
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: passwordInput.text.length === 0
                             text: "Password"
-                            color: Global.Theme.base03
+                            color: Global.Theme[Global.Config.colors.muted]
                             font: passwordInput.font
                         }
                     }
@@ -394,15 +394,15 @@ Item {
                     Text {
                         anchors {
                             left: parent.left
-                            leftMargin: Global.Config.statusbar.padding
+                            leftMargin: Global.Config.padding
                             verticalCenter: parent.verticalCenter
                         }
                         visible: !networkRow.supported
                         text: "Unsupported security type"
-                        color: Global.Theme.base08
+                        color: Global.Theme[Global.Config.colors.danger]
                         font.family: "monospace"
                         font.bold: true
-                        font.pixelSize: Global.Config.statusbar.fontSize
+                        font.pixelSize: Global.Config.fontSize
                     }
 
                     Rectangle {
@@ -420,21 +420,21 @@ Item {
 
                         anchors {
                             right: parent.right
-                            rightMargin: Global.Config.statusbar.padding
+                            rightMargin: Global.Config.padding
                             verticalCenter: parent.verticalCenter
                         }
                         width: root.unit * 1.25
                         height: Global.Config.statusbar.height
                         visible: networkRow.supported
-                        color: Global.Theme[Global.Config.statusbar.popup.color]
+                        color: Global.Theme[Global.Config.colors.accent]
 
                         Text {
                             anchors.centerIn: parent
                             text: "SUB"
-                            color: Global.Theme.base00
+                            color: Global.Theme[Global.Config.colors.background]
                             font.family: "monospace"
                             font.bold: true
-                            font.pixelSize: Global.Config.statusbar.fontSize
+                            font.pixelSize: Global.Config.fontSize
                         }
 
                         MouseArea {
@@ -471,26 +471,26 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     color: bluetoothMouse.containsMouse
-                        ? Global.Theme.base02
+                        ? Global.Theme[Global.Config.colors.surfaceAlt]
                         : "transparent"
                 }
 
                 Text {
                     anchors {
                         left: parent.left
-                        leftMargin: Global.Config.statusbar.padding
+                        leftMargin: Global.Config.padding
                         right: bluetoothActions.left
-                        rightMargin: Global.Config.statusbar.padding
+                        rightMargin: Global.Config.padding
                         verticalCenter: parent.verticalCenter
                     }
                     text: bluetoothRow.modelData.name || "Unknown device"
                     elide: Text.ElideRight
                     color: bluetoothRow.modelData.connected
-                        ? Global.Theme[Global.Config.statusbar.popup.color]
-                        : Global.Theme.base05
+                        ? Global.Theme[Global.Config.colors.accent]
+                        : Global.Theme[Global.Config.colors.foreground]
                     font.family: "monospace"
                     font.bold: true
-                    font.pixelSize: Global.Config.statusbar.fontSize
+                    font.pixelSize: Global.Config.fontSize
                 }
 
                 Row {
@@ -498,7 +498,7 @@ Item {
 
                     anchors {
                         right: parent.right
-                        rightMargin: Global.Config.statusbar.padding
+                        rightMargin: Global.Config.padding
                         verticalCenter: parent.verticalCenter
                     }
                     height: Global.Config.statusbar.height
@@ -518,7 +518,7 @@ Item {
                             height: bluetoothActions.height
                             color: bluetoothActionMouse.containsMouse
                                 ? Global.Theme.base06
-                                : Global.Theme.base05
+                                : Global.Theme[Global.Config.colors.foreground]
 
                             Behavior on color {
                                 ColorAnimation { duration: 120 }
@@ -527,10 +527,10 @@ Item {
                             Text {
                                 anchors.centerIn: parent
                                 text: parent.modelData
-                                color: Global.Theme.base00
+                                color: Global.Theme[Global.Config.colors.background]
                                 font.family: "monospace"
                                 font.bold: true
-                                font.pixelSize: Global.Config.statusbar.fontSize
+                                font.pixelSize: Global.Config.fontSize
                             }
 
                             MouseArea {

@@ -11,7 +11,7 @@ PanelWindow {
         bottom: true
     }
 
-    color: Theme[Config.wallpaper.background]
+    color: Theme[Config.colors.background]
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Background
     WlrLayershell.namespace: "qs-trivial-wallpaper"

@@ -79,12 +79,12 @@ Scope {
 
     property real bgWidth: popupWidth
     property real bgHeight: popupHeight
-    property real bgY: popupY + (Config.statusbar.border.width / 2)
+    property real bgY: popupY + (Config.borderWidth / 2)
     property real bgX: {
         if (root.popupX === root.frameLeft) {
-            return root.popupX - (Config.statusbar.border.width / 2)
+            return root.popupX - (Config.borderWidth / 2)
         } else if (root.popupX + root.popupWidth === root.frameRight) {
-            return root.popupX + (Config.statusbar.border.width / 2)
+            return root.popupX + (Config.borderWidth / 2)
         }
         return root.popupX
     }
@@ -93,7 +93,7 @@ Scope {
         const left = root.popupX
         const right = root.popupX + root.popupWidth
         const top = root.frameBottom - root.popupHeight
-        const bottom = root.frameBottom + (Config.statusbar.border.width / 2)
+        const bottom = root.frameBottom + (Config.borderWidth / 2)
 
         if (root.popupX === root.frameLeft) {
             return (
@@ -163,7 +163,7 @@ Scope {
             anchors.fill: parent
 
             ShapePath {
-                fillColor: Theme[Config.statusbar.color]
+                fillColor: Theme[Config.colors.background]
                 capStyle: ShapePath.FlatCap
                 strokeWidth: -1
 
@@ -177,9 +177,9 @@ Scope {
             }
 
             ShapePath {
-                fillColor: Theme[Config.statusbar.color]
-                strokeColor: Theme[Config.statusbar.border.color]
-                strokeWidth: Config.statusbar.border.width
+                fillColor: Theme[Config.colors.background]
+                strokeColor: Theme[Config.colors.border]
+                strokeWidth: Config.borderWidth
                 capStyle: ShapePath.FlatCap
 
                 PathSvg {
@@ -205,7 +205,7 @@ Scope {
 
             clip: true
             x: root.popupX + root.popupPaddingLeft
-            y: root.popupY + Config.statusbar.padding
+            y: root.popupY + Config.padding
             width: Math.max(
                 0,
                 root.popupWidth
@@ -214,12 +214,12 @@ Scope {
             )
             height: Math.max(
                 0,
-                root.popupHeight - Config.statusbar.padding
+                root.popupHeight - Config.padding
             )
             sourceComponent: root.popupContent
 
             onLoaded: {
-                const padding = Config.statusbar.padding
+                const padding = Config.padding
                 const contentWidth = item.implicitWidth
                 const contentHeight = item.implicitHeight
                 const paddedWidth = contentWidth + padding * 2

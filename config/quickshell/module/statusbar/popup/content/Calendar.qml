@@ -10,10 +10,10 @@ Item {
     property int displayedMonth: currentDate.getMonth()
     property int displayedYear: currentDate.getFullYear()
 
-    readonly property int cellSize: Config.statusbar.popup.unit
-    readonly property int headerHeight: Config.statusbar.popup.unit
+    readonly property int cellSize: Config.unit
+    readonly property int headerHeight: Config.unit
     readonly property int weekHeaderHeight:
-        Config.statusbar.popup.unit * 5 / 8
+        Config.unit * 5 / 8
 
     implicitWidth: implicitHeight
     implicitHeight:
@@ -34,7 +34,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Theme.base01
+        color: Theme[Config.colors.surface]
     }
 
     ColumnLayout {
@@ -60,10 +60,10 @@ Item {
 
                         text: "<"
                         font.bold: true
-                        font.pixelSize: Config.statusbar.fontSize
+                        font.pixelSize: Config.fontSize
                         color: previousMouse.containsMouse
-                            ? Theme[Config.statusbar.popup.color]
-                            : Theme.base05
+                            ? Theme[Config.colors.accent]
+                            : Theme[Config.colors.foreground]
 
                         Behavior on color {
                             ColorAnimation { duration: 120 }
@@ -82,10 +82,10 @@ Item {
 
                 Text {
                     text: monthGrid.title
-                    color: Theme.base05
+                    color: Theme[Config.colors.foreground]
                     font.bold: true
                     font.family: "monospace"
-                    font.pixelSize: Config.statusbar.fontSize
+                    font.pixelSize: Config.fontSize
                 }
 
                 Item {
@@ -97,10 +97,10 @@ Item {
 
                         text: ">"
                         font.bold: true
-                        font.pixelSize: Config.statusbar.fontSize
+                        font.pixelSize: Config.fontSize
                         color: nextMouse.containsMouse
-                            ? Theme[Config.statusbar.popup.color]
-                            : Theme.base05
+                            ? Theme[Config.colors.accent]
+                            : Theme[Config.colors.foreground]
 
                         Behavior on color {
                             ColorAnimation { duration: 120 }
@@ -132,10 +132,10 @@ Item {
                 required property string narrowName
 
                 text: narrowName
-                color: Theme.base03
+                color: Theme[Config.colors.muted]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Config.statusbar.fontSize
+                font.pixelSize: Config.fontSize
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
@@ -157,7 +157,7 @@ Item {
                 required property var model
 
                 color: model.today
-                    ? Theme[Config.statusbar.popup.color]
+                    ? Theme[Config.colors.accent]
                     : "transparent"
 
                 Text {
@@ -165,14 +165,14 @@ Item {
                     text: model.day
                     color: model.month === monthGrid.month
                         ? model.today
-                        ? Theme.base00
-                        : Theme.base05
-                        : Theme.base03
+                        ? Theme[Config.colors.background]
+                        : Theme[Config.colors.foreground]
+                        : Theme[Config.colors.muted]
                     opacity:
                     model.month === monthGrid.month ? 1 : 0.4
                     font.family: "monospace"
                     font.bold: model.today
-                    font.pixelSize: Config.statusbar.fontSize
+                    font.pixelSize: Config.fontSize
                 }
             }
         }

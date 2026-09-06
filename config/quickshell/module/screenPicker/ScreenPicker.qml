@@ -20,12 +20,12 @@ Scope {
 
     readonly property color selectionColor: Theme.withAlpha(
         Theme[root.shouldRecord
-            ? Config.screenPicker.recording
-            : Config.screenPicker.screenshot],
+            ? Config.colors.danger
+            : Config.colors.accent],
         Config.screenPicker.alpha)
 
     readonly property color recordingActiveColor: Theme.withAlpha(
-        Theme[Config.screenPicker.recordingActive],
+        Theme[Config.colors.background],
         Config.screenPicker.alpha)
 
     function reset(): void {

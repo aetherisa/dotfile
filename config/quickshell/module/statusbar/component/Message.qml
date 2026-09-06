@@ -10,7 +10,7 @@ Item {
     required property ShellScreen screen
 
     readonly property color defaultTagColor: Global.Theme[
-        Global.Config.statusbar.component.tagColor
+        Global.Config.colors.danger
     ]
     property color displayedTagColor: defaultTagColor
     property color attentionColor: Global.Theme.base0A
@@ -25,9 +25,9 @@ Item {
 
     function urgencyColor(urgency): color {
         if (urgency === NotificationUrgency.Critical)
-            return Global.Theme.base08
+            return Global.Theme[Global.Config.colors.danger]
         if (urgency === NotificationUrgency.Low)
-            return Global.Theme.base0B
+            return Global.Theme[Global.Config.colors.accent]
         return Global.Theme.base0A
     }
 
@@ -82,10 +82,10 @@ Item {
 
                 anchors.centerIn: parent
                 text: "MSG"
-                color: Global.Theme.base00
+                color: Global.Theme[Global.Config.colors.background]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
         }
 
@@ -93,7 +93,7 @@ Item {
             implicitWidth: contentText.implicitWidth + 12
             height: root.height
             color: Global.Theme[
-                Global.Config.statusbar.component.contentColor
+                Global.Config.colors.surfaceAlt
             ]
 
             Text {
@@ -102,10 +102,10 @@ Item {
                 anchors.centerIn: parent
                 text: String(Global.Notifications.unread.length)
                     .padStart(2, "0")
-                color: Global.Theme.base05
+                color: Global.Theme[Global.Config.colors.foreground]
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Global.Config.statusbar.fontSize
+                font.pixelSize: Global.Config.fontSize
             }
         }
     }

@@ -9,7 +9,12 @@ Singleton {
 
     readonly property alias screenPicker: adapter.screenPicker
     readonly property alias statusbar: adapter.statusbar
-    readonly property alias wallpaper: adapter.wallpaper
+    readonly property alias launcher: adapter.launcher
+    readonly property alias colors: adapter.colors
+    readonly property alias unit: adapter.unit
+    readonly property alias padding: adapter.padding
+    readonly property alias fontSize: adapter.fontSize
+    readonly property alias borderWidth: adapter.borderWidth
 
     readonly property ShellScreen primaryScreen: {
         const screens = Quickshell.screens
@@ -52,32 +57,29 @@ Singleton {
             id: adapter
 
             property string primaryScreen: "auto"
+            property int unit: 32
+            property int padding: 10
+            property int fontSize: 12
+            property int borderWidth: 3
+            property JsonObject colors: JsonObject {
+                property string background: "base00"
+                property string surface: "base01"
+                property string surfaceAlt: "base02"
+                property string muted: "base03"
+                property string foreground: "base05"
+                property string accent: "base0B"
+                property string danger: "base08"
+                property string border: "base02"
+            }
             property JsonObject screenPicker: JsonObject {
-                property string screenshot: "base0B"
-                property string recording: "base08"
-                property string recordingActive: "base00"
                 property string alpha: "66"
             }
             property JsonObject statusbar: JsonObject {
                 property int height: 20
-                property int padding: 10
-                property int fontSize: 12
-                property string color: "base00"
-                property JsonObject popup: JsonObject {
-                    property int unit: 32
-                    property string color: "base0B"
-                }
-                property JsonObject component: JsonObject {
-                    property string tagColor: "base08"
-                    property string contentColor: "base02"
-                }
-                property JsonObject border: JsonObject {
-                    property int width: 3
-                    property string color: "base02"
-                }
             }
-            property JsonObject wallpaper: JsonObject {
-                property string background: "base00"
+            property JsonObject launcher: JsonObject {
+                property int width: 16
+                property int maximumRows: 5
             }
         }
     }

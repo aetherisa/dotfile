@@ -14,7 +14,7 @@ PanelWindow {
         bottom: true
     }
 
-    color: Theme[Config.wallpaper.background]
+    color: Theme[Config.colors.background]
     WlrLayershell.layer: WlrLayer.Bottom
     exclusionMode: ExclusionMode.Ignore
 
@@ -26,7 +26,7 @@ PanelWindow {
 
         environment: ExtendedSceneEnvironment {
             backgroundMode: SceneEnvironment.Color
-            clearColor: Theme[Config.wallpaper.background]
+            clearColor: Theme[Config.colors.background]
 
             lutEnabled: true
             lutSize: 16
@@ -91,7 +91,7 @@ PanelWindow {
             position: Qt.vector3d(0, 0, -50)
             scale: Qt.vector3d(10, 10, 10)
             materials: PrincipledMaterial {
-                baseColor: Theme[Config.wallpaper.background]
+                baseColor: Theme[Config.colors.background]
                 roughness: 1.0
             }
         }
