@@ -61,6 +61,7 @@ in
             pkgs.bash
             pkgs.grim
             pkgs.imagemagick
+            pkgs.libnotify
             pkgs.lutgen
             pkgs.wl-clipboard
             pkgs.wf-recorder

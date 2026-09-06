@@ -9,6 +9,8 @@ Singleton {
     id: root
 
     property int discoveryAttempts: 0
+    property bool notificationsReady: false
+    property var previousConnectedWifi: null
 
     readonly property var wifiDevice:
         Networking.devices.values.find(
@@ -30,6 +32,34 @@ Singleton {
     readonly property bool bluetoothAvailable: root.bluetoothAdapter !== null
     readonly property bool bluetoothEnabled:
         root.bluetoothAdapter?.enabled ?? false
+
+    onConnectedWifiChanged: {
+        if (!root.notificationsReady) {
+            root.previousConnectedWifi = root.connectedWifi
+            return
+        }
+
+        if (root.previousConnectedWifi === root.connectedWifi)
+            return
+
+        if (root.previousConnectedWifi !== null) {
+            Notifier.send(
+                "Wi-Fi disconnected",
+                root.previousConnectedWifi.name || "Wireless network",
+                "low"
+            )
+        }
+
+        if (root.connectedWifi !== null) {
+            Notifier.send(
+                "Wi-Fi connected",
+                root.connectedWifi.name || "Wireless network",
+                "low"
+            )
+        }
+
+        root.previousConnectedWifi = root.connectedWifi
+    }
 
     function sortedWifiNetworks(): var {
         if (root.wifiDevice === null)
@@ -175,7 +205,56 @@ Singleton {
         root.scheduleBluetoothDiscovery()
     }
 
-    Component.onCompleted: root.scheduleBluetoothDiscovery()
+    Component.onCompleted: {
+        root.scheduleBluetoothDiscovery()
+        notificationInitialization.start()
+    }
+
+    Timer {
+        id: notificationInitialization
+
+        interval: 2000
+        repeat: false
+        onTriggered: {
+            root.previousConnectedWifi = root.connectedWifi
+            root.notificationsReady = true
+        }
+    }
+
+    Instantiator {
+        model: ScriptModel {
+            values: root.bluetoothDevices
+            objectProp: "dbusPath"
+        }
+
+        delegate: Connections {
+            required property var modelData
+
+            property bool ready: false
+            property bool wasConnected: false
+
+            target: modelData
+
+            Component.onCompleted: {
+                wasConnected = modelData.connected
+                ready = true
+            }
+
+            function onConnectedChanged(): void {
+                if (!ready || wasConnected === modelData.connected)
+                    return
+
+                Notifier.send(
+                    modelData.connected
+                        ? "Bluetooth connected"
+                        : "Bluetooth disconnected",
+                    modelData.name || "Bluetooth device",
+                    "low"
+                )
+                wasConnected = modelData.connected
+            }
+        }
+    }
 
     Connections {
         target: root.bluetoothAdapter

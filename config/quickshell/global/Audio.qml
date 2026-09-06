@@ -8,11 +8,46 @@ Singleton {
     id: root
 
     property list<PwNode> streams: []
+    property bool notificationsReady: false
+    property var previousSink: null
 
     readonly property PwNode sink: Pipewire.defaultAudioSink
     readonly property bool available: !!sink?.audio
     readonly property bool muted: sink?.audio?.muted ?? false
     readonly property real volume: sink?.audio?.volume ?? 0
+
+    onSinkChanged: {
+        if (!root.notificationsReady) {
+            root.previousSink = root.sink
+            return
+        }
+
+        if (root.previousSink === root.sink)
+            return
+
+        if (root.sink === null) {
+            Notifier.send(
+                "Audio output unavailable",
+                root.nodeName(root.previousSink),
+                "normal"
+            )
+        } else if (root.previousSink !== null) {
+            Notifier.send(
+                "Audio output changed",
+                root.nodeName(root.sink),
+                "low"
+            )
+        }
+
+        root.previousSink = root.sink
+    }
+
+    function nodeName(node): string {
+        return node?.description
+            || node?.nickname
+            || node?.name
+            || "Default output"
+    }
 
     function streamName(node): string {
         const properties = node?.properties ?? {}
@@ -41,7 +76,21 @@ Singleton {
         root.streams = streams
     }
 
-    Component.onCompleted: root.refreshStreams()
+    Component.onCompleted: {
+        root.refreshStreams()
+        notificationInitialization.start()
+    }
+
+    Timer {
+        id: notificationInitialization
+
+        interval: 2000
+        repeat: false
+        onTriggered: {
+            root.previousSink = root.sink
+            root.notificationsReady = true
+        }
+    }
 
     Connections {
         target: Pipewire.nodes

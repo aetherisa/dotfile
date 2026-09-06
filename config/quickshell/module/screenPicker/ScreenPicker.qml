@@ -243,8 +243,21 @@ Scope {
         id: takeScreenshot
         command: ["grim", "-g", root.geometry, root.path]
         onExited: (exitCode, exitStatus) => {
-            if (exitCode === 0 && root.shouldCopyToClipboard) 
+            if (exitCode !== 0) {
+                Notifier.send(
+                    "Screenshot failed",
+                    "grim exited with code " + exitCode,
+                    "normal"
+                )
+            } else if (root.shouldCopyToClipboard) {
                 copyScreenshot.running = true
+            } else {
+                Notifier.send(
+                    "Screenshot saved",
+                    root.path,
+                    "low"
+                )
+            }
         }
     }
 
@@ -254,6 +267,18 @@ Scope {
             "sh", "-c", "wl-copy --type image/png < \"$1\"", 
             "screen-picker-copy", root.path
         ]
+
+        onExited: (exitCode, exitStatus) => {
+            Notifier.send(
+                exitCode === 0
+                    ? "Screenshot copied"
+                    : "Screenshot copy failed",
+                exitCode === 0
+                    ? root.path
+                    : "wl-copy exited with code " + exitCode,
+                exitCode === 0 ? "low" : "normal"
+            )
+        }
     }
 
     Timer {
@@ -273,8 +298,21 @@ Scope {
             "-f", root.path
         ]
         onExited: (exitCode, exitStatus) => {
-            if (exitCode === 0 && root.shouldCopyToClipboard)
+            if (exitCode !== 0) {
+                Notifier.send(
+                    "Recording failed",
+                    "wf-recorder exited with code " + exitCode,
+                    "normal"
+                )
+            } else if (root.shouldCopyToClipboard) {
                 copyRecording.running = true
+            } else {
+                Notifier.send(
+                    "Recording saved",
+                    root.path,
+                    "low"
+                )
+            }
         }
     }
 
@@ -285,6 +323,18 @@ Scope {
             "printf 'file://%s\\r\\n' \"$1\" | wl-copy --type text/uri-list",
             "screen-picker-copy", root.path
         ]
+
+        onExited: (exitCode, exitStatus) => {
+            Notifier.send(
+                exitCode === 0
+                    ? "Recording copied"
+                    : "Recording copy failed",
+                exitCode === 0
+                    ? root.path
+                    : "wl-copy exited with code " + exitCode,
+                exitCode === 0 ? "low" : "normal"
+            )
+        }
     }
 
     Connections {

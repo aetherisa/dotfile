@@ -151,6 +151,11 @@ Scope {
                 Layout.fillHeight: true
                 popupManager: statusbarPopupManager
             }
+
+            Component.Message {
+                Layout.fillHeight: true
+                screen: root.screen
+            }
         }
     }
 
