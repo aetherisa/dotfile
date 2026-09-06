@@ -21,11 +21,6 @@ PanelWindow {
     View3D {
         id: root
 
-        readonly property bool interactive:
-            pointer.containsMouse
-            && Workspace.focusedIsEmpty
-            && !Workspace.specialVisible
-
         anchors.fill: parent
         camera: camera
 
@@ -51,10 +46,13 @@ PanelWindow {
         Node {
             id: cameraRig
 
-            property real pitch:
-                root.interactive ? -pointer.normalizedY * 3 : 0
-            property real yaw:
-                root.interactive ? pointer.normalizedX * 4 : 0
+            property real pitch: 0
+            property real yaw: 0
+
+            function moveToward(x, y): void {
+                yaw = (x / pointer.width - 0.5) * 8
+                pitch = -(y / pointer.height - 0.5) * 6
+            }
 
             eulerRotation: Qt.vector3d(pitch, yaw, 0)
 
@@ -66,16 +64,18 @@ PanelWindow {
             }
 
             Behavior on pitch {
-                NumberAnimation {
-                    duration: 400
-                    easing.type: Easing.OutCubic
+                SpringAnimation {
+                    spring: 2
+                    damping: 0.25
+                    epsilon: 0.01
                 }
             }
 
             Behavior on yaw {
-                NumberAnimation {
-                    duration: 400
-                    easing.type: Easing.OutCubic
+                SpringAnimation {
+                    spring: 2
+                    damping: 0.25
+                    epsilon: 0.01
                 }
             }
         }
@@ -101,10 +101,8 @@ PanelWindow {
         id: pointer
 
         anchors.fill: parent
-        hoverEnabled: true
-        acceptedButtons: Qt.NoButton
+        acceptedButtons: Qt.LeftButton
 
-        readonly property real normalizedX: containsMouse && width > 0 ? (mouseX / width - 0.5) * 2 : 0
-        readonly property real normalizedY: containsMouse && height > 0 ? (mouseY / height - 0.5) * 2 : 0
+        onClicked: mouse => cameraRig.moveToward(mouse.x, mouse.y)
     }
 }
