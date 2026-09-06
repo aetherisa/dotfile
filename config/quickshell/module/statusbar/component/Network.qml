@@ -1,26 +1,17 @@
 import QtQuick
 import Quickshell
 import Quickshell.Networking
-import qs.global
+import qs.global as Global
 import qs.module.statusbar.popup
+import qs.module.statusbar.popup.content as Popup
 
 Item {
     id: root
 
     required property PopupManager popupManager
 
-    readonly property var wifiDevice:
-        Networking.devices.values.find(
-            device => device.type === DeviceType.Wifi) ?? null
-    readonly property var connectedDevice:
-        Networking.devices.values.find(
-            device => device.connected && device.type === DeviceType.Wifi)
-        ?? Networking.devices.values.find(device => device.connected)
-        ?? null
-    readonly property var connectedNetwork:
-        connectedDevice?.type === DeviceType.Wifi
-        ? connectedDevice.networks.values.find(network => network.connected) ?? null
-        : null
+    readonly property var connectedDevice: Global.Network.connectedDevice
+    readonly property var connectedNetwork: Global.Network.connectedWifi
     readonly property string tag:
         connectedDevice?.type === DeviceType.Wifi
         ? "WFI"
@@ -37,14 +28,7 @@ Item {
             : "100%"
 
     implicitWidth: contentRow.implicitWidth
-    implicitHeight: Config.statusbar.height
-
-    Binding {
-        target: root.wifiDevice
-        property: "scannerEnabled"
-        value: true
-        when: root.wifiDevice !== null
-    }
+    implicitHeight: Global.Config.statusbar.height
 
     Row {
         id: contentRow
@@ -55,34 +39,34 @@ Item {
         Rectangle {
             implicitWidth: tagText.implicitWidth + 12
             height: root.height
-            color: Theme[Config.statusbar.component.tagColor]
+            color: Global.Theme[Global.Config.statusbar.component.tagColor]
 
             Text {
                 id: tagText
 
                 anchors.centerIn: parent
                 text: root.tag
-                color: Theme.base00
+                color: Global.Theme.base00
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Config.statusbar.fontSize
+                font.pixelSize: Global.Config.statusbar.fontSize
             }
         }
 
         Rectangle {
             implicitWidth: contentText.implicitWidth + 12
             height: root.height
-            color: Theme[Config.statusbar.component.contentColor]
+            color: Global.Theme[Global.Config.statusbar.component.contentColor]
 
             Text {
                 id: contentText
 
                 anchors.centerIn: parent
                 text: root.content
-                color: Theme.base05
+                color: Global.Theme.base05
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Config.statusbar.fontSize
+                font.pixelSize: Global.Config.statusbar.fontSize
             }
         }
     }
@@ -90,15 +74,7 @@ Item {
     Component {
         id: popupContent
 
-        Item {
-            implicitWidth: 300
-            implicitHeight: 200
-
-            Rectangle {
-                anchors.fill: parent
-                color: "green"
-            }
-        }
+        Popup.NetworkDashboard {}
     }
 
     MouseArea {

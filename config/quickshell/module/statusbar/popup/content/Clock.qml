@@ -7,8 +7,8 @@ Item {
 
     readonly property date currentTime: systemClock.date
 
-    implicitWidth: 150
-    implicitHeight: 150
+    implicitHeight: Config.statusbar.popup.unit * 61 / 8
+    implicitWidth: implicitHeight
 
     SystemClock {
         id: systemClock
@@ -24,7 +24,7 @@ Item {
         id: face
 
         anchors.fill: parent
-        anchors.margins: 8
+        anchors.margins: Config.statusbar.padding
         radius: width / 2
         color: Theme.base01
         border.width: Config.statusbar.border.width
@@ -43,7 +43,7 @@ Item {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
                         top: parent.top
-                        topMargin: 8
+                        topMargin: Config.statusbar.padding
                     }
                     width: index % 5 === 0 ? 2 : 1
                     height: index % 5 === 0 ? 8 : 4
@@ -80,7 +80,7 @@ Item {
         Rectangle {
             width: 1
             height: face.height * 0.39
-            color: Theme.base0B
+            color: Theme[Config.statusbar.popup.color]
             x: (face.width - width) / 2
             y: face.height / 2 - height
             transformOrigin: Item.Bottom
@@ -92,7 +92,7 @@ Item {
             width: 8
             height: 8
             radius: 4
-            color: Theme.base0B
+            color: Theme[Config.statusbar.popup.color]
         }
     }
 }

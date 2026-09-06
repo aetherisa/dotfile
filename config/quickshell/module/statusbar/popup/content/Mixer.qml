@@ -5,9 +5,10 @@ import qs.global
 Item {
     id: root
 
-    readonly property int rowHeight: 36
+    readonly property int unit: Config.statusbar.popup.unit
+    readonly property int rowHeight: unit
 
-    implicitWidth: 360
+    implicitWidth: unit * 10
     implicitHeight: Math.max(root.rowHeight, streamColumn.implicitHeight)
 
     Rectangle {
@@ -54,10 +55,10 @@ Item {
 
                     anchors {
                         left: parent.left
-                        leftMargin: 8
+                        leftMargin: Config.statusbar.padding
                         verticalCenter: parent.verticalCenter
                     }
-                    width: 100
+                    width: root.unit * 3
                     text: Audio.streamName(streamRow.modelData)
                     elide: Text.ElideRight
                     color: Theme.base05
@@ -72,11 +73,11 @@ Item {
                     anchors {
                         left: streamLabel.right
                         right: volumeText.left
-                        leftMargin: 10
-                        rightMargin: 10
+                        leftMargin: Config.statusbar.padding
+                        rightMargin: Config.statusbar.padding
                         verticalCenter: parent.verticalCenter
                     }
-                    height: 12
+                    height: Config.statusbar.height / 2
 
                     Rectangle {
                         anchors.fill: parent
@@ -91,7 +92,7 @@ Item {
                         height: parent.height
                         color: streamRow.audio.muted
                             ? Theme.base03
-                            : Theme.base0B
+                            : Theme[Config.statusbar.popup.color]
                     }
 
                     MouseArea {
@@ -123,10 +124,10 @@ Item {
 
                     anchors {
                         right: parent.right
-                        rightMargin: 8
+                        rightMargin: Config.statusbar.padding
                         verticalCenter: parent.verticalCenter
                     }
-                    width: 42
+                    width: root.unit * 1.5
                     horizontalAlignment: Text.AlignRight
                     text: streamRow.audio.muted
                         ? "--"

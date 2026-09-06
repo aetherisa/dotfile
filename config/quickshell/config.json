@@ -11,9 +11,8 @@
         "padding": 10,
         "fontSize": 12,
         "color": "base00",
-        "calendar": {
-            "headerHeight": 30,
-            "weekHeaderHeight": 20,
+        "popup": {
+            "unit": 32,
             "color": "base0B"
         },
         "component": {

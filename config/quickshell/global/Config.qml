@@ -63,9 +63,8 @@ Singleton {
                 property int padding: 10
                 property int fontSize: 12
                 property string color: "base00"
-                property JsonObject calendar: JsonObject {
-                    property int headerHeight: 40
-                    property int weekHeaderHeight: 20
+                property JsonObject popup: JsonObject {
+                    property int unit: 32
                     property string color: "base0B"
                 }
                 property JsonObject component: JsonObject {

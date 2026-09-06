@@ -10,12 +10,12 @@ Item {
     property int displayedMonth: currentDate.getMonth()
     property int displayedYear: currentDate.getFullYear()
 
-    readonly property int cellSize: Config.statusbar.calendar.headerHeight
-    readonly property int headerHeight: Config.statusbar.calendar.headerHeight
+    readonly property int cellSize: Config.statusbar.popup.unit
+    readonly property int headerHeight: Config.statusbar.popup.unit
     readonly property int weekHeaderHeight:
-        Config.statusbar.calendar.weekHeaderHeight
+        Config.statusbar.popup.unit * 5 / 8
 
-    implicitWidth: cellSize * 7
+    implicitWidth: implicitHeight
     implicitHeight:
         headerHeight
         + weekHeaderHeight
@@ -62,7 +62,7 @@ Item {
                         font.bold: true
                         font.pixelSize: Config.statusbar.fontSize
                         color: previousMouse.containsMouse
-                            ? Theme.base0B
+                            ? Theme[Config.statusbar.popup.color]
                             : Theme.base05
 
                         Behavior on color {
@@ -99,7 +99,7 @@ Item {
                         font.bold: true
                         font.pixelSize: Config.statusbar.fontSize
                         color: nextMouse.containsMouse
-                            ? Theme.base0B
+                            ? Theme[Config.statusbar.popup.color]
                             : Theme.base05
 
                         Behavior on color {
@@ -157,7 +157,7 @@ Item {
                 required property var model
 
                 color: model.today
-                    ? Theme[Config.statusbar.calendar.color]
+                    ? Theme[Config.statusbar.popup.color]
                     : "transparent"
 
                 Text {

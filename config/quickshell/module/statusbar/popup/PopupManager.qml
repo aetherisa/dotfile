@@ -155,7 +155,7 @@ Scope {
             width: overlay.width
             height: root.frameBottom
         }
-        WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+        WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-statusbar-popup"
 

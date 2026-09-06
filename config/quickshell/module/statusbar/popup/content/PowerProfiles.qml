@@ -4,12 +4,13 @@ import qs.global as Global
 Item {
     id: root
 
-    readonly property int buttonWidth: 52
+    readonly property int unit: Global.Config.statusbar.popup.unit
+    readonly property int buttonWidth: unit * 2
     readonly property int profileCount: Global.Battery.profiles.length
 
     implicitWidth: buttonWidth * profileCount
         + Global.Config.statusbar.padding * Math.max(0, profileCount - 1)
-    implicitHeight: Global.Config.statusbar.height * 2
+    implicitHeight: unit
 
     Rectangle {
         anchors.fill: parent
@@ -34,7 +35,7 @@ Item {
 
                 width: root.buttonWidth
                 height: profileRow.height
-                color: Global.Theme.base0B
+                color: Global.Theme[Global.Config.statusbar.popup.color]
                 opacity: active || profileMouse.containsMouse ? 1 : 0.65
 
                 Behavior on opacity {
