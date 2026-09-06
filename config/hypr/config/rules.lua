@@ -30,13 +30,13 @@ hl.window_rule({
 	center = true,
 })
 
--- fullscreen browser
+-- non-transparent browser
 hl.window_rule({
-    name = "maximized-browser",
+    name = "opaque-browser",
     match = {
         class = apps.browser.class,
     },
-    fullscreen = true,
+    opacity = "1.0 override 1.0 override 1.0 override",
 })
 
 ----------------------
