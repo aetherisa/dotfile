@@ -2,6 +2,7 @@ import Quickshell
 import qs.module.screenPicker
 import qs.module.wallpaper
 import qs.module.statusbar
+import qs.module.launcher
 
 Scope {
     id: root
@@ -17,6 +18,10 @@ Scope {
     }
 
     StatusBar {
+        screen: root.screen
+    }
+
+    Launcher {
         screen: root.screen
     }
 }

@@ -10,6 +10,9 @@ local mod = "SUPER"
 -- MOD + Return -> launch terminal
 hl.bind(mod .. "+ Return", hl.dsp.exec_cmd(apps.terminal.command))
 
+-- MOD + D -> open application launcher
+hl.bind(mod .. "+ D", hl.dsp.exec_cmd(apps.shell.command.launcher))
+
 -- Mod + S -> start screen pick
 hl.bind(mod .. "+ S", hl.dsp.exec_cmd(apps.shell.command.screenpick.start))
 

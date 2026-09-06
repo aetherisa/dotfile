@@ -11,6 +11,7 @@ Singleton {
     signal pickerStartRequested()
     signal pickerStopRequested()
     signal pickerDismissRequested()
+    signal launcherOpenRequested()
 
     function initialize(): void {}
 
@@ -35,6 +36,14 @@ Singleton {
 
         function stop(): void {
             root.pickerStopRequested()
+        }
+    }
+
+    IpcHandler {
+        target: "launcher"
+
+        function open(): void {
+            root.launcherOpenRequested()
         }
     }
 }

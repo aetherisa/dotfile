@@ -19,6 +19,7 @@ return {
 
     shell = {
         command = {
+            launcher = "qs ipc call launcher open",
             screenpick = {
                 start = "qs ipc call picker start",
                 stop = "qs ipc call picker stop",
