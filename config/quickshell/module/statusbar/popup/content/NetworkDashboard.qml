@@ -68,7 +68,7 @@ Item {
 
             Text {
                 anchors.centerIn: parent
-                text: "BT"
+                text: "BLUE"
                 color: root.wifiSelected ? Global.Theme.base05 : Global.Theme.base00
                 font.family: "monospace"
                 font.bold: true
