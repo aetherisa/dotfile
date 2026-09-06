@@ -5,6 +5,7 @@ import Quickshell
 import Quickshell.Wayland
 import qs.global
 import qs.module.statusbar.component as Component
+import qs.module.statusbar.popup
 
 Scope {
     id: root
@@ -103,6 +104,12 @@ Scope {
 
             Component.Network {
                 Layout.fillHeight: true
+                popupManager: statusbarPopupManager
+            }
+
+            Component.Sound {
+                Layout.fillHeight: true
+                popupManager: statusbarPopupManager
             }
 
             Component.Backlight {
@@ -113,14 +120,32 @@ Scope {
                 Layout.fillWidth: true
             }
 
+            Component.Battery {
+                Layout.fillHeight: true
+                popupManager: statusbarPopupManager
+            }
+
             Component.Time {
                 Layout.fillHeight: true
+                popupManager: statusbarPopupManager
             }
 
             Component.Day {
                 Layout.fillHeight: true
+                popupManager: statusbarPopupManager
             }
         }
+    }
+
+    PopupManager {
+        id: statusbarPopupManager
+
+        screen: root.screen
+        frameLeft: Config.statusbar.padding
+        frameRight: frame.width - Config.statusbar.padding
+        frameBottom: frame.height
+            - Config.statusbar.padding * 2
+            - Config.statusbar.height
     }
 
     PanelWindow {

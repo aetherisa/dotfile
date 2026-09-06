@@ -12,6 +12,7 @@ let
     };
 in
 {
+    services.upower.enable = true;
     services.power-profiles-daemon.enable = true;
 
     environment.persistence = lib.mkIf persist.enable {

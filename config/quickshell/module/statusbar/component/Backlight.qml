@@ -20,7 +20,7 @@ Row {
             color: Theme.base00
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: 12
+            font.pixelSize: Config.statusbar.fontSize
         }
     }
 
@@ -37,7 +37,7 @@ Row {
             color: Theme.base05
             font.family: "monospace"
             font.bold: true
-            font.pixelSize: 12
+            font.pixelSize: Config.statusbar.fontSize
         }
     }
 }

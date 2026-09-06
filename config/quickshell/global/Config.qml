@@ -61,7 +61,13 @@ Singleton {
             property JsonObject statusbar: JsonObject {
                 property int height: 20
                 property int padding: 10
+                property int fontSize: 12
                 property string color: "base00"
+                property JsonObject calendar: JsonObject {
+                    property int headerHeight: 40
+                    property int weekHeaderHeight: 20
+                    property string color: "base0B"
+                }
                 property JsonObject component: JsonObject {
                     property string tagColor: "base08"
                     property string contentColor: "base02"

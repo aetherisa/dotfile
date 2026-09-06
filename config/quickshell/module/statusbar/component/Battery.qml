@@ -1,5 +1,5 @@
 import QtQuick
-import qs.global
+import qs.global as Global
 import qs.module.statusbar.popup
 import qs.module.statusbar.popup.content as Popup
 
@@ -8,10 +8,12 @@ Item {
 
     required property PopupManager popupManager
 
-    property date currentTime: new Date()
+    readonly property string content: Global.Battery.available
+        ? Global.Battery.percentage + "%"
+        : "--"
 
     implicitWidth: contentRow.implicitWidth
-    implicitHeight: Config.statusbar.height
+    implicitHeight: Global.Config.statusbar.height
 
     Row {
         id: contentRow
@@ -22,49 +24,46 @@ Item {
         Rectangle {
             implicitWidth: tagText.implicitWidth + 12
             height: root.height
-            color: Theme[Config.statusbar.component.tagColor]
+            color: Global.Theme[
+                Global.Config.statusbar.component.tagColor
+            ]
 
             Text {
                 id: tagText
 
                 anchors.centerIn: parent
-                text: "TIM"
-                color: Theme.base00
+                text: "BAT"
+                color: Global.Theme.base00
                 font.family: "monospace"
                 font.bold: true
-                font.pixelSize: Config.statusbar.fontSize
+                font.pixelSize: Global.Config.statusbar.fontSize
             }
         }
 
         Rectangle {
             implicitWidth: contentText.implicitWidth + 12
             height: root.height
-            color: Theme[Config.statusbar.component.contentColor]
+            color: Global.Theme[
+                Global.Config.statusbar.component.contentColor
+            ]
 
             Text {
                 id: contentText
 
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(root.currentTime, "HH:mm")
-                color: Theme.base05
-                font.bold: true
+                text: root.content
+                color: Global.Theme.base05
                 font.family: "monospace"
-                font.pixelSize: Config.statusbar.fontSize
+                font.bold: true
+                font.pixelSize: Global.Config.statusbar.fontSize
             }
         }
-    }
-
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: root.currentTime = new Date()
     }
 
     Component {
         id: popupContent
 
-        Popup.Clock {}
+        Popup.PowerProfiles {}
     }
 
     MouseArea {

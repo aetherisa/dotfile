@@ -2,9 +2,12 @@ import QtQuick
 import Quickshell
 import Quickshell.Networking
 import qs.global
+import qs.module.statusbar.popup
 
-Row {
+Item {
     id: root
+
+    required property PopupManager popupManager
 
     readonly property var wifiDevice:
         Networking.devices.values.find(
@@ -33,8 +36,8 @@ Row {
                 : Math.round(connectedNetwork.signalStrength * 100) + "%"
             : "100%"
 
-    height: Config.statusbar.height
-    spacing: 0
+    implicitWidth: contentRow.implicitWidth
+    implicitHeight: Config.statusbar.height
 
     Binding {
         target: root.wifiDevice
@@ -43,37 +46,72 @@ Row {
         when: root.wifiDevice !== null
     }
 
-    Rectangle {
-        implicitWidth: tagText.implicitWidth + 12
-        height: root.height
-        color: Theme[Config.statusbar.component.tagColor]
+    Row {
+        id: contentRow
 
-        Text {
-            id: tagText
+        anchors.fill: parent
+        spacing: 0
 
-            anchors.centerIn: parent
-            text: root.tag
-            color: Theme.base00
-            font.family: "monospace"
-            font.bold: true
-            font.pixelSize: 12
+        Rectangle {
+            implicitWidth: tagText.implicitWidth + 12
+            height: root.height
+            color: Theme[Config.statusbar.component.tagColor]
+
+            Text {
+                id: tagText
+
+                anchors.centerIn: parent
+                text: root.tag
+                color: Theme.base00
+                font.family: "monospace"
+                font.bold: true
+                font.pixelSize: Config.statusbar.fontSize
+            }
+        }
+
+        Rectangle {
+            implicitWidth: contentText.implicitWidth + 12
+            height: root.height
+            color: Theme[Config.statusbar.component.contentColor]
+
+            Text {
+                id: contentText
+
+                anchors.centerIn: parent
+                text: root.content
+                color: Theme.base05
+                font.family: "monospace"
+                font.bold: true
+                font.pixelSize: Config.statusbar.fontSize
+            }
         }
     }
 
-    Rectangle {
-        implicitWidth: contentText.implicitWidth + 12
-        height: root.height
-        color: Theme[Config.statusbar.component.contentColor]
+    Component {
+        id: popupContent
 
-        Text {
-            id: contentText
+        Item {
+            implicitWidth: 300
+            implicitHeight: 200
 
-            anchors.centerIn: parent
-            text: root.content
-            color: Theme.base05
-            font.family: "monospace"
-            font.bold: true
-            font.pixelSize: 12
+            Rectangle {
+                anchors.fill: parent
+                color: "green"
+            }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+
+        onClicked: {
+            const pos = root.mapToItem(null, 0, 0)
+            root.popupManager.open(
+                pos.x,
+                root.width,
+                popupContent
+            )
         }
     }
 }

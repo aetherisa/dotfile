@@ -9,7 +9,13 @@
     "statusbar": {
         "height": 20,
         "padding": 10,
+        "fontSize": 12,
         "color": "base00",
+        "calendar": {
+            "headerHeight": 30,
+            "weekHeaderHeight": 20,
+            "color": "base0B"
+        },
         "component": {
             "tagColor": "base08",
             "contentColor": "base02"

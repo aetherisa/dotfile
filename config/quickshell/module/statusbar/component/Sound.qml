@@ -8,7 +8,9 @@ Item {
 
     required property PopupManager popupManager
 
-    property date currentTime: new Date()
+    readonly property string content: !Audio.available || Audio.muted
+        ? "--"
+        : Math.round(Audio.volume * 100) + "%"
 
     implicitWidth: contentRow.implicitWidth
     implicitHeight: Config.statusbar.height
@@ -28,7 +30,7 @@ Item {
                 id: tagText
 
                 anchors.centerIn: parent
-                text: "TIM"
+                text: "VOL"
                 color: Theme.base00
                 font.family: "monospace"
                 font.bold: true
@@ -45,26 +47,19 @@ Item {
                 id: contentText
 
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(root.currentTime, "HH:mm")
+                text: root.content
                 color: Theme.base05
-                font.bold: true
                 font.family: "monospace"
+                font.bold: true
                 font.pixelSize: Config.statusbar.fontSize
             }
         }
     }
 
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: root.currentTime = new Date()
-    }
-
     Component {
         id: popupContent
 
-        Popup.Clock {}
+        Popup.Mixer {}
     }
 
     MouseArea {
