@@ -39,15 +39,6 @@ hl.window_rule({
     opacity = "1.0 override 1.0 override 1.0 override",
 })
 
--- windows in the scratchpad should not inherit the global border
-hl.window_rule({
-	name = "borderless-special-workspace",
-	match = {
-		workspace = "special:magic",
-	},
-	border_size = 0,
-})
-
 ----------------------
 -- Workspace rules
 

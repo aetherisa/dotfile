@@ -40,6 +40,7 @@ hl.config({
 
 	decoration = {
 		rounding = 0,
+		dim_special = 0,
 
 		-- helps concentration
 		active_opacity = 0.9,
