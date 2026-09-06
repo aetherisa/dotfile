@@ -121,6 +121,11 @@ Scope {
                 popupManager: statusbarPopupManager
             }
 
+            Component.Media {
+                Layout.fillHeight: true
+                popupManager: statusbarPopupManager
+            }
+
             Item {
                 Layout.fillWidth: true
             }
