@@ -35,11 +35,14 @@ Item {
 
                 width: root.buttonWidth
                 height: profileRow.height
-                color: Global.Theme[Global.Config.statusbar.popup.color]
-                opacity: active || profileMouse.containsMouse ? 1 : 0.65
+                color: active
+                    ? Global.Theme.base05
+                    : profileMouse.containsMouse
+                        ? Global.Theme.base06
+                        : Global.Theme.base02
 
-                Behavior on opacity {
-                    NumberAnimation { duration: 120 }
+                Behavior on color {
+                    ColorAnimation { duration: 120 }
                 }
 
                 Text {
@@ -47,7 +50,10 @@ Item {
 
                     anchors.centerIn: parent
                     text: Global.Battery.profileTag(profileButton.modelData)
-                    color: Global.Theme.base00
+                    color: profileButton.active
+                        || profileMouse.containsMouse
+                        ? Global.Theme.base00
+                        : Global.Theme.base05
                     font.family: "monospace"
                     font.bold: true
                     font.pixelSize: Global.Config.statusbar.fontSize

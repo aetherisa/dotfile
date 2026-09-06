@@ -116,13 +116,25 @@ Scope {
                 Layout.fillHeight: true
             }
 
+            Component.Battery {
+                Layout.fillHeight: true
+                popupManager: statusbarPopupManager
+            }
+
             Item {
                 Layout.fillWidth: true
             }
 
-            Component.Battery {
+            Component.Cpu {
                 Layout.fillHeight: true
-                popupManager: statusbarPopupManager
+            }
+
+            Component.Memory {
+                Layout.fillHeight: true
+            }
+
+            Component.Temperature {
+                Layout.fillHeight: true
             }
 
             Component.Time {
