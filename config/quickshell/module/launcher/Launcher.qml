@@ -16,7 +16,7 @@ Scope {
     readonly property int maximumVisibleRows: Config.launcher.maximumRows
     readonly property real frameTop: Config.padding
     readonly property real launcherWidth: root.unit * Config.launcher.width
-    readonly property real collapsedHeight: root.rowHeight + root.padding * 2
+    readonly property real collapsedHeight: root.rowHeight + root.padding
     readonly property var applications: {
         const query = searchInput.text.trim().toLowerCase()
         if (query.length === 0)
@@ -284,7 +284,7 @@ Scope {
                 id: inputBackground
 
                 x: root.padding
-                y: root.padding
+                y: 0
                 width: parent.width - root.padding * 2
                 height: root.rowHeight
                 color: Theme[Config.colors.surface]
