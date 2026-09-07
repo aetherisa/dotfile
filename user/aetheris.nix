@@ -82,6 +82,7 @@ in
     environment.persistence = lib.mkIf metadata."persistence.enable" {
         ${metadata."persistence.userRoot"}.users.${metadata."user.name"}.directories = [
             "dotfile"
+            "works"
         ];
     };
 
