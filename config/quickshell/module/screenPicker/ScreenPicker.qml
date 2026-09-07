@@ -50,7 +50,7 @@ Scope {
         return Quickshell.cachePath(
             "recording-" +
             Qt.formatDateTime(new Date(), "yyyy-MM-dd_HH-mm-ss-zzz") +
-            ".webm")
+            ".mp4")
     }
 
     PanelWindow {
@@ -293,8 +293,11 @@ Scope {
         command: [
             "wf-recorder",
             "-g", root.geometry,
-            "-c", "libvpx-vp9",
-            "-m", "webm",
+            "-r", "60",
+            "-D",
+            "-c", "h264_nvenc",
+            "-x", "yuv420p",
+            "-m", "mp4",
             "-f", root.path
         ]
         onExited: (exitCode, exitStatus) => {
