@@ -24,6 +24,7 @@ let
         "gtk"
         "hyprland"
         "mpv"
+        "net-devel"
         "neovim"
         "pipewire"
         "rust"
