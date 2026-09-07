@@ -29,6 +29,10 @@ let
     };
 in
 {
+    users.users.${userName}.packages = [
+        pkgs.wl-clipboard
+    ];
+
     programs.hyprland = {
         enable = true;
         xwayland.enable = true;
