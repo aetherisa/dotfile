@@ -159,6 +159,15 @@ Scope {
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-statusbar-popup"
 
+        Rectangle {
+            x: root.frameLeft
+            y: root.frameLeft
+            width: root.frameRight - root.frameLeft
+            height: root.frameBottom - y
+            color: Theme.withAlpha(
+                Theme[Config.colors.background], "b3")
+        }
+
         Shape {
             anchors.fill: parent
 

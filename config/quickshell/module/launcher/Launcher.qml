@@ -199,6 +199,17 @@ Scope {
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-app-launcher"
 
+        Rectangle {
+            x: Config.padding
+            y: root.frameTop
+            width: parent.width - Config.padding * 2
+            height: parent.height
+                - Config.padding * 3
+                - Config.statusbar.height
+            color: Theme.withAlpha(
+                Theme[Config.colors.background], "b3")
+        }
+
         MouseArea {
             anchors.fill: parent
             onClicked: root.close()
