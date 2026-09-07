@@ -25,6 +25,7 @@ let
         "mpv"
         "neovim"
         "pipewire"
+        "rust"
         "ssh"
         "starship"
         "xdg"
