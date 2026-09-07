@@ -11,6 +11,7 @@ let
     userHome = "/home/aetheris";
     modules = [
         "base"
+        "base-devel"
         "brightnessctl"
         "codex"
         "cursor"
