@@ -86,6 +86,7 @@ in
         ${metadata."persistence.userRoot"}.users.${metadata."user.name"}.directories = [
             "dotfile"
             "works"
+            "books"
         ];
     };
 
