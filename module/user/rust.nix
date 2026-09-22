@@ -17,10 +17,12 @@ let
     cargoHome = "${userHome}/.local/share/cargo";
     environmentConfig = pkgs.writeText "20-rust.conf" ''
         CARGO_HOME=${cargoHome}
-        PATH=${cargoHome}/bin:$PATH
+        CARGO_INSTALL_ROOT=${userHome}/.local
     '';
 in
 {
+    environment.localBinInPath = true;
+
     users.users.${userName}.packages = with pkgs; [
         cargo
         clippy
@@ -30,11 +32,13 @@ in
 
     systemd.tmpfiles.rules = [
         "d ${cargoHome} 0755 ${userName} users -"
+        "d ${userHome}/.local/bin 0755 ${userName} users -"
         "L+ ${userHome}/.config/environment.d/20-rust.conf - - - - ${environmentConfig}"
     ];
 
     environment.persistence = lib.mkIf metadata."persistence.enable" {
         ${metadata."persistence.userRoot"}.users.${userName}.directories = [
+            ".local/bin"
             ".local/share/cargo"
         ];
     };
