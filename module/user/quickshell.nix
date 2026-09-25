@@ -35,7 +35,6 @@ in
 {
     users.users.${userName}.packages = [
         quickshell
-        pkgs.imagemagick
         pkgs.lutgen
     ];
 
@@ -60,7 +59,6 @@ in
         path = config.users.users.${userName}.packages ++ [
             pkgs.bash
             pkgs.grim
-            pkgs.imagemagick
             pkgs.libnotify
             pkgs.lutgen
             pkgs.wl-clipboard

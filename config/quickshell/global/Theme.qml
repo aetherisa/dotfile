@@ -31,9 +31,6 @@ Singleton {
     readonly property string _nextLutPath:
         Quickshell.cachePath("theme-lut-" + ((_lutSlot + 1) % 2) + ".png")
 
-    readonly property string _rawLutPath:
-        Quickshell.cachePath("theme-lut-raw.png")
-
     readonly property url lutPath:
         _lutSlot < 0
             ? ""
@@ -95,7 +92,7 @@ Singleton {
             "lutgen",
             "apply",
             "-P",
-            "-o", root._rawLutPath,
+            "-o", root._nextLutPath,
             Qt.resolvedUrl("../assets/identity.png").toString().replace("file://", ""),
             "--",
             root.base00,
@@ -117,29 +114,11 @@ Singleton {
         ]
 
         onExited: (exitCode, exitStatus) => {
-            if (exitCode === 0)
-                lutFlipper.running = true
-            else
-                console.error("lutgen failed:", exitCode)
-        }
-    }
-
-    Process {
-        id: lutFlipper
-
-        command: [
-            "magick",
-            root._rawLutPath,
-            "-flip",
-            root._nextLutPath
-        ]
-
-        onExited: (exitCode, exitStatus) => {
             if (exitCode === 0) {
                 root._lutSlot = (root._lutSlot + 1) % 2
                 console.log("LUT ready:", root.lutPath)
             } else {
-                console.error("LUT flip failed:", exitCode)
+                console.error("lutgen failed:", exitCode)
             }
         }
     }
